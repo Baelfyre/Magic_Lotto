@@ -1,0 +1,13 @@
+# Generated local validation and audit artifacts
+outputs/
+.artifacts/
+.playwright-cli/
+coverage/
+tmp/
+*.log
+
+# Environment and secrets
+Keys.env
+.env
+*.env
+.env.*
