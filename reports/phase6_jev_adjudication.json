@@ -1,0 +1,1684 @@
+{
+  "schema_version": "phase6-jev-adjudication/v1",
+  "phase": "PHASE_6_JEV_ADJUDICATION",
+  "status": "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL",
+  "created_date": "2026-10-08",
+  "repository": {
+    "path": "D:/Dev/Repositories/magic_Lotto",
+    "branch": "main",
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+    "configured_remotes": [],
+    "tracked_worktree_clean_before_phase6_outputs": true,
+    "index_clean_before_phase6_outputs": true,
+    "preexisting_untracked_artifacts_preserved": true
+  },
+  "jev": {
+    "status": "SUCCESS",
+    "provider": "TypeSafe",
+    "system": "System One",
+    "endpoint": "https://api.typesafe.ai/v1/systemone",
+    "model_alias_requested": "jev-latest",
+    "model_identifier_returned": "jev-1.13.0",
+    "request_question_count": 63,
+    "http_status": 200,
+    "request_schema_reference": "D:/Dev/Sinag/scripts/content/jev-smoke-tests.js",
+    "response_schema_reference": "D:/Dev/Sinag/scripts/content/definition-cross-check.js",
+    "official_api_reference": "https://docs.typesafe.ai/api",
+    "evidence_packet_sha256": {
+      "reports/phase6_jev_adjudication.json": "5bc4963b5688fd6cf73469c9beedba0664c99c2fc14daaaa3a11cfa4dd49e827",
+      "reports/phase6_evidence_matrix.csv": "8478afcfd4ed6d9b1c438ca6c4724778190c69e2bb8ab078431ad8fc88c60443",
+      "reports/phase6_jev_evidence_review.md": "b1ba376f048c94fa48db7f84c2fd6a9fd64049dbcb7a4dff55e8960392df9b56"
+    },
+    "native_typed_answers": {
+      "c1_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.97,
+        "probabilities": {
+          "INCONCLUSIVE": 0.01,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.01,
+          "SUPPORTED_WITH_LIMITATIONS": 0.98
+        }
+      },
+      "c1_support": {
+        "type": "noul",
+        "noul": 0.89
+      },
+      "c1_caution": {
+        "type": "noul",
+        "noul": 0.17
+      },
+      "c1_assumptions": {
+        "type": "score",
+        "score": 1.45,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.55,
+          "2": 0.45
+        },
+        "confidence": 0.32
+      },
+      "c1_limitations": {
+        "type": "score",
+        "score": 1.37,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.63,
+          "2": 0.37
+        },
+        "confidence": 0.44
+      },
+      "c1_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.58,
+        "probabilities": {
+          "HIGH": 0.01,
+          "MODERATE": 0.27,
+          "LOW": 0.72
+        }
+      },
+      "c1_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.72,
+        "probabilities": {
+          "original_claim": 0.18,
+          "human_rewrite_needed": 0.01,
+          "candidate_wording": 0.81
+        }
+      },
+      "c2_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.91,
+        "probabilities": {
+          "INCONCLUSIVE": 0.0,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.07,
+          "SUPPORTED_WITH_LIMITATIONS": 0.93
+        }
+      },
+      "c2_support": {
+        "type": "noul",
+        "noul": 0.92
+      },
+      "c2_caution": {
+        "type": "noul",
+        "noul": 0.2
+      },
+      "c2_assumptions": {
+        "type": "score",
+        "score": 1.37,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.62,
+          "2": 0.38
+        },
+        "confidence": 0.43
+      },
+      "c2_limitations": {
+        "type": "score",
+        "score": 1.37,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.63,
+          "2": 0.37
+        },
+        "confidence": 0.44
+      },
+      "c2_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.62,
+        "probabilities": {
+          "HIGH": 0.02,
+          "MODERATE": 0.23,
+          "LOW": 0.75
+        }
+      },
+      "c2_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.95,
+        "probabilities": {
+          "original_claim": 0.03,
+          "human_rewrite_needed": 0.0,
+          "candidate_wording": 0.97
+        }
+      },
+      "c3_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.76,
+        "probabilities": {
+          "INCONCLUSIVE": 0.0,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED_WITH_LIMITATIONS": 0.81,
+          "SUPPORTED": 0.19
+        }
+      },
+      "c3_support": {
+        "type": "noul",
+        "noul": 0.9
+      },
+      "c3_caution": {
+        "type": "noul",
+        "noul": 0.14
+      },
+      "c3_assumptions": {
+        "type": "score",
+        "score": 1.45,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.02,
+          "1": 0.51,
+          "2": 0.47
+        },
+        "confidence": 0.27
+      },
+      "c3_limitations": {
+        "type": "score",
+        "score": 1.19,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.03,
+          "1": 0.75,
+          "2": 0.22
+        },
+        "confidence": 0.62
+      },
+      "c3_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.59,
+        "probabilities": {
+          "HIGH": 0.03,
+          "MODERATE": 0.24,
+          "LOW": 0.73
+        }
+      },
+      "c3_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.72,
+        "probabilities": {
+          "original_claim": 0.18,
+          "human_rewrite_needed": 0.01,
+          "candidate_wording": 0.81
+        }
+      },
+      "c4_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.81,
+        "probabilities": {
+          "INCONCLUSIVE": 0.12,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.03,
+          "SUPPORTED_WITH_LIMITATIONS": 0.85
+        }
+      },
+      "c4_support": {
+        "type": "noul",
+        "noul": 0.78
+      },
+      "c4_caution": {
+        "type": "noul",
+        "noul": 0.24
+      },
+      "c4_assumptions": {
+        "type": "score",
+        "score": 1.37,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.63,
+          "2": 0.37
+        },
+        "confidence": 0.44
+      },
+      "c4_limitations": {
+        "type": "score",
+        "score": 1.1,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.88,
+          "2": 0.11
+        },
+        "confidence": 0.82
+      },
+      "c4_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.48,
+        "probabilities": {
+          "HIGH": 0.02,
+          "MODERATE": 0.33,
+          "LOW": 0.65
+        }
+      },
+      "c4_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.94,
+        "probabilities": {
+          "original_claim": 0.04,
+          "human_rewrite_needed": 0.0,
+          "candidate_wording": 0.96
+        }
+      },
+      "c5_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.81,
+        "probabilities": {
+          "INCONCLUSIVE": 0.0,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.15,
+          "SUPPORTED_WITH_LIMITATIONS": 0.85
+        }
+      },
+      "c5_support": {
+        "type": "noul",
+        "noul": 0.86
+      },
+      "c5_caution": {
+        "type": "noul",
+        "noul": 0.13
+      },
+      "c5_assumptions": {
+        "type": "score",
+        "score": 1.57,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.41,
+          "2": 0.58
+        },
+        "confidence": 0.35
+      },
+      "c5_limitations": {
+        "type": "score",
+        "score": 1.25,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.74,
+          "2": 0.25
+        },
+        "confidence": 0.61
+      },
+      "c5_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.66,
+        "probabilities": {
+          "HIGH": 0.02,
+          "MODERATE": 0.21,
+          "LOW": 0.77
+        }
+      },
+      "c5_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.85,
+        "probabilities": {
+          "original_claim": 0.09,
+          "human_rewrite_needed": 0.01,
+          "candidate_wording": 0.9
+        }
+      },
+      "c6_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.7,
+        "probabilities": {
+          "INCONCLUSIVE": 0.01,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED_WITH_LIMITATIONS": 0.76,
+          "SUPPORTED": 0.23
+        }
+      },
+      "c6_support": {
+        "type": "noul",
+        "noul": 0.87
+      },
+      "c6_caution": {
+        "type": "noul",
+        "noul": 0.14
+      },
+      "c6_assumptions": {
+        "type": "score",
+        "score": 1.75,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.25,
+          "2": 0.75
+        },
+        "confidence": 0.62
+      },
+      "c6_limitations": {
+        "type": "score",
+        "score": 1.31,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.02,
+          "1": 0.65,
+          "2": 0.33
+        },
+        "confidence": 0.47
+      },
+      "c6_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.76,
+        "probabilities": {
+          "HIGH": 0.01,
+          "MODERATE": 0.15,
+          "LOW": 0.84
+        }
+      },
+      "c6_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.85,
+        "probabilities": {
+          "original_claim": 0.09,
+          "human_rewrite_needed": 0.01,
+          "candidate_wording": 0.9
+        }
+      },
+      "c7_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED_WITH_LIMITATIONS",
+        "confidence": 0.99,
+        "probabilities": {
+          "INCONCLUSIVE": 0.01,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.0,
+          "SUPPORTED_WITH_LIMITATIONS": 0.99
+        }
+      },
+      "c7_support": {
+        "type": "noul",
+        "noul": 0.84
+      },
+      "c7_caution": {
+        "type": "noul",
+        "noul": 0.23
+      },
+      "c7_assumptions": {
+        "type": "score",
+        "score": 1.61,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.39,
+          "2": 0.61
+        },
+        "confidence": 0.41
+      },
+      "c7_limitations": {
+        "type": "score",
+        "score": 1.18,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.8,
+          "2": 0.19
+        },
+        "confidence": 0.7
+      },
+      "c7_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.45,
+        "probabilities": {
+          "HIGH": 0.03,
+          "MODERATE": 0.34,
+          "LOW": 0.63
+        }
+      },
+      "c7_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.97,
+        "probabilities": {
+          "human_rewrite_needed": 0.0,
+          "original_claim": 0.02,
+          "candidate_wording": 0.98
+        }
+      },
+      "c8_verdict": {
+        "type": "choice",
+        "choice": "SUPPORTED",
+        "confidence": 0.42,
+        "probabilities": {
+          "INCONCLUSIVE": 0.0,
+          "CONTRADICTED": 0.0,
+          "NOT_SUPPORTED": 0.0,
+          "SUPPORTED": 0.54,
+          "SUPPORTED_WITH_LIMITATIONS": 0.46
+        }
+      },
+      "c8_support": {
+        "type": "noul",
+        "noul": 0.86
+      },
+      "c8_caution": {
+        "type": "noul",
+        "noul": 0.08
+      },
+      "c8_assumptions": {
+        "type": "score",
+        "score": 1.98,
+        "legend": {
+          "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "1": "Assumptions are plausible, but important parts remain unverified.",
+          "2": "Assumptions are supported or not material to this scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.02,
+          "2": 0.98
+        },
+        "confidence": 0.97
+      },
+      "c8_limitations": {
+        "type": "score",
+        "score": 1.89,
+        "legend": {
+          "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+          "2": "Limitations are minor or do not materially affect the scoped claim."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.11,
+          "2": 0.89
+        },
+        "confidence": 0.83
+      },
+      "c8_overstatement": {
+        "type": "choice",
+        "choice": "LOW",
+        "confidence": 0.98,
+        "probabilities": {
+          "HIGH": 0.0,
+          "MODERATE": 0.01,
+          "LOW": 0.99
+        }
+      },
+      "c8_wording": {
+        "type": "choice",
+        "choice": "candidate_wording",
+        "confidence": 0.83,
+        "probabilities": {
+          "original_claim": 0.1,
+          "human_rewrite_needed": 0.01,
+          "candidate_wording": 0.89
+        }
+      },
+      "global_stop_model_expansion": {
+        "type": "noul",
+        "noul": 0.77
+      },
+      "global_open_test_value": {
+        "type": "noul",
+        "noul": 0.12
+      },
+      "global_phase5r_label": {
+        "type": "choice",
+        "choice": "APPROPRIATE",
+        "confidence": 0.88,
+        "probabilities": {
+          "TOO_STRONG": 0.02,
+          "TOO_WEAK": 0.06,
+          "APPROPRIATE": 0.92
+        }
+      },
+      "global_no_signal_conclusion": {
+        "type": "choice",
+        "choice": "DEFENSIBLE_WITH_LIMITATIONS",
+        "confidence": 0.87,
+        "probabilities": {
+          "NOT_DEFENSIBLE": 0.0,
+          "DEFENSIBLE": 0.03,
+          "INCONCLUSIVE": 0.07,
+          "DEFENSIBLE_WITH_LIMITATIONS": 0.9
+        }
+      },
+      "global_overstatement_findings": {
+        "type": "choice",
+        "choice": "SOME_OVERSTATEMENT",
+        "confidence": 0.41,
+        "probabilities": {
+          "NO_MATERIAL_OVERSTATEMENT": 0.4,
+          "SOME_OVERSTATEMENT": 0.56,
+          "MATERIAL_OVERSTATEMENT": 0.01,
+          "UNKNOWN": 0.03
+        }
+      },
+      "global_method_findings": {
+        "type": "choice",
+        "choice": "LIMITATIONS_ONLY",
+        "confidence": 0.27,
+        "probabilities": {
+          "LIMITATIONS_ONLY": 0.45,
+          "MATERIAL_METHOD_REPAIR": 0.03,
+          "NONE_MATERIAL": 0.11,
+          "UNRESOLVED": 0.41
+        }
+      },
+      "global_research_status": {
+        "type": "choice",
+        "choice": "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL",
+        "confidence": 1.0,
+        "probabilities": {
+          "REQUIRES_METHOD_REPAIR": 0.0,
+          "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL": 1.0,
+          "INCONCLUSIVE_REQUIRES_NEW_DATA": 0.0,
+          "EVIDENCE_SUPPORTS_MODEL_FREEZE_FOR_TEST": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 14608,
+      "output_tokens": 2326
+    },
+    "credential_value_recorded": false,
+    "request_headers_recorded": false,
+    "credential_echo_check": "PASS"
+  },
+  "preflight": {
+    "phase_verdicts": {
+      "phase3": "PHASE3_PASS_RANDOM_COMPATIBLE",
+      "phase4": "PHASE4_PASS_READY_FOR_ML_BASELINE",
+      "phase5a": "PHASE5A_INCONCLUSIVE",
+      "phase5r": "PHASE5R_INCONCLUSIVE"
+    },
+    "phase2_canonical_inputs": [
+      {
+        "name": "3d_analysis_ready",
+        "path": "swertres_9pm_analysis_ready.csv",
+        "exists": true
+      },
+      {
+        "name": "3d_cleaned",
+        "path": "swertres_9pm_cleaned_normalized.csv",
+        "exists": true
+      },
+      {
+        "name": "3d_frequency",
+        "path": "swertres_9pm_digit_frequency.csv",
+        "exists": true
+      },
+      {
+        "name": "3d_phase2",
+        "path": "swertres_9pm_phase2_analysis.csv",
+        "exists": true
+      },
+      {
+        "name": "6_42_cleaned",
+        "path": "lotto_6_42_cleaned_normalized.csv",
+        "exists": true
+      },
+      {
+        "name": "6_42_frequency",
+        "path": "lotto_6_42_number_frequency.csv",
+        "exists": true
+      },
+      {
+        "name": "6_42_phase2",
+        "path": "lotto_6_42_phase2_analysis.csv",
+        "exists": true
+      },
+      {
+        "name": "phase2_report",
+        "path": "phase2_randomness_diagnostics.md",
+        "exists": true
+      }
+    ],
+    "phase3_structural_validation": "PASS per phase3_monte_carlo_results.json",
+    "phase4_leakage_and_split_validation": "PASS per reports/phase4_validation.json",
+    "phase5a_test_contamination": {
+      "test_targets_parsed": false,
+      "test_metrics_calculated": false
+    },
+    "phase5r_locked_test_contamination": {
+      "locked_test_rows_parsed_or_scored": "NO",
+      "locked_test_targets_parsed": false,
+      "train_validation_only_prefix_parsing": "PASS",
+      "phase4_split_boundaries_preserved": "PASS"
+    },
+    "locked_test_metadata_only": {
+      "3d_lotto": {
+        "row_count": 724,
+        "start_date": "2024-10-08",
+        "end_date": "2026-10-07"
+      },
+      "lotto_6_42": {
+        "row_count": 302,
+        "start_date": "2024-10-24",
+        "end_date": "2026-10-06"
+      },
+      "phase6_target_rows_opened": false,
+      "phase6_predictive_evaluation_performed": false
+    },
+    "prior_phase_integrity": {
+      "phase5r_recorded_prior_artifact_count": 35,
+      "phase5r_recorded_all_prior_artifacts_unchanged": true,
+      "phase6_rechecked_report_json_and_source_files": 16,
+      "phase6_rechecked_report_json_and_source_files_all_match_recorded_hashes": true,
+      "phase6_rechecked_phase5r_outputs": 9,
+      "phase6_rechecked_phase5r_outputs_all_match_recorded_hashes": true,
+      "full_data_csv_and_feature_target_arrays_rehashed_in_phase6": false,
+      "reason": "Phase 6 kept locked target rows sealed and relied on the prior-phase integrity manifest and report metadata for these files."
+    },
+    "keys_env": {
+      "exists": true,
+      "ignored": true,
+      "ignore_rule": ".gitignore:12:*.env",
+      "tracked": false,
+      "contents_read": false
+    }
+  },
+  "evidence_facts_for_adjudication": [
+    {
+      "topic": "Phase 3 randomness diagnostics",
+      "fact": "The canonical Phase 3 verdict is PHASE3_PASS_RANDOM_COMPATIBLE for the fair-random processes tested.",
+      "limitation": "Compatibility with tested diagnostics does not prove perfect randomness."
+    },
+    {
+      "topic": "Phase 5R mutual information",
+      "fact": "One diagnostic passed its within-family BH threshold: Lotto 6/42 expanding historical frequency, mutual information 0.00368 nats per candidate, permutation p=0.00370, BH q=0.02960.",
+      "limitation": "This is a small association found in development evidence and does not establish predictive usefulness or independent replication."
+    },
+    {
+      "topic": "Phase 5R complete-combination proper scores",
+      "fact": "On chronological validation, 3D raw expanding-frequency NLL was 5.32132 versus fair 5.31989, with log-score advantage -0.00143, paired 95% bootstrap interval [-0.00535, 0.00252], and Monte Carlo p=0.48555. Lotto 6/42 raw expanding-frequency NLL was 15.49795 versus fair 15.47294, with log-score advantage -0.02502, paired 95% bootstrap interval [-0.04421, -0.00619], and Monte Carlo p=0.86701.",
+      "limitation": "The proper scores are validation results, not pristine locked-test evidence. Positive log-score advantage favors the non-fair model; the reported point estimates are negative."
+    },
+    {
+      "topic": "Phase 5R shrinkage and secondary metric",
+      "fact": "The strongest listed 6/42 shrinkage setting, beta kappa=1000, reduced the fair-baseline log-score deficit to -0.00977 but did not beat fair. Its mean hits@6 was 0.90, compared with fair observed mean 0.84 and fair expectation 0.85714.",
+      "limitation": "The secondary hit-count point estimate does not replace complete-combination proper scoring."
+    },
+    {
+      "topic": "Temporal dependence and stationarity",
+      "fact": "The reported paired bootstrap intervals for previous-draw conditional-rate differences crossed zero. No bounded stationarity change point passed BH correction; the minimum reported q-value was 0.24958.",
+      "limitation": "Failure to detect these effects is not proof that all temporal dependence or nonstationarity is absent."
+    },
+    {
+      "topic": "Development and validation boundary",
+      "fact": "Phase 5R used the 2,170-row 3D and 902-row 6/42 training partitions plus 723-row 3D and 300-row 6/42 validation partitions. Phase 5A validation had already been inspected.",
+      "limitation": "Phase 5R validation is development evidence, not a pristine final confirmation."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "The observed historical 3D Lotto and Lotto 6/42 results are broadly compatible with the fair-random processes tested in Phase 3.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "phase2_randomness_diagnostics.md",
+        "phase3_monte_carlo_random_baseline.md",
+        "phase3_monte_carlo_results.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.97,
+          "probabilities": {
+            "INCONCLUSIVE": 0.01,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.01,
+            "SUPPORTED_WITH_LIMITATIONS": 0.98
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.89
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.17
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.45,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.55,
+            "2": 0.45
+          },
+          "confidence": 0.32
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.37,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.63,
+            "2": 0.37
+          },
+          "confidence": 0.44
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.58,
+          "probabilities": {
+            "HIGH": 0.01,
+            "MODERATE": 0.27,
+            "LOW": 0.72
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "Results were broadly compatible with the fair-random processes and diagnostics tested in Phase 3.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.72,
+            "probabilities": {
+              "original_claim": 0.18,
+              "human_rewrite_needed": 0.01,
+              "candidate_wording": 0.81
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C2",
+      "claim": "Expanding historical frequency for Lotto 6/42 showed a small statistically detectable mutual-information association in development data.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "reports/phase5r_information_tests.csv",
+        "reports/phase5r_information_permutations.csv",
+        "reports/phase5r_predictive_information.md",
+        "reports/phase5r_evidence.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.91,
+          "probabilities": {
+            "INCONCLUSIVE": 0.0,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.07,
+            "SUPPORTED_WITH_LIMITATIONS": 0.93
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.92
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.2
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.37,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.62,
+            "2": 0.38
+          },
+          "confidence": 0.43
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.37,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.63,
+            "2": 0.37
+          },
+          "confidence": 0.44
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.62,
+          "probabilities": {
+            "HIGH": 0.02,
+            "MODERATE": 0.23,
+            "LOW": 0.75
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "A small adjusted mutual-information association was detected for 6/42 expanding frequency in development data; predictive value remains unestablished.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.95,
+            "probabilities": {
+              "original_claim": 0.03,
+              "human_rewrite_needed": 0.0,
+              "candidate_wording": 0.97
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C3",
+      "claim": "The detected 6/42 mutual-information association did not translate into improved complete-combination probability scoring on chronological validation.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "reports/phase5r_combination_probability_metrics.csv",
+        "reports/phase5r_bayesian_shrinkage.csv",
+        "reports/phase5r_evidence.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.76,
+          "probabilities": {
+            "INCONCLUSIVE": 0.0,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED_WITH_LIMITATIONS": 0.81,
+            "SUPPORTED": 0.19
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.9
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.14
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.45,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.02,
+            "1": 0.51,
+            "2": 0.47
+          },
+          "confidence": 0.27
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.19,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.03,
+            "1": 0.75,
+            "2": 0.22
+          },
+          "confidence": 0.62
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.59,
+          "probabilities": {
+            "HIGH": 0.03,
+            "MODERATE": 0.24,
+            "LOW": 0.73
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "The detected MI association did not produce improved complete-combination validation likelihood over the fair baseline.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.72,
+            "probabilities": {
+              "original_claim": 0.18,
+              "human_rewrite_needed": 0.01,
+              "candidate_wording": 0.81
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C4",
+      "claim": "The Phase 5A machine-learning candidates did not establish reliable predictive improvement over the relevant fair and historical baselines.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "reports/phase5a_ml_validation.md",
+        "reports/phase5a_validation.json",
+        "reports/phase5a_metrics.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.81,
+          "probabilities": {
+            "INCONCLUSIVE": 0.12,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.03,
+            "SUPPORTED_WITH_LIMITATIONS": 0.85
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.78
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.24
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.37,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.63,
+            "2": 0.37
+          },
+          "confidence": 0.44
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.1,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.01,
+            "1": 0.88,
+            "2": 0.11
+          },
+          "confidence": 0.82
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.48,
+          "probabilities": {
+            "HIGH": 0.02,
+            "MODERATE": 0.33,
+            "LOW": 0.65
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "Phase 5A candidates did not establish reliable improvement over the tested baselines on chronological validation.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.94,
+            "probabilities": {
+              "original_claim": 0.04,
+              "human_rewrite_needed": 0.0,
+              "candidate_wording": 0.96
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C5",
+      "claim": "Bayesian shrinkage reduced some historical-frequency overfitting but still failed to outperform the fair-random complete-combination likelihood baseline.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "reports/phase5r_bayesian_shrinkage.csv",
+        "reports/phase5r_combination_probability_metrics.csv",
+        "reports/phase5r_evidence.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.81,
+          "probabilities": {
+            "INCONCLUSIVE": 0.0,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.15,
+            "SUPPORTED_WITH_LIMITATIONS": 0.85
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.86
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.13
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.57,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.01,
+            "1": 0.41,
+            "2": 0.58
+          },
+          "confidence": 0.35
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.25,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.01,
+            "1": 0.74,
+            "2": 0.25
+          },
+          "confidence": 0.61
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.66,
+          "probabilities": {
+            "HIGH": 0.02,
+            "MODERATE": 0.21,
+            "LOW": 0.77
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "Shrinkage reduced some frequency-model overfit but did not beat fair-random complete-combination likelihood on validation.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.85,
+            "probabilities": {
+              "original_claim": 0.09,
+              "human_rewrite_needed": 0.01,
+              "candidate_wording": 0.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C6",
+      "claim": "No tested model currently satisfies the evidentiary standard required to justify opening the locked test partition.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "reports/phase5a_validation.json",
+        "reports/phase5r_evidence.json",
+        "data/features/chronological_splits.json"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.7,
+          "probabilities": {
+            "INCONCLUSIVE": 0.01,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED_WITH_LIMITATIONS": 0.76,
+            "SUPPORTED": 0.23
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.87
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.14
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.75,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.25,
+            "2": 0.75
+          },
+          "confidence": 0.62
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.31,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.02,
+            "1": 0.65,
+            "2": 0.33
+          },
+          "confidence": 0.47
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.76,
+          "probabilities": {
+            "HIGH": 0.01,
+            "MODERATE": 0.15,
+            "LOW": 0.84
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "Current evidence does not justify opening the locked test; keep it sealed pending a frozen model and separately authorized evaluation.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.85,
+            "probabilities": {
+              "original_claim": 0.09,
+              "human_rewrite_needed": 0.01,
+              "candidate_wording": 0.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C7",
+      "claim": "The strongest evidence-supported conclusion is that no reproducible predictive signal has been detected under the available data and tested methods.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED_WITH_LIMITATIONS",
+      "evidence_paths": [
+        "phase3_monte_carlo_results.json",
+        "reports/phase5a_validation.json",
+        "reports/phase5r_evidence.json",
+        "reports/phase5r_predictive_information.md"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED_WITH_LIMITATIONS",
+          "confidence": 0.99,
+          "probabilities": {
+            "INCONCLUSIVE": 0.01,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.0,
+            "SUPPORTED_WITH_LIMITATIONS": 0.99
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.84
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.23
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.61,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.39,
+            "2": 0.61
+          },
+          "confidence": 0.41
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.18,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.01,
+            "1": 0.8,
+            "2": 0.19
+          },
+          "confidence": 0.7
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.45,
+          "probabilities": {
+            "HIGH": 0.03,
+            "MODERATE": 0.34,
+            "LOW": 0.63
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "No reproducible predictive improvement was demonstrated under the available data and tested methods; this does not establish that prediction is impossible.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.97,
+            "probabilities": {
+              "human_rewrite_needed": 0.0,
+              "original_claim": 0.02,
+              "candidate_wording": 0.98
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C8",
+      "claim": "The evidence does not prove that prediction is theoretically impossible.",
+      "adjudication_status": "ADJUDICATED_BY_JEV",
+      "jev_verdict": "SUPPORTED",
+      "evidence_paths": [
+        "phase3_monte_carlo_random_baseline.md",
+        "reports/phase5a_ml_validation.md",
+        "reports/phase5r_predictive_information.md"
+      ],
+      "jev": {
+        "verdict": {
+          "type": "choice",
+          "choice": "SUPPORTED",
+          "confidence": 0.42,
+          "probabilities": {
+            "INCONCLUSIVE": 0.0,
+            "CONTRADICTED": 0.0,
+            "NOT_SUPPORTED": 0.0,
+            "SUPPORTED": 0.54,
+            "SUPPORTED_WITH_LIMITATIONS": 0.46
+          }
+        },
+        "supporting_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.86
+        },
+        "contradicting_or_cautionary_evidence_assessment": {
+          "type": "noul",
+          "noul": 0.08
+        },
+        "assumptions": {
+          "type": "score",
+          "score": 1.98,
+          "legend": {
+            "0": "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+            "1": "Assumptions are plausible, but important parts remain unverified.",
+            "2": "Assumptions are supported or not material to this scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.02,
+            "2": 0.98
+          },
+          "confidence": 0.97
+        },
+        "assumption_scale": [
+          "Material assumptions are unsupported, contradicted, or make the claim invalid.",
+          "Assumptions are plausible, but important parts remain unverified.",
+          "Assumptions are supported or not material to this scoped claim."
+        ],
+        "limitations": {
+          "type": "score",
+          "score": 1.89,
+          "legend": {
+            "0": "Limitations are severe enough to prevent or seriously undermine the claim.",
+            "1": "Limitations are material but bounded; the claim needs explicit qualification.",
+            "2": "Limitations are minor or do not materially affect the scoped claim."
+          },
+          "probabilities": {
+            "0": 0.0,
+            "1": 0.11,
+            "2": 0.89
+          },
+          "confidence": 0.83
+        },
+        "limitation_scale": [
+          "Limitations are severe enough to prevent or seriously undermine the claim.",
+          "Limitations are material but bounded; the claim needs explicit qualification.",
+          "Limitations are minor or do not materially affect the scoped claim."
+        ],
+        "overstatement_risk": {
+          "type": "choice",
+          "choice": "LOW",
+          "confidence": 0.98,
+          "probabilities": {
+            "HIGH": 0.0,
+            "MODERATE": 0.01,
+            "LOW": 0.99
+          }
+        },
+        "recommended_wording": {
+          "choice": "candidate_wording",
+          "text": "These results do not establish that prediction is theoretically impossible.",
+          "human_rewrite_needed": false,
+          "native_answer": {
+            "type": "choice",
+            "choice": "candidate_wording",
+            "confidence": 0.83,
+            "probabilities": {
+              "original_claim": 0.1,
+              "human_rewrite_needed": 0.01,
+              "candidate_wording": 0.89
+            }
+          }
+        }
+      }
+    }
+  ],
+  "global_questions": {
+    "stop_model_expansion": {
+      "type": "noul",
+      "noul": 0.77
+    },
+    "open_test_now_value": {
+      "type": "noul",
+      "noul": 0.12
+    },
+    "phase5r_label": {
+      "type": "choice",
+      "choice": "APPROPRIATE",
+      "confidence": 0.88,
+      "probabilities": {
+        "TOO_STRONG": 0.02,
+        "TOO_WEAK": 0.06,
+        "APPROPRIATE": 0.92
+      }
+    },
+    "no_reproducible_signal_conclusion": {
+      "type": "choice",
+      "choice": "DEFENSIBLE_WITH_LIMITATIONS",
+      "confidence": 0.87,
+      "probabilities": {
+        "NOT_DEFENSIBLE": 0.0,
+        "DEFENSIBLE": 0.03,
+        "INCONCLUSIVE": 0.07,
+        "DEFENSIBLE_WITH_LIMITATIONS": 0.9
+      }
+    },
+    "overstatement_findings": {
+      "type": "choice",
+      "choice": "SOME_OVERSTATEMENT",
+      "confidence": 0.41,
+      "probabilities": {
+        "NO_MATERIAL_OVERSTATEMENT": 0.4,
+        "SOME_OVERSTATEMENT": 0.56,
+        "MATERIAL_OVERSTATEMENT": 0.01,
+        "UNKNOWN": 0.03
+      }
+    },
+    "methodological_defects": {
+      "type": "choice",
+      "choice": "LIMITATIONS_ONLY",
+      "confidence": 0.27,
+      "probabilities": {
+        "LIMITATIONS_ONLY": 0.45,
+        "MATERIAL_METHOD_REPAIR": 0.03,
+        "NONE_MATERIAL": 0.11,
+        "UNRESOLVED": 0.41
+      }
+    },
+    "recommended_research_status": {
+      "type": "choice",
+      "choice": "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL",
+      "confidence": 1.0,
+      "probabilities": {
+        "REQUIRES_METHOD_REPAIR": 0.0,
+        "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL": 1.0,
+        "INCONCLUSIVE_REQUIRES_NEW_DATA": 0.0,
+        "EVIDENCE_SUPPORTS_MODEL_FREEZE_FOR_TEST": 0.0
+      }
+    }
+  },
+  "interpretation": {
+    "independent_adjudication_completed": true,
+    "no_phase6_scientific_verdict_is_issued": false,
+    "all_claim_verdicts_remain_pending": false,
+    "interim_test_policy": "KEEP_SEALED",
+    "interim_recommendation": "The locked test remains sealed. Any later one-time evaluation requires a separately frozen model and analysis plan and the applicable authorization."
+  },
+  "validation": {
+    "phase2_input_existence": "PASS",
+    "phase3_phase4_phase5a_phase5r_verdict_reports": "PASS",
+    "phase5r_locked_test_boundary": "PASS",
+    "phase5r_output_hashes": "PASS: 9 of 9 matched",
+    "prior_phase_report_json_source_hashes": "PASS: 16 of 16 matched",
+    "keys_env_git_metadata": "PASS: ignored and untracked",
+    "keys_env_contents_access": "NOT_PERFORMED",
+    "jev_adjudication": "PASS: actual typed JEV adjudication completed",
+    "phase6a_smoke_test": "PASS",
+    "phase6a_typed_claim_answers": "PASS: all 8 claims received valid native typed answers",
+    "phase6a_global_answers": "PASS",
+    "phase6a_evidence_packet_hashes": "PASS: exact blocked-packet hashes submitted",
+    "phase6a_prior_artifacts": "PASS",
+    "phase6a_locked_test_boundary": "PASS: metadata only; no rows parsed or scored",
+    "phase6a_credential_safety": "PASS: exact credential not emitted or recorded"
+  },
+  "git_policy": {
+    "staged": false,
+    "committed": false,
+    "pushed": false,
+    "merged": false
+  },
+  "phase6a": {
+    "status": "PHASE6A_PASS_AND_PHASE6_ADJUDICATED",
+    "smoke_test": "PASS",
+    "claim_count": 8,
+    "question_count": 63,
+    "pre_adjudication_packet_sha256": {
+      "reports/phase6_jev_adjudication.json": "5bc4963b5688fd6cf73469c9beedba0664c99c2fc14daaaa3a11cfa4dd49e827",
+      "reports/phase6_evidence_matrix.csv": "8478afcfd4ed6d9b1c438ca6c4724778190c69e2bb8ab078431ad8fc88c60443",
+      "reports/phase6_jev_evidence_review.md": "b1ba376f048c94fa48db7f84c2fd6a9fd64049dbcb7a4dff55e8960392df9b56"
+    },
+    "trusted_reference_path": "D:/Dev/Sinag/scripts/content/jev-smoke-tests.js",
+    "locked_test_status": "SEALED"
+  }
+}

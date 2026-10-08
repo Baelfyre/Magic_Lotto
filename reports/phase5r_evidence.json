@@ -1,0 +1,1769 @@
+{
+  "bit_generator": "PCG64",
+  "bootstrap": {
+    "3d_lotto": {
+      "dirichlet_kappa_10": {
+        "bootstrap_ci95_vs_fair": [
+          -0.005345350641773413,
+          0.0025205463775063346
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          -1.0870634038415436e-06,
+          9.044679903795433e-06
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+        "mean_log_score_difference_vs_raw_expanding": 3.994649851119914e-06,
+        "segment_log_score_advantage_vs_fair": [
+          -0.003298730231138013,
+          -0.0018817862597737545,
+          0.0009129887042308405
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          6.9899895362889e-06,
+          4.377964848039952e-06,
+          6.159951690308904e-07
+        ],
+        "segments_better_than_fair": 1,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "dirichlet_kappa_100": {
+        "bootstrap_ci95_vs_fair": [
+          -0.005264414486922492,
+          0.002511420645470164
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          -1.0998939873181223e-05,
+          8.917849315460758e-05
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+        "mean_log_score_difference_vs_raw_expanding": 3.924312764525844e-05,
+        "segment_log_score_advantage_vs_fair": [
+          -0.0032369804244320845,
+          -0.0018431004879606418,
+          0.0009182985590942146
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          6.873979624221762e-05,
+          4.3063736661152716e-05,
+          5.9258500324049845e-06
+        ],
+        "segments_better_than_fair": 1,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "dirichlet_kappa_1000": {
+        "bootstrap_ci95_vs_fair": [
+          -0.00456699802518088,
+          0.0024106831461200777
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          -0.00011869316366684876,
+          0.0007797788243895027
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+        "mean_log_score_difference_vs_raw_expanding": 0.00033259133327784475,
+        "segment_log_score_advantage_vs_fair": [
+          -0.002717058420441277,
+          -0.001516900175846318,
+          0.0009522208598868424
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.0005886618002330251,
+          0.00036926404877547634,
+          3.9848150825032736e-05
+        ],
+        "segments_better_than_fair": 1,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "fair_random": {
+        "bootstrap_ci95_vs_fair": [
+          0.0,
+          0.0
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          -0.0025215451918323725,
+          0.00535448430037557
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": 0.0,
+        "mean_log_score_difference_vs_raw_expanding": 0.0014265039120780955,
+        "segment_log_score_advantage_vs_fair": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.003305720220674302,
+          0.0018861642246217943,
+          -0.0009123727090618096
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 2,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "raw_expanding_frequency": {
+        "bootstrap_ci95_vs_fair": [
+          -0.005354484300375572,
+          0.0025215451918323716
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.0,
+          0.0
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+        "mean_log_score_difference_vs_raw_expanding": 0.0,
+        "segment_log_score_advantage_vs_fair": [
+          -0.003305720220674302,
+          -0.0018861642246217943,
+          0.0009123727090618096
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "segments_better_than_fair": 1,
+        "segments_better_than_raw_expanding": 0,
+        "whole_validation_draw_rows_resampled": true
+      }
+    },
+    "lotto_6_42": {
+      "beta_kappa_10": {
+        "bootstrap_ci95_vs_fair": [
+          -0.04369262348565588,
+          -0.006011895490789998
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.00017733695909651,
+          0.0005087417916796906
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.02467566627414937,
+        "mean_log_score_difference_vs_raw_expanding": 0.0003417694947751689,
+        "segment_log_score_advantage_vs_fair": [
+          -0.031215602028928126,
+          -0.013058969562252934,
+          -0.02975242723126705
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.00044881051456638235,
+          0.00023920705489056005,
+          0.00033729091486856433
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "beta_kappa_100": {
+        "bootstrap_ci95_vs_fair": [
+          -0.03957462250534383,
+          -0.004591364595839638
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.0015631113667782626,
+          0.00463420262088883
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.02193333780406394,
+        "mean_log_score_difference_vs_raw_expanding": 0.0030840979648605977,
+        "segment_log_score_advantage_vs_fair": [
+          -0.02763626649930357,
+          -0.011161130511514407,
+          -0.027002616401373844
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.004028146044190936,
+          0.002137046105629086,
+          0.003087101744761771
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "beta_kappa_1000": {
+        "bootstrap_ci95_vs_fair": [
+          -0.020024254970673967,
+          0.0003265359030290533
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.006427045781892308,
+          0.02416930568639732
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.00976679272493764,
+        "mean_log_score_difference_vs_raw_expanding": 0.015250643043986899,
+        "segment_log_score_advantage_vs_fair": [
+          -0.01220900982296861,
+          -0.0034735729479807454,
+          -0.013617795403863564
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.019455402720525896,
+          0.009824603669162747,
+          0.01647192274227205
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "fair_random": {
+        "bootstrap_ci95_vs_fair": [
+          0.0,
+          0.0
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.006185513739841156,
+          0.044212729007720546
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": 0.0,
+        "mean_log_score_difference_vs_raw_expanding": 0.025017435768924536,
+        "segment_log_score_advantage_vs_fair": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.03166441254349451,
+          0.013298176617143493,
+          0.030089718146135612
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 3,
+        "whole_validation_draw_rows_resampled": true
+      },
+      "raw_expanding_frequency": {
+        "bootstrap_ci95_vs_fair": [
+          -0.044212729007720546,
+          -0.006185513739841158
+        ],
+        "bootstrap_ci95_vs_raw_expanding": [
+          0.0,
+          0.0
+        ],
+        "bootstrap_resamples": 10000,
+        "mean_log_score_advantage_vs_fair": -0.025017435768924536,
+        "mean_log_score_difference_vs_raw_expanding": 0.0,
+        "segment_log_score_advantage_vs_fair": [
+          -0.03166441254349451,
+          -0.013298176617143493,
+          -0.030089718146135612
+        ],
+        "segment_log_score_difference_vs_raw_expanding": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "segments_better_than_fair": 0,
+        "segments_better_than_raw_expanding": 0,
+        "whole_validation_draw_rows_resampled": true
+      }
+    }
+  },
+  "calibration": {
+    "3d_lotto": {
+      "dirichlet_kappa_10": {
+        "bins": [
+          {
+            "bin": 2,
+            "bootstrap_ci95_gap": [
+              -0.003199981548250495,
+              0.0037158517931368392
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 7230,
+            "mean_predicted_probability": 0.2709730864380259,
+            "observed_minus_predicted": 0.00025789558133781356,
+            "observed_rate": 0.27123098201936374
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 0.00025789558133781356,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "dirichlet_kappa_100": {
+        "bins": [
+          {
+            "bin": 2,
+            "bootstrap_ci95_gap": [
+              -0.0032007443980016513,
+              0.0037151072916066018
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 7230,
+            "mean_predicted_probability": 0.27097369536447474,
+            "observed_minus_predicted": 0.00025728665488903354,
+            "observed_rate": 0.27123098201936374
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 0.00025728665488903354,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "dirichlet_kappa_1000": {
+        "bins": [
+          {
+            "bin": 2,
+            "bootstrap_ci95_gap": [
+              -0.0032055668743429778,
+              0.0037099430656348546
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 7230,
+            "mean_predicted_probability": 0.27097879011880927,
+            "observed_minus_predicted": 0.0002521919005545018,
+            "observed_rate": 0.27123098201936374
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 0.0002521919005545018,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "fair_random": {
+        "bins": [
+          {
+            "bin": 2,
+            "bootstrap_ci95_gap": [
+              -0.0033651452282157557,
+              0.003688796680497914
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 7230,
+            "mean_predicted_probability": 0.27099999999999996,
+            "observed_minus_predicted": 0.00023098201936385448,
+            "observed_rate": 0.27123098201936374
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 0.00023098201936385448,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "raw_expanding_frequency": {
+        "bins": [
+          {
+            "bin": 2,
+            "bootstrap_ci95_gap": [
+              -0.0033380856187781513,
+              0.00371573506419837
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 7230,
+            "mean_predicted_probability": 0.2709730174682506,
+            "observed_minus_predicted": 0.0002579645511131657,
+            "observed_rate": 0.27123098201936374
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 0.0002579645511131657,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      }
+    },
+    "lotto_6_42": {
+      "beta_kappa_10": {
+        "bins": [
+          {
+            "bin": 1,
+            "bootstrap_ci95_gap": [
+              -1.883414059631962e-18,
+              2.546518992147413e-18
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 12600,
+            "mean_predicted_probability": 0.14285714285714285,
+            "observed_minus_predicted": 3.6126304769548743e-19,
+            "observed_rate": 0.14285714285714285
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 3.6126304769548743e-19,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "beta_kappa_100": {
+        "bins": [
+          {
+            "bin": 1,
+            "bootstrap_ci95_gap": [
+              8.568983265460037e-19,
+              5.035709503707784e-18
+            ],
+            "calibration_screen_ci_contains_zero": false,
+            "count_candidate_draws": 12600,
+            "mean_predicted_probability": 0.14285714285714285,
+            "observed_minus_predicted": 2.9187410865641516e-18,
+            "observed_rate": 0.14285714285714285
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 2.9187410865641516e-18,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": false,
+        "whole_draw_rows_resampled": true
+      },
+      "beta_kappa_1000": {
+        "bins": [
+          {
+            "bin": 1,
+            "bootstrap_ci95_gap": [
+              -2.8196691013805873e-18,
+              1.2116079744433558e-18
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 12600,
+            "mean_predicted_probability": 0.14285714285714285,
+            "observed_minus_predicted": -7.555684473143426e-19,
+            "observed_rate": 0.14285714285714285
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 7.555684473143426e-19,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      },
+      "fair_random": {
+        "bins": [
+          {
+            "bin": 1,
+            "bootstrap_ci95_gap": [
+              2.7156407634085178e-17,
+              2.817851772024802e-17
+            ],
+            "calibration_screen_ci_contains_zero": false,
+            "count_candidate_draws": 12600,
+            "mean_predicted_probability": 0.14285714285714285,
+            "observed_minus_predicted": 2.7663057030243485e-17,
+            "observed_rate": 0.14285714285714285
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 2.7663057030243485e-17,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": false,
+        "whole_draw_rows_resampled": true
+      },
+      "raw_expanding_frequency": {
+        "bins": [
+          {
+            "bin": 1,
+            "bootstrap_ci95_gap": [
+              -3.683230968897804e-18,
+              7.159176250063013e-19
+            ],
+            "calibration_screen_ci_contains_zero": true,
+            "count_candidate_draws": 12600,
+            "mean_predicted_probability": 0.14285714285714285,
+            "observed_minus_predicted": -1.515542541551801e-18,
+            "observed_rate": 0.14285714285714285
+          }
+        ],
+        "bootstrap_resamples": 10000,
+        "ece": 1.515542541551801e-18,
+        "screen": "all nonempty fixed-width probability bins have a 95% whole-draw bootstrap interval for observed-minus-predicted rate that contains zero",
+        "screen_passes": true,
+        "whole_draw_rows_resampled": true
+      }
+    }
+  },
+  "combination_validation": {
+    "3d_lotto": {
+      "catalog_size": 220,
+      "fair_log_score_nats": -5.319893920986909,
+      "models": {
+        "dirichlet_kappa_10": {
+          "marginal_brier": 0.19768435848052132,
+          "maximum_probability_normalization_error": 5.551115123125783e-16,
+          "mean_actual_combination_rank": 88.98340248962656,
+          "mean_combination_nll_nats": 5.321316430249136,
+          "mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+          "mean_log_score_difference_vs_raw": 3.994649851119914e-06,
+          "mean_reciprocal_rank": 0.03614170771556355,
+          "median_actual_combination_rank": 79.0,
+          "top_10_rate": 0.07053941908713693,
+          "top_1_rate": 0.005532503457814661,
+          "top_5_rate": 0.030428769017980636
+        },
+        "dirichlet_kappa_100": {
+          "marginal_brier": 0.19768335645721566,
+          "maximum_probability_normalization_error": 6.661338147750939e-16,
+          "mean_actual_combination_rank": 88.9820193637621,
+          "mean_combination_nll_nats": 5.321281181771342,
+          "mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+          "mean_log_score_difference_vs_raw": 3.924312764525844e-05,
+          "mean_reciprocal_rank": 0.036142352210110695,
+          "median_actual_combination_rank": 79.0,
+          "top_10_rate": 0.07053941908713693,
+          "top_1_rate": 0.005532503457814661,
+          "top_5_rate": 0.030428769017980636
+        },
+        "dirichlet_kappa_1000": {
+          "marginal_brier": 0.19767525830038343,
+          "maximum_probability_normalization_error": 6.661338147750939e-16,
+          "mean_actual_combination_rank": 88.98616874135546,
+          "mean_combination_nll_nats": 5.3209878335657095,
+          "mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+          "mean_log_score_difference_vs_raw": 0.00033259133327784475,
+          "mean_reciprocal_rank": 0.03614171859314361,
+          "median_actual_combination_rank": 80.0,
+          "top_10_rate": 0.07053941908713693,
+          "top_1_rate": 0.005532503457814661,
+          "top_5_rate": 0.030428769017980636
+        },
+        "fair_random": {
+          "marginal_brier": 0.19766478976486862,
+          "maximum_probability_normalization_error": 0.0,
+          "mean_actual_combination_rank": 88.58367911479945,
+          "mean_combination_nll_nats": 5.319893920986909,
+          "mean_log_score_advantage_vs_fair": 0.0,
+          "mean_log_score_difference_vs_raw": 0.0014265039120780955,
+          "mean_reciprocal_rank": 0.038226111427593176,
+          "median_actual_combination_rank": 82.0,
+          "top_10_rate": 0.07053941908713693,
+          "top_1_rate": 0.006915629322268326,
+          "top_5_rate": 0.0318118948824343
+        },
+        "raw_expanding_frequency": {
+          "marginal_brier": 0.19768447238313291,
+          "maximum_probability_normalization_error": 6.661338147750939e-16,
+          "mean_actual_combination_rank": 88.98616874135546,
+          "mean_combination_nll_nats": 5.321320424898987,
+          "mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+          "mean_log_score_difference_vs_raw": 0.0,
+          "mean_reciprocal_rank": 0.03614112812093786,
+          "median_actual_combination_rank": 79.0,
+          "top_10_rate": 0.07053941908713693,
+          "top_1_rate": 0.005532503457814661,
+          "top_5_rate": 0.030428769017980636
+        }
+      }
+    },
+    "lotto_6_42": {
+      "fair_log_score_nats": -15.472935645591768,
+      "models": {
+        "beta_kappa_10": {
+          "hits_at_6_fair_expectation": 0.8571428571428571,
+          "marginal_brier": 0.12259441641898255,
+          "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+          "mean_combination_nll_nats": 15.497611311865915,
+          "mean_hits_at_6": 0.9,
+          "mean_log_score_advantage_vs_fair": -0.02467566627414937,
+          "mean_log_score_difference_vs_raw": 0.0003417694947751689
+        },
+        "beta_kappa_100": {
+          "hits_at_6_fair_expectation": 0.8571428571428571,
+          "marginal_brier": 0.12257827775800857,
+          "maximum_inclusion_sum_error": 3.552713678800501e-15,
+          "mean_combination_nll_nats": 15.494868983395833,
+          "mean_hits_at_6": 0.9,
+          "mean_log_score_advantage_vs_fair": -0.02193333780406394,
+          "mean_log_score_difference_vs_raw": 0.0030840979648605977
+        },
+        "beta_kappa_1000": {
+          "hits_at_6_fair_expectation": 0.8571428571428571,
+          "marginal_brier": 0.12250666321892256,
+          "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+          "mean_combination_nll_nats": 15.4827024383167,
+          "mean_hits_at_6": 0.9,
+          "mean_log_score_advantage_vs_fair": -0.00976679272493764,
+          "mean_log_score_difference_vs_raw": 0.015250643043986899
+        },
+        "fair_random": {
+          "hits_at_6_fair_expectation": 0.8571428571428571,
+          "marginal_brier": 0.12244897959183676,
+          "maximum_inclusion_sum_error": 0.0,
+          "mean_combination_nll_nats": 15.472935645591766,
+          "mean_hits_at_6": 0.84,
+          "mean_log_score_advantage_vs_fair": 0.0,
+          "mean_log_score_difference_vs_raw": 0.025017435768924536
+        },
+        "raw_expanding_frequency": {
+          "hits_at_6_fair_expectation": 0.8571428571428571,
+          "marginal_brier": 0.12259642764550509,
+          "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+          "mean_combination_nll_nats": 15.497953081360693,
+          "mean_hits_at_6": 0.9,
+          "mean_log_score_advantage_vs_fair": -0.025017435768924536,
+          "mean_log_score_difference_vs_raw": 0.0
+        }
+      },
+      "valid_set_count": 5245786
+    }
+  },
+  "data_boundaries": {
+    "3d_lotto": {
+      "test": {
+        "end_date": "2026-10-07",
+        "row_count": 724,
+        "start_date": "2024-10-08"
+      },
+      "train": {
+        "end_date": "2022-10-03",
+        "row_count": 2170,
+        "start_date": "2016-04-16"
+      },
+      "validation": {
+        "end_date": "2024-10-07",
+        "row_count": 723,
+        "start_date": "2022-10-04"
+      }
+    },
+    "lotto_6_42": {
+      "test": {
+        "end_date": "2026-10-06",
+        "row_count": 302,
+        "start_date": "2024-10-24"
+      },
+      "train": {
+        "end_date": "2022-11-12",
+        "row_count": 902,
+        "start_date": "2016-08-30"
+      },
+      "validation": {
+        "end_date": "2024-10-22",
+        "row_count": 300,
+        "start_date": "2022-11-15"
+      }
+    }
+  },
+  "data_read_audit": {
+    "3d_lotto": {
+      "dev_rows_parsed": 2893,
+      "feature_target_keys_aligned": true,
+      "locked_test_rows_parsed": 0,
+      "read_method": "CSV prefix parser stops after the Phase 4 train plus validation row count",
+      "target_structure_validated_in_dev_prefix": true,
+      "train_rows_parsed": 2170,
+      "validation_rows_parsed": 723
+    },
+    "lotto_6_42": {
+      "dev_rows_parsed": 1202,
+      "feature_target_keys_aligned": true,
+      "locked_test_rows_parsed": 0,
+      "read_method": "CSV prefix parser stops after the Phase 4 train plus validation row count",
+      "target_structure_validated_in_dev_prefix": true,
+      "train_rows_parsed": 902,
+      "validation_rows_parsed": 300
+    }
+  },
+  "decision_evidence": {
+    "bh_adjusted_information_detected": true,
+    "chronological_direction_stability_detected": false,
+    "conditional_monte_carlo_p_gate_detected": false,
+    "decision_gate": "BH q < 0.05 plus paired 95% bootstrap intervals above zero versus fair and raw expansion, positive direction in all three validation thirds, conditional fair-null Monte Carlo p <= 0.05, and no detected marginal miscalibration under the whole-draw bootstrap screen",
+    "marginal_calibration_screen_passed_by_any_candidate": true,
+    "proper_score_bootstrap_improvement_vs_fair_and_raw_detected": false,
+    "qualifying_models": []
+  },
+  "fair_random_monte_carlo": {
+    "3d_lotto": {
+      "confirmation_simulations": 100000,
+      "escalated_models": [],
+      "initial_simulations_per_model": 10000,
+      "interpretation": "conditional fair-null comparison: model forecasts are frozen to the observed leakage-safe validation history; simulated complete fair validation outcomes are scored against those forecasts",
+      "models": {
+        "dirichlet_kappa_10": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.48555144485551444,
+          "fair_null_simulation_interval95": [
+            -0.0054947567537427635,
+            0.002507234234561842
+          ],
+          "fair_null_simulation_mean": -0.0014906171031529912,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.48555144485551444,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+          "simulations": 10000
+        },
+        "dirichlet_kappa_100": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.48485151484851513,
+          "fair_null_simulation_interval95": [
+            -0.005413822735521136,
+            0.0024952114517478143
+          ],
+          "fair_null_simulation_mean": -0.0014568880299274424,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.48485151484851513,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+          "simulations": 10000
+        },
+        "dirichlet_kappa_1000": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.48135186481351866,
+          "fair_null_simulation_interval95": [
+            -0.0047338361232038065,
+            0.002374723769847011
+          ],
+          "fair_null_simulation_mean": -0.0011746941246918489,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.48135186481351866,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+          "simulations": 10000
+        },
+        "raw_expanding_frequency": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.48555144485551444,
+          "fair_null_simulation_interval95": [
+            -0.005503892328013805,
+            0.002509117442716778
+          ],
+          "fair_null_simulation_mean": -0.001494437431014045,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.48555144485551444,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+          "simulations": 10000
+        }
+      }
+    },
+    "lotto_6_42": {
+      "confirmation_simulations": 100000,
+      "escalated_models": [],
+      "initial_simulations_per_model": 10000,
+      "interpretation": "conditional fair-null comparison: model forecasts are frozen to the observed leakage-safe validation history; simulated complete fair validation outcomes are scored against those forecasts",
+      "models": {
+        "beta_kappa_10": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.8669133086691331,
+          "fair_null_simulation_interval95": [
+            -0.03244347703502363,
+            0.004458746323966402
+          ],
+          "fair_null_simulation_mean": -0.014022244086358467,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.8669133086691331,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.02467566627414937,
+          "simulations": 10000
+        },
+        "beta_kappa_100": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.8658134186581342,
+          "fair_null_simulation_interval95": [
+            -0.02912807826157835,
+            0.005044220616154782
+          ],
+          "fair_null_simulation_mean": -0.012078486302172686,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.8658134186581342,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.02193333780406394,
+          "simulations": 10000
+        },
+        "beta_kappa_1000": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.8620137986201379,
+          "fair_null_simulation_interval95": [
+            -0.014056695648819196,
+            0.005773293893946826
+          ],
+          "fair_null_simulation_mean": -0.004123606953908216,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.8620137986201379,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.00976679272493764,
+          "simulations": 10000
+        },
+        "raw_expanding_frequency": {
+          "complete_fair_random_validation_histories": true,
+          "confirmation_escalated": false,
+          "empirical_p_add_one": 0.867013298670133,
+          "fair_null_simulation_interval95": [
+            -0.03284434696290245,
+            0.004370719253262787
+          ],
+          "fair_null_simulation_mean": -0.014267141517796563,
+          "forecast_path_fixed_to_observed_history": true,
+          "initial_empirical_p_add_one": 0.867013298670133,
+          "initial_simulations": 10000,
+          "observed_mean_log_score_advantage_vs_fair": -0.025017435768924536,
+          "simulations": 10000
+        }
+      }
+    }
+  },
+  "fair_random_verification": {
+    "3d": {
+      "all_distinct_probability_each": 0.006,
+      "fair_model_computed_from_multinomial_coefficients": true,
+      "fair_probability_sum": 1.0,
+      "multiset_count": 220,
+      "one_pair_probability_each": 0.003,
+      "ordered_outcomes": 1000,
+      "triple_probability_each": 0.001
+    },
+    "642": {
+      "exact_normalizer_method": "sixth elementary symmetric polynomial computed by descending-order dynamic programming",
+      "fair_normalizer": 5245786.0,
+      "fair_probability_each": 1.9062920218247562e-07,
+      "synthetic_dp_normalizer": 27.06875,
+      "synthetic_enumerated_normalizer": 27.06875,
+      "valid_set_count": 5245786,
+      "weighted_model_support": "all six-element subsets of 42 positive-weight candidates; all support outcomes contain six distinct numbers"
+    }
+  },
+  "final_git_state": {
+    "final_porcelain_paths": [
+      "__pycache__/monte_carlo_baseline.cpython-312.pyc",
+      "data/features/3d_features.csv",
+      "data/features/3d_targets.csv",
+      "data/features/642_features.csv",
+      "data/features/642_targets.csv",
+      "data/features/chronological_splits.json",
+      "data/features/feature_dictionary.json",
+      "models/phase5a_model_config.json",
+      "monte_carlo_baseline.py",
+      "notebooks/lotto_phase4_feature_engineering.ipynb",
+      "notebooks/lotto_phase5a_ml_validation.ipynb",
+      "notebooks/lotto_phase5r_predictive_information.ipynb",
+      "notebooks/lotto_statistical_analysis.ipynb",
+      "phase3_monte_carlo_random_baseline.md",
+      "phase3_monte_carlo_results.json",
+      "phase3_simulation_distributions.csv",
+      "reports/phase4_feature_engineering.md",
+      "reports/phase4_validation.json",
+      "reports/phase5a_metrics.json",
+      "reports/phase5a_ml_validation.md",
+      "reports/phase5a_random_baseline_distributions.csv",
+      "reports/phase5a_validation.json",
+      "reports/phase5a_validation_predictions/3d_validation_predictions.csv",
+      "reports/phase5a_validation_predictions/642_validation_predictions.csv",
+      "reports/phase5r_bayesian_shrinkage.csv",
+      "reports/phase5r_combination_probability_metrics.csv",
+      "reports/phase5r_evidence.json",
+      "reports/phase5r_information_permutations.csv",
+      "reports/phase5r_information_tests.csv",
+      "reports/phase5r_predictive_information.md",
+      "reports/phase5r_stationarity.csv",
+      "reports/phase5r_temporal_dependence.csv",
+      "scripts/phase4_feature_engineering.py",
+      "scripts/phase5a_ml_validation.py",
+      "scripts/phase5r_predictive_information.py"
+    ],
+    "index_clean": true,
+    "new_phase5r_paths": [
+      "notebooks/lotto_phase5r_predictive_information.ipynb",
+      "reports/phase5r_bayesian_shrinkage.csv",
+      "reports/phase5r_combination_probability_metrics.csv",
+      "reports/phase5r_evidence.json",
+      "reports/phase5r_information_permutations.csv",
+      "reports/phase5r_information_tests.csv",
+      "reports/phase5r_predictive_information.md",
+      "reports/phase5r_stationarity.csv",
+      "reports/phase5r_temporal_dependence.csv",
+      "scripts/phase5r_predictive_information.py"
+    ],
+    "preexisting_untracked_preserved": true,
+    "stage_commit_push_merge_performed": false,
+    "tracked_worktree_clean": true
+  },
+  "git_actions": {
+    "commit": false,
+    "merge": false,
+    "push": false,
+    "stage": false
+  },
+  "information_method": {
+    "burn_in_draws_within_train_partition": 100,
+    "diagnostic_families": [
+      "previous_10_frequency",
+      "previous_30_frequency",
+      "previous_100_frequency",
+      "expanding_historical_frequency",
+      "gap_since_seen",
+      "previous_draw_appearance",
+      "previous_100_frequency_deviation",
+      "approved_draw_context"
+    ],
+    "feature_binning": "candidate-specific training quantile cutpoints at 20, 40, 60, and 80 percent; context family statistic is the maximum over predeclared context variables and is re-maximized for every permutation",
+    "interpretation": "in-sample training diagnostics under a random-order null; validation is reserved for chronological development scoring",
+    "multiple_testing": "Benjamini-Hochberg across every predefined family and response measure within each game",
+    "permutation_unit": "complete target draw rows, preserving each 3D multiset or 6/42 set; recompute the previous-only feature history after every permutation",
+    "permutations": 10000,
+    "statistic": "mean candidate-level discrete mutual information in nats between prior-only feature bins and next-draw membership or 3D multiplicity count",
+    "training_only": true
+  },
+  "information_tests": [
+    {
+      "bh_q_within_game": 0.5433056694330567,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_10_frequency",
+      "empirical_p_add_one": 0.07269273072692731,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.00291686780759302,
+      "null_mean": 0.0024008634637060714,
+      "observed_mutual_information_nats_per_candidate": 0.002860605645869595,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.35036496350364965,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_10_frequency",
+      "empirical_p_add_one": 0.021897810218978103,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0012056398450604928,
+      "null_mean": 0.0008481094737875566,
+      "observed_mutual_information_nats_per_candidate": 0.0012943391442384537,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.8209179082091791,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_30_frequency",
+      "empirical_p_add_one": 0.8209179082091791,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0033061641223618133,
+      "null_mean": 0.0027334540418265866,
+      "observed_mutual_information_nats_per_candidate": 0.0024307848660735983,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.8119721361197213,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_30_frequency",
+      "empirical_p_add_one": 0.7606239376062394,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0013573548211070236,
+      "null_mean": 0.0009727291699459289,
+      "observed_mutual_information_nats_per_candidate": 0.0008155889723445095,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6061616060616161,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency",
+      "empirical_p_add_one": 0.34096590340965904,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.003319462359157669,
+      "null_mean": 0.002751682151705038,
+      "observed_mutual_information_nats_per_candidate": 0.0028696462579704666,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.5433056694330567,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency",
+      "empirical_p_add_one": 0.13938606139386062,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0013639944177895255,
+      "null_mean": 0.0009814013488630095,
+      "observed_mutual_information_nats_per_candidate": 0.001219660157836541,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6061616060616161,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "expanding_historical_frequency",
+      "empirical_p_add_one": 0.23727627237276272,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.003217335530181778,
+      "null_mean": 0.0025625785651055663,
+      "observed_mutual_information_nats_per_candidate": 0.0028340268508929905,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.7776453123918378,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "expanding_historical_frequency",
+      "empirical_p_add_one": 0.6056394360563944,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0015785044695836472,
+      "null_mean": 0.0011429827927667952,
+      "observed_mutual_information_nats_per_candidate": 0.0010611362945736169,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.8119721361197213,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "gap_since_seen",
+      "empirical_p_add_one": 0.7612238776122388,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.00262060171551565,
+      "null_mean": 0.0021029086769377594,
+      "observed_mutual_information_nats_per_candidate": 0.0018885441353873136,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6499713664997137,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "gap_since_seen",
+      "empirical_p_add_one": 0.44685531446855314,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0010731974081950786,
+      "null_mean": 0.0007300426442134588,
+      "observed_mutual_information_nats_per_candidate": 0.0007387461681963014,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.7776453123918378,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_draw_appearance",
+      "empirical_p_add_one": 0.6318368163183682,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.001027418703044831,
+      "null_mean": 0.000716517418042536,
+      "observed_mutual_information_nats_per_candidate": 0.000645050540679161,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6061616060616161,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_draw_appearance",
+      "empirical_p_add_one": 0.29747025297470253,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.00044523147251399937,
+      "null_mean": 0.00024114523952844608,
+      "observed_mutual_information_nats_per_candidate": 0.0002833258891113837,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6061616060616161,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency_deviation",
+      "empirical_p_add_one": 0.34096590340965904,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.003319462359157669,
+      "null_mean": 0.002751682151705038,
+      "observed_mutual_information_nats_per_candidate": 0.0028696462579704666,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.5433056694330567,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency_deviation",
+      "empirical_p_add_one": 0.13938606139386062,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0013639944177895255,
+      "null_mean": 0.0009814013488630095,
+      "observed_mutual_information_nats_per_candidate": 0.001219660157836541,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.6499713664997137,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "approved_draw_context",
+      "empirical_p_add_one": 0.43005699430056993,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0034470727459691196,
+      "null_mean": 0.0029304198180332493,
+      "observed_mutual_information_nats_per_candidate": 0.0029610112994688923,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "multiplicity_count",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.5433056694330567,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "approved_draw_context",
+      "empirical_p_add_one": 0.16978302169783022,
+      "game": "3d_lotto",
+      "null_95_percentile": 0.0014591578936841456,
+      "null_mean": 0.0010944265357471109,
+      "observed_mutual_information_nats_per_candidate": 0.0012828147819575043,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.7345932073459321,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_10_frequency",
+      "empirical_p_add_one": 0.5509449055094491,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.001708133100087562,
+      "null_mean": 0.001363768798177676,
+      "observed_mutual_information_nats_per_candidate": 0.0013276139171874341,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.0603939606039396,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_30_frequency",
+      "empirical_p_add_one": 0.0150984901509849,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.002905972800526249,
+      "null_mean": 0.0024433024642670077,
+      "observed_mutual_information_nats_per_candidate": 0.0030692974538926014,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.09619038096190381,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency",
+      "empirical_p_add_one": 0.048095190480951906,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.003058899977552236,
+      "null_mean": 0.002586204485180759,
+      "observed_mutual_information_nats_per_candidate": 0.003066089138642975,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.029597040295970403,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "expanding_historical_frequency",
+      "empirical_p_add_one": 0.0036996300369963003,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.0033307001115740554,
+      "null_mean": 0.002822962294279117,
+      "observed_mutual_information_nats_per_candidate": 0.0036796053644954176,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.7345932073459321,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "gap_since_seen",
+      "empirical_p_add_one": 0.503949605039496,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.002983455818049968,
+      "null_mean": 0.0025213383730866637,
+      "observed_mutual_information_nats_per_candidate": 0.0025101365143359315,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 1.0,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_draw_appearance",
+      "empirical_p_add_one": 1.0,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.0,
+      "null_mean": 0.0,
+      "observed_mutual_information_nats_per_candidate": 0.0,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.09619038096190381,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "previous_100_frequency_deviation",
+      "empirical_p_add_one": 0.048095190480951906,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.003058899977552236,
+      "null_mean": 0.002586204485180759,
+      "observed_mutual_information_nats_per_candidate": 0.003066089138642975,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    },
+    {
+      "bh_q_within_game": 0.7684945791135173,
+      "complete_draw_rows_permuted": true,
+      "diagnostic_family": "approved_draw_context",
+      "empirical_p_add_one": 0.6724327567243276,
+      "game": "lotto_6_42",
+      "null_95_percentile": 0.0030869382538219184,
+      "null_mean": 0.0026753396714247644,
+      "observed_mutual_information_nats_per_candidate": 0.0025591627219683005,
+      "permutation_features_recomputed_from_prior_rows": true,
+      "permutations": 10000,
+      "target_measure": "membership",
+      "train_only": true
+    }
+  ],
+  "limitations": [
+    "Phase 5A already examined the validation partitions; Phase 5R validation is development evidence, not pristine confirmation.",
+    "The Monte Carlo fair-null test holds the observed leakage-safe forecast path fixed and simulates complete fair validation outcomes conditionally.",
+    "The information tests are finite-sample candidate-level diagnostics on the training sequence and do not imply full-combination utility.",
+    "Stationarity and change-point tests can detect statistical variation but cannot identify a machine, ball, environmental, or physical cause.",
+    "Physical dynamics require machine state, ball properties, airflow, timing, temperature, humidity, or video trajectory data.",
+    "Quantum methods are not predictors supported by the available variables; player-choice and payout-sharing data are absent for game-theoretic expected-payout analysis.",
+    "No probability calibration acceptance threshold was specified in the request; the reported 95% bootstrap screen is used descriptively and as a conservative promotion gate."
+  ],
+  "notebook_execution": {
+    "code_cell_count": 20,
+    "executed_top_to_bottom_in_clean_kernel": true,
+    "execution_errors": 0,
+    "kernel_name": "python3",
+    "nbformat_validation": "PASS"
+  },
+  "output_sha256": {
+    "notebooks/lotto_phase5r_predictive_information.ipynb": "4df5ac1c86af4f92d8d9163c9d0c58455588d1217ca69ed214aa1209611b2723",
+    "reports/phase5r_bayesian_shrinkage.csv": "0aff3c3831e01073b616a2b4d6e8166a51822b6cd976e4dd17781a25e61c1f11",
+    "reports/phase5r_combination_probability_metrics.csv": "7f97ef48cfe53dcd6fad98ecce53b8886a85f9e8190576235d7d4c2d64bfd1f9",
+    "reports/phase5r_information_permutations.csv": "6ebf7e7949eadad2964bac7d0ea0f94c0dc0d4eac3f56f751e5bca20df314d70",
+    "reports/phase5r_information_tests.csv": "8a683e37e2c53250f363dfe75e3faa6a65cecd550554e0fd5d06a82ecf87ae5d",
+    "reports/phase5r_predictive_information.md": "6ee7ec4c6cb83b0b9d62a8f749516d244c782eacb0ac71d03e4334785a1db1b5",
+    "reports/phase5r_stationarity.csv": "625bb306c1c9e9ee2c329764f65285babedf5d3c66d2ab0cb7e1a0592b213198",
+    "reports/phase5r_temporal_dependence.csv": "f0ea342c3d6d865a717306f44a43a41f697a3727dacf0991051d5236a495486c",
+    "scripts/phase5r_predictive_information.py": "702e1a6d3d8366e7d03fd77ff1d1985007098c69abe287f9d5a077594fed24e8"
+  },
+  "phase": "PHASE_5R",
+  "preflight": {
+    "branch": "main",
+    "configured_remotes": [],
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+    "index_clean": true,
+    "keys_env_contents_read": false,
+    "keys_env_ignored": true,
+    "keys_env_tracked": false,
+    "locked_test_metadata_only": {
+      "3d_lotto": {
+        "end_date": "2026-10-07",
+        "row_count": 724,
+        "start_date": "2024-10-08"
+      },
+      "lotto_6_42": {
+        "end_date": "2026-10-06",
+        "row_count": 302,
+        "start_date": "2024-10-24"
+      }
+    },
+    "phase3_verdict": "PHASE3_PASS_RANDOM_COMPATIBLE",
+    "phase4_split_boundaries_unchanged": true,
+    "phase4_verdict": "PHASE4_PASS_READY_FOR_ML_BASELINE",
+    "phase5a_artifact_hashes_match": true,
+    "phase5a_test_contamination_audit_passed": true,
+    "phase5a_verdict": "PHASE5A_INCONCLUSIVE",
+    "pre_modification_status": [
+      "__pycache__/monte_carlo_baseline.cpython-312.pyc",
+      "data/features/3d_features.csv",
+      "data/features/3d_targets.csv",
+      "data/features/642_features.csv",
+      "data/features/642_targets.csv",
+      "data/features/chronological_splits.json",
+      "data/features/feature_dictionary.json",
+      "models/phase5a_model_config.json",
+      "monte_carlo_baseline.py",
+      "notebooks/lotto_phase4_feature_engineering.ipynb",
+      "notebooks/lotto_phase5a_ml_validation.ipynb",
+      "notebooks/lotto_phase5r_predictive_information.ipynb",
+      "notebooks/lotto_statistical_analysis.ipynb",
+      "phase3_monte_carlo_random_baseline.md",
+      "phase3_monte_carlo_results.json",
+      "phase3_simulation_distributions.csv",
+      "reports/phase4_feature_engineering.md",
+      "reports/phase4_validation.json",
+      "reports/phase5a_metrics.json",
+      "reports/phase5a_ml_validation.md",
+      "reports/phase5a_random_baseline_distributions.csv",
+      "reports/phase5a_validation.json",
+      "reports/phase5a_validation_predictions/3d_validation_predictions.csv",
+      "reports/phase5a_validation_predictions/642_validation_predictions.csv",
+      "reports/phase5r_bayesian_shrinkage.csv",
+      "reports/phase5r_combination_probability_metrics.csv",
+      "reports/phase5r_evidence.json",
+      "reports/phase5r_information_permutations.csv",
+      "reports/phase5r_information_tests.csv",
+      "reports/phase5r_predictive_information.md",
+      "reports/phase5r_stationarity.csv",
+      "reports/phase5r_temporal_dependence.csv",
+      "scripts/phase4_feature_engineering.py",
+      "scripts/phase5a_ml_validation.py",
+      "scripts/phase5r_predictive_information.py"
+    ],
+    "preexisting_untracked_matches_phase5a_scope": true,
+    "repository": "D:\\Dev\\Repositories\\magic_Lotto",
+    "tracked_worktree_clean": true
+  },
+  "prior_phase_integrity": {
+    "all_prior_phase_artifacts_unchanged": true,
+    "artifact_count": 35,
+    "prior_artifact_hashes": {
+      "6-42.csv": "9d8bf396373cd20ac197f423ed245407fa701bbd28895b2bb55e1dca92e3e8a8",
+      "data/features/3d_features.csv": "09ad8a7d2360eb59ad35e5fb836854f372a6291ca3d86181c9119d1f6ba74dce",
+      "data/features/3d_targets.csv": "86de523ebdc7e80af2b7764be36be6ec26f8d95af7b686d7e7a861c6b1a56645",
+      "data/features/642_features.csv": "409a524abc0fcebebf8fbbc65362ab95ba04e346d11d3c69653026dda7a57d75",
+      "data/features/642_targets.csv": "4c0bda750e3b758808bb65a9e236c20e2cbedbf768faa3fb38b98c87e8b84d40",
+      "data/features/chronological_splits.json": "7265ad3acf5a039ea7568f07db51877be0115cba5fd40492aa477bfe83f1eb41",
+      "data/features/feature_dictionary.json": "2c7faab68cb76fb12166a3fb40edfc3e7e1ffbecc322a2c603a78b054ef94a71",
+      "lotto_6_42_cleaned_normalized.csv": "980386a399077564d25de3a3a19aa3611969899895b9e3c06d7e9406599053a0",
+      "lotto_6_42_number_frequency.csv": "1284586aaccc86f43da2e9676f425842dbf171dde36d8d8da2b4027789252456",
+      "lotto_6_42_phase2_analysis.csv": "a7ff6ac667ab9a4dd83c821ca6a7ad94b2866ab15299f5f0ad7e47818ac32958",
+      "lotto_data_cleaning_report.md": "5f3f0c99e9610781c64c2f5a1b8a2e057534a3202c781287ad00b37f38218850",
+      "models/phase5a_model_config.json": "5467ed08377e0ab727d8166f27e069cfc3ae9287f56cf10bc118703a077f142e",
+      "monte_carlo_baseline.py": "31cd14b519af3457f2de5f55e836a1899d8751a8bb492faeb663b5ba10f7fe19",
+      "notebooks/lotto_phase4_feature_engineering.ipynb": "ff9b3e27306001b8d1347db6ded21bc439ed3d0ed705df36b01ad38063eff7ce",
+      "notebooks/lotto_phase5a_ml_validation.ipynb": "6b92f0467f5e03a26495ae9d4a8e5cc370c8bfa1db44fc47a376938d69086c72",
+      "notebooks/lotto_statistical_analysis.ipynb": "24d7e03e75d8c41a97ade1c826aae3a83e5b487de263d37b3165eac7b02dc1ae",
+      "phase2_randomness_diagnostics.md": "c6318f74cc5685108f4bb278d6293b84771e0c29af7250888a789aec365cbce7",
+      "phase3_monte_carlo_random_baseline.md": "f4105e6a40277c40e5374c9120e853050931b25b1dbb62a0b70fefee2c603f73",
+      "phase3_monte_carlo_results.json": "79d131a68f913e43f3f8eabfac3f7ab557017216c623b893f283b72d8bbaa3b3",
+      "phase3_simulation_distributions.csv": "c8dc4d390ae941bef8429f9d9c9564897b98f61e80eeb5738614e35ce161f43a",
+      "reports/phase4_feature_engineering.md": "56b89d41a5acc5dd126921176e00cf6cc20b15b90a88cba192b1861943fe04fe",
+      "reports/phase4_validation.json": "9c3e5b8406a883957a800d6a55b34ca0f3954a845934c8d9d99b0fe1502861f9",
+      "reports/phase5a_metrics.json": "de16b54d7e43404e34046f8d335febe36ce02d6ed00e6b761e2c6aa8a0183f75",
+      "reports/phase5a_ml_validation.md": "d0a56a691b3b6226069e4631688b95c31939423b271a194d2a22e7e354b5c0a4",
+      "reports/phase5a_random_baseline_distributions.csv": "27ed1bfce5bb067405c2cbd94698c551debb61ffa0eee3cb39a678391020802b",
+      "reports/phase5a_validation.json": "7d55198e47db4fe3b18cf82a315f06239d4cd033c093ade62f26418cbf026fc9",
+      "reports/phase5a_validation_predictions/3d_validation_predictions.csv": "19fd7a7556087b784c9b0f4c3431b4e981249268f913c905f2751d640e03eb21",
+      "reports/phase5a_validation_predictions/642_validation_predictions.csv": "442bf9fa0f0cff54ce6a74937f7a62c0fff3b3fb73d8409b1ac8f315c5382317",
+      "scripts/phase4_feature_engineering.py": "ae28c63a60866b54e5b18523da17271fd8de60d699e2795cdaa7c57457258596",
+      "scripts/phase5a_ml_validation.py": "2c713a63ecc4d089e4b3712ebcf51792a0dd9330a5ed0e86d6c491d311f97fb7",
+      "swertres9pm.md": "b8c1e1f762c8b3059956d96b344804498bc20bc9f174a358fc616ae115ecb1a3",
+      "swertres_9pm_analysis_ready.csv": "bed32547054a819e108f18d53af73db1f74db693202db066c64572846860959b",
+      "swertres_9pm_cleaned_normalized.csv": "3118bc4972bbff55db6029342701c870ca3e4735e26ddcdf6bbe86ee018836cc",
+      "swertres_9pm_digit_frequency.csv": "4ad90a87cbaaca99a08001904b7bbef18e1561ed4b9c5a138f0253729b359681",
+      "swertres_9pm_phase2_analysis.csv": "3b207b356349c0bf4e1677979c1077bea434071508e3f835e4fc75e9997d7d72"
+    }
+  },
+  "random_seed": 162,
+  "repository": {
+    "branch": "main",
+    "configured_remotes": [],
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+    "path": "D:\\Dev\\Repositories\\magic_Lotto"
+  },
+  "research_question": "Given only information available before draw t, does the historical record contain enough information to assign a next-draw combination probability distribution that performs better than the appropriate fair-random baseline on chronological validation data?",
+  "safest_next_action": "Stop model expansion and keep the locked test untouched. The current evidence does not justify freezing a Phase 5R candidate for the one-time test evaluation; use any future confirmation only in a separately authorized phase after an explicit model freeze.",
+  "schema_version": 1,
+  "security": {
+    "jev_invoked": false,
+    "keys_env_contents_read": false,
+    "keys_env_ignored": true,
+    "keys_env_tracked": false,
+    "locked_test_targets_parsed": false,
+    "typesafe_invoked": false
+  },
+  "self_checks": {
+    "3d_fair_probability_sum": 1.0,
+    "3d_synthetic_conditional_probability_sum": 1.0,
+    "3d_unordered_multisets": 220,
+    "642_fair_dp_normalizer": 5245786.0,
+    "642_fair_expected_normalizer": 5245786,
+    "642_synthetic_dp_normalizer": 27.06875,
+    "642_synthetic_enumerated_normalizer": 27.06875,
+    "642_synthetic_subset_probability_sum": 1.0,
+    "future_target_perturbation_audit": "PASS for both games; features at target index 110 unchanged when that and later outcomes change",
+    "passed": true
+  },
+  "shrinkage": {
+    "3d_lotto": {
+      "dirichlet_kappa_10": {
+        "candidate_draw_estimates": 7230,
+        "maximum_absolute_difference_from_raw_frequency": 8.27859740255843e-06,
+        "mean_absolute_difference_from_raw_frequency": 3.493008053911096e-06,
+        "mean_posterior_probability_across_candidate_draws": 0.1,
+        "prior_center": 0.1,
+        "prior_strength": 10
+      },
+      "dirichlet_kappa_100": {
+        "candidate_draw_estimates": 7230,
+        "maximum_absolute_difference_from_raw_frequency": 8.174259947552054e-05,
+        "mean_absolute_difference_from_raw_frequency": 3.453062211465053e-05,
+        "mean_posterior_probability_across_candidate_draws": 0.1,
+        "prior_center": 0.1,
+        "prior_strength": 100
+      },
+      "dirichlet_kappa_1000": {
+        "candidate_draw_estimates": 7230,
+        "maximum_absolute_difference_from_raw_frequency": 0.0007259344644381382,
+        "mean_absolute_difference_from_raw_frequency": 0.00030989292896307935,
+        "mean_posterior_probability_across_candidate_draws": 0.1,
+        "prior_center": 0.1,
+        "prior_strength": 1000
+      },
+      "raw_expanding_frequency": {
+        "candidate_draw_estimates": 7230,
+        "maximum_absolute_difference_from_raw_frequency": 0.0,
+        "mean_absolute_difference_from_raw_frequency": 0.0,
+        "mean_posterior_probability_across_candidate_draws": 0.1,
+        "prior_center": 0.1,
+        "prior_strength": null
+      }
+    },
+    "lotto_6_42": {
+      "beta_kappa_10": {
+        "candidate_draw_estimates": 12600,
+        "maximum_absolute_difference_from_raw_frequency": 0.00022355722284564394,
+        "mean_absolute_difference_from_raw_frequency": 6.337515595824519e-05,
+        "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+        "prior_center": 0.14285714285714285,
+        "prior_strength": 10
+      },
+      "beta_kappa_100": {
+        "candidate_draw_estimates": 12600,
+        "maximum_absolute_difference_from_raw_frequency": 0.0020531592633057927,
+        "mean_absolute_difference_from_raw_frequency": 0.0005876156112384163,
+        "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+        "prior_center": 0.14285714285714285,
+        "prior_strength": 100
+      },
+      "beta_kappa_1000": {
+        "candidate_draw_estimates": 12600,
+        "maximum_absolute_difference_from_raw_frequency": 0.011306214016107291,
+        "mean_absolute_difference_from_raw_frequency": 0.003404051040624896,
+        "mean_posterior_probability_across_candidate_draws": 0.14285714285714288,
+        "prior_center": 0.14285714285714285,
+        "prior_strength": 1000
+      },
+      "raw_expanding_frequency": {
+        "candidate_draw_estimates": 12600,
+        "maximum_absolute_difference_from_raw_frequency": 0.0,
+        "mean_absolute_difference_from_raw_frequency": 0.0,
+        "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+        "prior_center": 0.14285714285714285,
+        "prior_strength": null
+      }
+    }
+  },
+  "significant_information_diagnostics_bh_q_lt_0_05": 1,
+  "stationarity": {
+    "3d_lotto": {
+      "change_point_permutations": 10000,
+      "change_points": [
+        {
+          "bh_q_within_change_family": 0.9419058094190581,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2021-08-28",
+          "cut_index_in_development_prefix": 1775,
+          "game": "3d_lotto",
+          "maximum_standardized_mean_shift": 1.485771879856153,
+          "metric": "draw_sum",
+          "minimum_segment_draws": 200,
+          "p_value": 0.7883211678832117,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        },
+        {
+          "bh_q_within_change_family": 0.9419058094190581,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2024-01-09",
+          "cut_index_in_development_prefix": 2625,
+          "game": "3d_lotto",
+          "maximum_standardized_mean_shift": 1.8307950810970637,
+          "metric": "all_distinct_indicator",
+          "minimum_segment_draws": 200,
+          "p_value": 0.5375462453754625,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        },
+        {
+          "bh_q_within_change_family": 0.9419058094190581,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2017-01-17",
+          "cut_index_in_development_prefix": 275,
+          "game": "3d_lotto",
+          "maximum_standardized_mean_shift": 1.4486840496945645,
+          "metric": "triple_indicator",
+          "minimum_segment_draws": 200,
+          "p_value": 0.8288171182881712,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        },
+        {
+          "bh_q_within_change_family": 0.9419058094190581,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2022-03-18",
+          "cut_index_in_development_prefix": 1975,
+          "game": "3d_lotto",
+          "maximum_standardized_mean_shift": 1.2054252715552134,
+          "metric": "previous_draw_overlap",
+          "minimum_segment_draws": 200,
+          "p_value": 0.9419058094190581,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        }
+      ],
+      "chronological_windows": [
+        {
+          "end_date": "2018-12-18",
+          "row_count": 965,
+          "start_date": "2016-04-16",
+          "third": 1
+        },
+        {
+          "end_date": "2022-01-31",
+          "row_count": 964,
+          "start_date": "2018-12-19",
+          "third": 2
+        },
+        {
+          "end_date": "2024-10-07",
+          "row_count": 964,
+          "start_date": "2022-02-01",
+          "third": 3
+        }
+      ],
+      "data_scope": "train plus validation rows only; validation is development evidence",
+      "jensen_shannon": [
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 0.00036875637836497664,
+          "metric": "digit_marginal",
+          "window_a": 1,
+          "window_b": 2
+        },
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 0.0004225286458619383,
+          "metric": "digit_marginal",
+          "window_a": 1,
+          "window_b": 3
+        },
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 0.0004798163638300235,
+          "metric": "digit_marginal",
+          "window_a": 2,
+          "window_b": 3
+        },
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 2.0444690788855204e-05,
+          "metric": "pattern_distribution",
+          "window_a": 1,
+          "window_b": 2
+        },
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 0.0003038813701109487,
+          "metric": "pattern_distribution",
+          "window_a": 1,
+          "window_b": 3
+        },
+        {
+          "game": "3d_lotto",
+          "js_divergence_bits": 0.0003588242401603377,
+          "metric": "pattern_distribution",
+          "window_a": 2,
+          "window_b": 3
+        }
+      ],
+      "rolling_stride_draws": 100,
+      "rolling_window_draws": 250
+    },
+    "lotto_6_42": {
+      "change_point_permutations": 10000,
+      "change_points": [
+        {
+          "bh_q_within_change_family": 0.2495750424957504,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2018-02-08",
+          "cut_index_in_development_prefix": 225,
+          "game": "lotto_6_42",
+          "maximum_standardized_mean_shift": 2.4349131674487188,
+          "metric": "draw_sum",
+          "minimum_segment_draws": 200,
+          "p_value": 0.11858814118588142,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        },
+        {
+          "bh_q_within_change_family": 0.25937406259374063,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2019-02-02",
+          "cut_index_in_development_prefix": 375,
+          "game": "lotto_6_42",
+          "maximum_standardized_mean_shift": 2.0504871897321024,
+          "metric": "odd_count",
+          "minimum_segment_draws": 200,
+          "p_value": 0.25937406259374063,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        },
+        {
+          "bh_q_within_change_family": 0.2495750424957504,
+          "candidate_cut_stride": 25,
+          "cut_after_date": "2019-09-28",
+          "cut_index_in_development_prefix": 475,
+          "game": "lotto_6_42",
+          "maximum_standardized_mean_shift": 2.295024791874959,
+          "metric": "previous_draw_overlap",
+          "minimum_segment_draws": 200,
+          "p_value": 0.1663833616638336,
+          "permutations": 10000,
+          "whole_draw_rows_permuted": true
+        }
+      ],
+      "chronological_windows": [
+        {
+          "end_date": "2019-04-04",
+          "row_count": 401,
+          "start_date": "2016-08-30",
+          "third": 1
+        },
+        {
+          "end_date": "2022-03-19",
+          "row_count": 401,
+          "start_date": "2019-04-06",
+          "third": 2
+        },
+        {
+          "end_date": "2024-10-22",
+          "row_count": 400,
+          "start_date": "2022-03-22",
+          "third": 3
+        }
+      ],
+      "data_scope": "train plus validation rows only; validation is development evidence",
+      "jensen_shannon": [
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.005265379776897178,
+          "metric": "number_marginal",
+          "window_a": 1,
+          "window_b": 2
+        },
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.0033345174699199575,
+          "metric": "odd_count_distribution",
+          "window_a": 1,
+          "window_b": 2
+        },
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.006642412154060058,
+          "metric": "number_marginal",
+          "window_a": 1,
+          "window_b": 3
+        },
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.00991841976570371,
+          "metric": "odd_count_distribution",
+          "window_a": 1,
+          "window_b": 3
+        },
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.005505764135016187,
+          "metric": "number_marginal",
+          "window_a": 2,
+          "window_b": 3
+        },
+        {
+          "game": "lotto_6_42",
+          "js_divergence_bits": 0.010507586674641104,
+          "metric": "odd_count_distribution",
+          "window_a": 2,
+          "window_b": 3
+        }
+      ],
+      "rolling_stride_draws": 100,
+      "rolling_window_draws": 250
+    }
+  },
+  "temporal_summary": {
+    "3d_lotto": {
+      "bootstrap_resamples": 10000,
+      "feature_groups": [
+        "gap_since_seen",
+        "previous_100_frequency",
+        "previous_10_frequency",
+        "previous_30_frequency",
+        "previous_draw_appearance"
+      ],
+      "rows": 21
+    },
+    "lotto_6_42": {
+      "bootstrap_resamples": 10000,
+      "feature_groups": [
+        "gap_since_seen",
+        "previous_100_frequency",
+        "previous_10_frequency",
+        "previous_30_frequency",
+        "previous_draw_appearance"
+      ],
+      "rows": 22
+    }
+  },
+  "validation": {
+    "3d_all_220_probabilities_normalized_for_every_validation_forecast": "PASS",
+    "642_exact_elementary_symmetric_normalizer_and_valid_six_set_support": "PASS",
+    "assert_based_3d_and_642_mathematical_self_checks": "PASS",
+    "bootstrap_and_monte_carlo_counts": "PASS",
+    "clean_kernel_notebook_execution": "PASS",
+    "generated_text_whitespace_check": "PASS",
+    "git_diff_check": "PASS",
+    "information_and_change_point_permutations": "PASS",
+    "jev_typesafe_or_keys_env_contents_accessed": "NO",
+    "locked_test_rows_parsed_or_scored": "NO",
+    "nbformat_validation": "PASS",
+    "phase3_phase4_phase5a_preflight_and_hashes": "PASS",
+    "phase4_split_boundaries_preserved": "PASS",
+    "prior_phase_artifact_integrity": "PASS",
+    "target_structure_and_feature_key_alignment": "PASS",
+    "temporal_features_use_only_information_before_target": "PASS by Phase 4 evidence and the Phase 5R recomputation audit",
+    "train_validation_only_prefix_parsing": "PASS"
+  },
+  "verdict": "PHASE5R_INCONCLUSIVE"
+}

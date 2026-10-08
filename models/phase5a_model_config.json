@@ -1,0 +1,160 @@
+{
+  "schema_version": "phase5a-model-config/v1",
+  "phase": "PHASE_5A",
+  "repository": "D:\\Dev\\Repositories\\magic_Lotto",
+  "baseline": {
+    "branch": "main",
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+    "phase4_verdict": "PHASE4_PASS_READY_FOR_ML_BASELINE",
+    "phase4_split_manifest": "data/features/chronological_splits.json"
+  },
+  "random_seed": 162,
+  "environment": {
+    "python": "3.12.10",
+    "scikit_learn": "1.9.1",
+    "pandas": "3.0.6"
+  },
+  "time_series_cv": {
+    "method": "sklearn.model_selection.TimeSeriesSplit",
+    "n_splits": 3,
+    "shuffle": false,
+    "scope": "Phase 4 train rows only",
+    "fold_scoring": {
+      "3d_lotto": "mean unordered-multiset multinomial negative log-likelihood per digit",
+      "lotto_6_42": "mean hits at six"
+    }
+  },
+  "models": {
+    "3d_lotto": {
+      "estimator": "regularized multinomial LogisticRegression",
+      "training_target": "expand each training draw into three digit observations weighted by target multiplicity",
+      "probability_model": "one categorical digit distribution for digits 0 through 9; unordered target likelihood includes the multinomial coefficient",
+      "scaling": "StandardScaler inside each training fold",
+      "solver": "lbfgs",
+      "regularization": "L2",
+      "max_iter": 2000,
+      "c_grid": [
+        0.1,
+        1.0,
+        10.0
+      ]
+    },
+    "lotto_6_42": {
+      "logistic": {
+        "estimator": "OneVsRestClassifier(LogisticRegression)",
+        "target": "42 binary membership labels",
+        "scaling": "StandardScaler inside each training fold",
+        "solver": "liblinear",
+        "regularization": "L2",
+        "max_iter": 2000,
+        "c_grid": [
+          0.1,
+          1.0,
+          10.0
+        ]
+      },
+      "random_forest": {
+        "estimator": "RandomForestClassifier multioutput",
+        "n_estimators": 100,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "bootstrap": true,
+        "n_jobs": 1,
+        "random_state": 162,
+        "tuning": false
+      }
+    }
+  },
+  "baselines": {
+    "3d_lotto": [
+      "uniform_random: p[digit]=0.10",
+      "expanding_historical_frequency: only prior draws available before each target"
+    ],
+    "lotto_6_42": [
+      "uniform_random: uniformly selected set of six distinct numbers from 1 through 42",
+      "expanding_historical_frequency: precomputed prior-only expanding appearance rate",
+      "recent_30_frequency: precomputed count in the previous 30 completed draws divided by 30"
+    ]
+  },
+  "feature_groups": {
+    "frequency_and_deviation": {
+      "rules": [
+        "columns containing _count_prev_ except _count_prev_draw",
+        "columns ending _expanding_count",
+        "columns ending _freq_expanding",
+        "columns ending _freq_deviation_prev_100"
+      ]
+    },
+    "recency_and_gap": {
+      "rules": [
+        "columns ending _gap_since_seen",
+        "columns ending _never_seen",
+        "columns ending _seen_prev_draw",
+        "columns ending _count_prev_draw"
+      ]
+    },
+    "draw_context": {
+      "rules": [
+        "all remaining non-key feature columns, including prior draw summary, pattern, parity, sum, variance, and overlap context"
+      ]
+    },
+    "all_features": {
+      "rules": [
+        "all Phase 4 feature columns"
+      ]
+    }
+  },
+  "random_baseline": {
+    "seed": 162,
+    "initial_simulations": 10000,
+    "confirmation_trigger_p_below": 0.01,
+    "confirmation_simulations": 100000,
+    "empirical_p": "(1 + count(simulated_score >= observed_score)) / (simulations + 1)",
+    "tail": "one-sided upper tail",
+    "3d_simulation": "three iid uniform digit draws per validation row; compare unordered multiset overlap",
+    "642_simulation": "Hypergeometric(42 population, 6 matching values, 6 selected) hits per validation row",
+    "multiple_candidate_adjustment": {
+      "method": "Bonferroni",
+      "candidate_count": 2,
+      "applies_to": "two predefined all-feature Lotto 6/42 candidates in the advancement gate"
+    }
+  },
+  "bootstrap": {
+    "replicates": 10000,
+    "confidence_level": 0.95,
+    "unit": "complete validation draw rows",
+    "resampling": "paired row resampling for candidate and baseline differences"
+  },
+  "decision_rule": {
+    "maximum_adjusted_empirical_p": 0.05,
+    "minimum_folds_better": 2,
+    "maximum_ece": 0.1,
+    "bootstrap_interval_rule": "95% paired percentile interval must exclude zero in the improving direction against fair-random and every required historical baseline",
+    "3d_lotto_primary_rule": "lower unordered-multiset negative log-likelihood than uniform and expanding-frequency baselines",
+    "lotto_6_42_primary_rule": "higher mean hits@6 than the fair-random expectation and both historical-frequency baselines",
+    "fold_rule": "improve over fair-random and historical baselines in at least two of three chronological folds",
+    "test_gate": "Phase 5A candidate-ready is not authorization to load or score the locked test partition"
+  },
+  "validation_boundary": {
+    "fit_rows": "Phase 4 train partition only",
+    "tuning_rows": "expanding-window folds within Phase 4 train partition only",
+    "evaluation_rows": "Phase 4 validation partition only",
+    "locked_test_targets_parsed": false,
+    "future_recommendations_generated": false,
+    "jev_enabled": false,
+    "typesafe_enabled": false
+  },
+  "outputs": {
+    "script": "scripts/phase5a_ml_validation.py",
+    "predictions": [
+      "reports/phase5a_validation_predictions/3d_validation_predictions.csv",
+      "reports/phase5a_validation_predictions/642_validation_predictions.csv"
+    ],
+    "random_simulations": "reports/phase5a_random_baseline_distributions.csv",
+    "metrics": "reports/phase5a_metrics.json",
+    "validation": "reports/phase5a_validation.json",
+    "report": "reports/phase5a_ml_validation.md",
+    "notebook": "notebooks/lotto_phase5a_ml_validation.ipynb"
+  }
+}

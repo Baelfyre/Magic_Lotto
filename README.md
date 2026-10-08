@@ -43,6 +43,8 @@ Some earlier research files remain in the top folder because the saved scripts a
 
 The project keeps the original data, cleaned data, scripts, notebooks, and reports so the work can be reviewed and repeated. The `data/` folder currently contains files prepared for later analysis.
 
+The [Phase 6B review notebook](notebooks/lotto_phase6b_model_semantic_review.ipynb) explains how the tested models and patterns were reviewed before deciding whether any model was ready for final testing.
+
 ## Research stages
 
 - Clean and check the historical lottery data.

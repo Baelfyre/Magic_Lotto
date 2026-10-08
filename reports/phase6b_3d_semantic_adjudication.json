@@ -1,0 +1,186 @@
+{
+  "schema_version": "phase6b-typed-model-evidence/v1",
+  "phase": "PHASE_6B_JEV_MODEL_SEMANTIC_READJUDICATION",
+  "phase6b_status": "PHASE6B_MODEL_SEMANTIC_ADJUDICATION_COMPLETE",
+  "requests": [
+    {
+      "request_id": "3d_semantic",
+      "title": "3D semantic-contract assessment",
+      "model_alias_requested": "jev-latest",
+      "model_identifier_returned": "jev-1.13.0",
+      "http_status": 200,
+      "state": {
+        "target": {
+          "outcome": "unordered multiset of three digits; repeated digits are preserved",
+          "complete_combination_probability": true
+        },
+        "model_configuration": {
+          "estimator": "regularized multinomial LogisticRegression",
+          "training_target": "expand each training draw into three digit observations weighted by target multiplicity",
+          "probability_model": "one categorical digit distribution for digits 0 through 9; unordered target likelihood includes the multinomial coefficient",
+          "scaling": "StandardScaler inside each training fold",
+          "solver": "lbfgs",
+          "regularization": "L2",
+          "max_iter": 2000,
+          "c_grid": [
+            0.1,
+            1.0,
+            10.0
+          ]
+        },
+        "primary_metric": {
+          "phase5a_name": "mean_multinomial_negative_log_likelihood_per_digit",
+          "phase5a_direction": "lower_is_better",
+          "phase5r_complete_combination_validation": {
+            "fair_log_score_nats": -5.319893920986909,
+            "models": {
+              "dirichlet_kappa_10": {
+                "marginal_brier": 0.19768435848052132,
+                "maximum_probability_normalization_error": 5.551115123125783e-16,
+                "mean_actual_combination_rank": 88.98340248962656,
+                "mean_combination_nll_nats": 5.321316430249136,
+                "mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+                "mean_log_score_difference_vs_raw": 3.994649851119914e-06,
+                "mean_reciprocal_rank": 0.03614170771556355,
+                "median_actual_combination_rank": 79.0,
+                "top_10_rate": 0.07053941908713693,
+                "top_1_rate": 0.005532503457814661,
+                "top_5_rate": 0.030428769017980636
+              },
+              "dirichlet_kappa_100": {
+                "marginal_brier": 0.19768335645721566,
+                "maximum_probability_normalization_error": 6.661338147750939e-16,
+                "mean_actual_combination_rank": 88.9820193637621,
+                "mean_combination_nll_nats": 5.321281181771342,
+                "mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+                "mean_log_score_difference_vs_raw": 3.924312764525844e-05,
+                "mean_reciprocal_rank": 0.036142352210110695,
+                "median_actual_combination_rank": 79.0,
+                "top_10_rate": 0.07053941908713693,
+                "top_1_rate": 0.005532503457814661,
+                "top_5_rate": 0.030428769017980636
+              },
+              "dirichlet_kappa_1000": {
+                "marginal_brier": 0.19767525830038343,
+                "maximum_probability_normalization_error": 6.661338147750939e-16,
+                "mean_actual_combination_rank": 88.98616874135546,
+                "mean_combination_nll_nats": 5.3209878335657095,
+                "mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+                "mean_log_score_difference_vs_raw": 0.00033259133327784475,
+                "mean_reciprocal_rank": 0.03614171859314361,
+                "median_actual_combination_rank": 80.0,
+                "top_10_rate": 0.07053941908713693,
+                "top_1_rate": 0.005532503457814661,
+                "top_5_rate": 0.030428769017980636
+              },
+              "fair_random": {
+                "marginal_brier": 0.19766478976486862,
+                "maximum_probability_normalization_error": 0.0,
+                "mean_actual_combination_rank": 88.58367911479945,
+                "mean_combination_nll_nats": 5.319893920986909,
+                "mean_log_score_advantage_vs_fair": 0.0,
+                "mean_log_score_difference_vs_raw": 0.0014265039120780955,
+                "mean_reciprocal_rank": 0.038226111427593176,
+                "median_actual_combination_rank": 82.0,
+                "top_10_rate": 0.07053941908713693,
+                "top_1_rate": 0.006915629322268326,
+                "top_5_rate": 0.0318118948824343
+              },
+              "raw_expanding_frequency": {
+                "marginal_brier": 0.19768447238313291,
+                "maximum_probability_normalization_error": 6.661338147750939e-16,
+                "mean_actual_combination_rank": 88.98616874135546,
+                "mean_combination_nll_nats": 5.321320424898987,
+                "mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+                "mean_log_score_difference_vs_raw": 0.0,
+                "mean_reciprocal_rank": 0.03614112812093786,
+                "median_actual_combination_rank": 79.0,
+                "top_10_rate": 0.07053941908713693,
+                "top_1_rate": 0.005532503457814661,
+                "top_5_rate": 0.030428769017980636
+              }
+            }
+          }
+        },
+        "secondary_metric": "mean_multiset_overlap",
+        "phase5a_validation_metrics": {
+          "uniform_random": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.7732979736623027,
+            "mean_multiset_overlap": 0.7425955739972339,
+            "digit_level_multiclass_brier": 0.9000000000000002
+          },
+          "expanding_historical_frequency": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.773773474966329,
+            "mean_multiset_overlap": 0.8450899031811895,
+            "digit_level_multiclass_brier": 0.9000941272114801
+          },
+          "multinomial_logistic_regression/frequency_and_deviation": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.8324356384665115,
+            "mean_multiset_overlap": 0.8381742738589212,
+            "digit_level_multiclass_brier": 0.9132922986993006,
+            "selected_c": 0.1
+          },
+          "multinomial_logistic_regression/recency_and_gap": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.7889486656228466,
+            "mean_multiset_overlap": 0.7565698478561549,
+            "digit_level_multiclass_brier": 0.9031582743957189,
+            "selected_c": 0.1
+          },
+          "multinomial_logistic_regression/draw_context": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.7903099899924841,
+            "mean_multiset_overlap": 0.8049792531120332,
+            "digit_level_multiclass_brier": 0.9033759490913797,
+            "selected_c": 0.1
+          },
+          "multinomial_logistic_regression/all_features": {
+            "mean_multinomial_negative_log_likelihood_per_digit": 1.8992462645315555,
+            "mean_multiset_overlap": 0.7994467496542186,
+            "digit_level_multiclass_brier": 0.9295064236344662,
+            "selected_c": 0.1,
+            "random_overlap_empirical_p": 0.013598640135986401
+          }
+        }
+      },
+      "questions": {
+        "3d_target_matches_goal": {
+          "type": "noul",
+          "instructions": "Does the evaluated 3D model output correspond to a probability model for the complete next unordered three-digit multiset rather than merely recurring individual digits?",
+          "criteria": {
+            "true": "The model output can be interpreted consistently as a next-draw probability distribution over valid complete 3D outcomes.",
+            "false": "The model output does not represent the intended complete next-draw probability target."
+          }
+        },
+        "3d_primary_metric_matches_goal": {
+          "type": "noul",
+          "instructions": "Does complete-combination negative log likelihood directly evaluate whether the model assigned better probability to the actual next 3D draw?",
+          "criteria": {
+            "true": "The metric is aligned with the intended probability-prediction objective.",
+            "false": "The metric does not adequately measure the stated prediction objective."
+          }
+        },
+        "3d_secondary_overlap_is_primary_evidence": {
+          "type": "noul",
+          "instructions": "Should multiset overlap be treated as stronger evidence of predictive probability quality than complete-combination likelihood?",
+          "criteria": {
+            "true": "Overlap should dominate the probability score when judging prediction quality.",
+            "false": "Overlap is secondary and should not override a worse proper probability score."
+          }
+        }
+      },
+      "answers": {
+        "3d_target_matches_goal": {
+          "type": "noul",
+          "noul": 0.71
+        },
+        "3d_primary_metric_matches_goal": {
+          "type": "noul",
+          "noul": 0.85
+        },
+        "3d_secondary_overlap_is_primary_evidence": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "schema_version": "phase6b-typed-model-evidence/v1",
+  "phase": "PHASE_6B_JEV_MODEL_SEMANTIC_READJUDICATION",
+  "phase6b_status": "PHASE6B_MODEL_SEMANTIC_ADJUDICATION_COMPLETE",
+  "requests": [
+    {
+      "request_id": "642_semantic",
+      "title": "6/42 semantic-contract assessment",
+      "model_alias_requested": "jev-latest",
+      "model_identifier_returned": "jev-1.13.0",
+      "http_status": 200,
+      "state": {
+        "target": {
+          "outcome": "unordered set of six distinct numbers from 1 through 42",
+          "complete_combination_probability": true
+        },
+        "phase5a_model_configurations": {
+          "logistic": {
+            "estimator": "OneVsRestClassifier(LogisticRegression)",
+            "target": "42 binary membership labels",
+            "scaling": "StandardScaler inside each training fold",
+            "solver": "liblinear",
+            "regularization": "L2",
+            "max_iter": 2000,
+            "c_grid": [
+              0.1,
+              1.0,
+              10.0
+            ]
+          },
+          "random_forest": {
+            "estimator": "RandomForestClassifier multioutput",
+            "n_estimators": 100,
+            "max_depth": 8,
+            "min_samples_leaf": 5,
+            "max_features": "sqrt",
+            "bootstrap": true,
+            "n_jobs": 1,
+            "random_state": 162,
+            "tuning": false
+          }
+        },
+        "phase5a_validation_metrics": {
+          "regularized_one_vs_rest_logistic_regression/frequency_and_deviation": {
+            "mean_hits_at_6": 0.89,
+            "mean_recall_at_6": 0.14833333333333334,
+            "mean_precision_at_6": 0.14833333333333334,
+            "mean_brier_42_label": 0.3468126621301501,
+            "mean_marginal_log_loss": 2.23039752341212,
+            "mean_jaccard_similarity": 0.08530303030303031,
+            "selected_c": 1.0
+          },
+          "random_forest_multioutput_comparator/frequency_and_deviation": {
+            "mean_hits_at_6": 0.87,
+            "mean_recall_at_6": 0.145,
+            "mean_precision_at_6": 0.145,
+            "mean_brier_42_label": 0.12314882898592373,
+            "mean_marginal_log_loss": 0.41292089325240133,
+            "mean_jaccard_similarity": 0.08415151515151517
+          },
+          "regularized_one_vs_rest_logistic_regression/recency_and_gap": {
+            "mean_hits_at_6": 0.8633333333333333,
+            "mean_recall_at_6": 0.14388888888888884,
+            "mean_precision_at_6": 0.14388888888888884,
+            "mean_brier_42_label": 0.13907355401171484,
+            "mean_marginal_log_loss": 0.46526450296375355,
+            "mean_jaccard_similarity": 0.08370707070707072,
+            "selected_c": 0.1
+          },
+          "random_forest_multioutput_comparator/recency_and_gap": {
+            "mean_hits_at_6": 0.86,
+            "mean_recall_at_6": 0.14333333333333334,
+            "mean_precision_at_6": 0.14333333333333334,
+            "mean_brier_42_label": 0.12293270342090944,
+            "mean_marginal_log_loss": 0.4120667179987938,
+            "mean_jaccard_similarity": 0.08273737373737373
+          },
+          "regularized_one_vs_rest_logistic_regression/draw_context": {
+            "mean_hits_at_6": 0.91,
+            "mean_recall_at_6": 0.15166666666666664,
+            "mean_precision_at_6": 0.15166666666666664,
+            "mean_brier_42_label": 0.12600309283228026,
+            "mean_marginal_log_loss": 0.4214005970718362,
+            "mean_jaccard_similarity": 0.0883939393939394,
+            "selected_c": 0.1
+          },
+          "random_forest_multioutput_comparator/draw_context": {
+            "mean_hits_at_6": 0.87,
+            "mean_recall_at_6": 0.145,
+            "mean_precision_at_6": 0.145,
+            "mean_brier_42_label": 0.12326741612386219,
+            "mean_marginal_log_loss": 0.4134857099142289,
+            "mean_jaccard_similarity": 0.08428282828282829
+          },
+          "regularized_one_vs_rest_logistic_regression/all_features": {
+            "mean_hits_at_6": 0.9233333333333333,
+            "mean_recall_at_6": 0.1538888888888889,
+            "mean_precision_at_6": 0.1538888888888889,
+            "mean_brier_42_label": 0.3712404998794881,
+            "mean_marginal_log_loss": 2.604837433189962,
+            "mean_jaccard_similarity": 0.08935353535353537,
+            "selected_c": 1.0,
+            "random_hits_empirical_p": 0.0826917308269173,
+            "random_hits_bonferroni_p": 0.1653834616538346
+          },
+          "random_forest_multioutput_comparator/all_features": {
+            "mean_hits_at_6": 0.8833333333333333,
+            "mean_recall_at_6": 0.14722222222222223,
+            "mean_precision_at_6": 0.14722222222222223,
+            "mean_brier_42_label": 0.12313540672861895,
+            "mean_marginal_log_loss": 0.4129871788129018,
+            "mean_jaccard_similarity": 0.0852929292929293,
+            "random_hits_empirical_p": 0.29317068293170684,
+            "random_hits_bonferroni_p": 0.5863413658634137
+          },
+          "uniform_random": {
+            "mean_hits_at_6": 0.8571428571428571,
+            "mean_recall_at_6": 0.14285714285714285,
+            "mean_precision_at_6": 0.14285714285714285,
+            "mean_brier_42_label": 0.12244897959183665,
+            "mean_marginal_log_loss": 0.41011631828840917
+          },
+          "expanding_historical_frequency": {
+            "mean_hits_at_6": 0.9,
+            "mean_recall_at_6": 0.15,
+            "mean_precision_at_6": 0.15,
+            "mean_brier_42_label": 0.1225909902672862,
+            "mean_marginal_log_loss": 0.4107038897979796,
+            "mean_jaccard_similarity": 0.08733333333333335
+          },
+          "recent_30_frequency": {
+            "mean_hits_at_6": 0.7933333333333333,
+            "mean_recall_at_6": 0.1322222222222222,
+            "mean_precision_at_6": 0.1322222222222222,
+            "mean_brier_42_label": 0.1267236331569628,
+            "mean_marginal_log_loss": 0.47322763462830914,
+            "mean_jaccard_similarity": 0.0770909090909091
+          }
+        },
+        "phase5r_complete_combination_validation": {
+          "fair_log_score_nats": -15.472935645591768,
+          "models": {
+            "beta_kappa_10": {
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12259441641898255,
+              "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+              "mean_combination_nll_nats": 15.497611311865915,
+              "mean_hits_at_6": 0.9,
+              "mean_log_score_advantage_vs_fair": -0.02467566627414937,
+              "mean_log_score_difference_vs_raw": 0.0003417694947751689
+            },
+            "beta_kappa_100": {
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12257827775800857,
+              "maximum_inclusion_sum_error": 3.552713678800501e-15,
+              "mean_combination_nll_nats": 15.494868983395833,
+              "mean_hits_at_6": 0.9,
+              "mean_log_score_advantage_vs_fair": -0.02193333780406394,
+              "mean_log_score_difference_vs_raw": 0.0030840979648605977
+            },
+            "beta_kappa_1000": {
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12250666321892256,
+              "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+              "mean_combination_nll_nats": 15.4827024383167,
+              "mean_hits_at_6": 0.9,
+              "mean_log_score_advantage_vs_fair": -0.00976679272493764,
+              "mean_log_score_difference_vs_raw": 0.015250643043986899
+            },
+            "fair_random": {
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12244897959183676,
+              "maximum_inclusion_sum_error": 0.0,
+              "mean_combination_nll_nats": 15.472935645591766,
+              "mean_hits_at_6": 0.84,
+              "mean_log_score_advantage_vs_fair": 0.0,
+              "mean_log_score_difference_vs_raw": 0.025017435768924536
+            },
+            "raw_expanding_frequency": {
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12259642764550509,
+              "maximum_inclusion_sum_error": 2.6645352591003757e-15,
+              "mean_combination_nll_nats": 15.497953081360693,
+              "mean_hits_at_6": 0.9,
+              "mean_log_score_advantage_vs_fair": -0.025017435768924536,
+              "mean_log_score_difference_vs_raw": 0.0
+            }
+          }
+        },
+        "phase5r_combination_calibration": {
+          "beta_kappa_10": {
+            "bootstrap_resamples": 10000,
+            "ece": 3.6126304769548743e-19,
+            "screen_passes": true,
+            "whole_draw_rows_resampled": true
+          },
+          "beta_kappa_100": {
+            "bootstrap_resamples": 10000,
+            "ece": 2.9187410865641516e-18,
+            "screen_passes": false,
+            "whole_draw_rows_resampled": true
+          },
+          "beta_kappa_1000": {
+            "bootstrap_resamples": 10000,
+            "ece": 7.555684473143426e-19,
+            "screen_passes": true,
+            "whole_draw_rows_resampled": true
+          },
+          "fair_random": {
+            "bootstrap_resamples": 10000,
+            "ece": 2.7663057030243485e-17,
+            "screen_passes": false,
+            "whole_draw_rows_resampled": true
+          },
+          "raw_expanding_frequency": {
+            "bootstrap_resamples": 10000,
+            "ece": 1.515542541551801e-18,
+            "screen_passes": true,
+            "whole_draw_rows_resampled": true
+          }
+        }
+      },
+      "questions": {
+        "642_target_matches_goal": {
+          "type": "noul",
+          "instructions": "Does the fixed-cardinality 6/42 combination model represent probabilities over valid complete six-number sets rather than only independent number recurrence?",
+          "criteria": {
+            "true": "The model evaluates complete valid six-number outcomes.",
+            "false": "The model is semantically misaligned with the complete-draw prediction target."
+          }
+        },
+        "642_primary_metric_matches_goal": {
+          "type": "noul",
+          "instructions": "Does complete-set negative log likelihood directly evaluate whether the model assigned better probability to the actual next 6/42 combination?",
+          "criteria": {
+            "true": "The metric directly matches the intended probabilistic prediction objective.",
+            "false": "The metric is not an appropriate primary measure for the stated prediction objective."
+          }
+        },
+        "642_hits_should_override_logscore": {
+          "type": "noul",
+          "instructions": "Should a higher hits-at-6 point estimate override worse complete-combination probability scoring when deciding whether the model learned useful next-draw probability information?",
+          "criteria": {
+            "true": "The hit-count point estimate is sufficient to override the proper probability score.",
+            "false": "The hit-count result is secondary and cannot by itself establish improved probabilistic prediction."
+          }
+        }
+      },
+      "answers": {
+        "642_target_matches_goal": {
+          "type": "noul",
+          "noul": 0.7
+        },
+        "642_primary_metric_matches_goal": {
+          "type": "noul",
+          "noul": 0.8
+        },
+        "642_hits_should_override_logscore": {
+          "type": "noul",
+          "noul": 0.11
+        }
+      }
+    }
+  ]
+}

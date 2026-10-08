@@ -1,0 +1,120 @@
+{
+  "fractions": {
+    "test": 0.2,
+    "train": 0.6,
+    "validation": 0.2
+  },
+  "games": {
+    "3d_lotto": {
+      "eligible_rows": 3617,
+      "excluded_insufficient_history": 101,
+      "partitions": {
+        "test": {
+          "end_date": "2026-10-07",
+          "first_record_key": {
+            "draw_date": "2024-10-08",
+            "source_row": "3007"
+          },
+          "last_record_key": {
+            "draw_date": "2026-10-07",
+            "source_row": "3730"
+          },
+          "row_count": 724,
+          "row_index_end_exclusive": 3617,
+          "row_index_start_in_eligible_matrix": 2893,
+          "start_date": "2024-10-08"
+        },
+        "train": {
+          "end_date": "2022-10-03",
+          "first_record_key": {
+            "draw_date": "2016-04-16",
+            "source_row": "103"
+          },
+          "last_record_key": {
+            "draw_date": "2022-10-03",
+            "source_row": "2283"
+          },
+          "row_count": 2170,
+          "row_index_end_exclusive": 2170,
+          "row_index_start_in_eligible_matrix": 0,
+          "start_date": "2016-04-16"
+        },
+        "validation": {
+          "end_date": "2024-10-07",
+          "first_record_key": {
+            "draw_date": "2022-10-04",
+            "source_row": "2284"
+          },
+          "last_record_key": {
+            "draw_date": "2024-10-07",
+            "source_row": "3006"
+          },
+          "row_count": 723,
+          "row_index_end_exclusive": 2893,
+          "row_index_start_in_eligible_matrix": 2170,
+          "start_date": "2022-10-04"
+        }
+      }
+    },
+    "lotto_6_42": {
+      "eligible_rows": 1504,
+      "excluded_insufficient_history": 101,
+      "partitions": {
+        "test": {
+          "end_date": "2026-10-06",
+          "first_record_key": {
+            "draw_date": "2024-10-24",
+            "source_row": "1309"
+          },
+          "last_record_key": {
+            "draw_date": "2026-10-06",
+            "source_row": "1610"
+          },
+          "row_count": 302,
+          "row_index_end_exclusive": 1504,
+          "row_index_start_in_eligible_matrix": 1202,
+          "start_date": "2024-10-24"
+        },
+        "train": {
+          "end_date": "2022-11-12",
+          "first_record_key": {
+            "draw_date": "2016-08-30",
+            "source_row": "103"
+          },
+          "last_record_key": {
+            "draw_date": "2022-11-12",
+            "source_row": "1008"
+          },
+          "row_count": 902,
+          "row_index_end_exclusive": 902,
+          "row_index_start_in_eligible_matrix": 0,
+          "start_date": "2016-08-30"
+        },
+        "validation": {
+          "end_date": "2024-10-22",
+          "first_record_key": {
+            "draw_date": "2022-11-15",
+            "source_row": "1009"
+          },
+          "last_record_key": {
+            "draw_date": "2024-10-22",
+            "source_row": "1308"
+          },
+          "row_count": 300,
+          "row_index_end_exclusive": 1202,
+          "row_index_start_in_eligible_matrix": 902,
+          "start_date": "2022-11-15"
+        }
+      }
+    }
+  },
+  "ordering": "ascending draw_date; source_row is stable tie-breaker",
+  "rounding": "floor train and validation counts; remainder assigned to test",
+  "row_key_columns": [
+    "draw_date",
+    "source_row"
+  ],
+  "schema_version": 1,
+  "shuffle": false,
+  "test_partition_locked": true
+}

@@ -1,0 +1,325 @@
+{
+  "schema_version": "phase6b-typed-model-evidence/v1",
+  "phase": "PHASE_6B_JEV_MODEL_SEMANTIC_READJUDICATION",
+  "phase6b_status": "PHASE6B_MODEL_SEMANTIC_ADJUDICATION_COMPLETE",
+  "requests": [
+    {
+      "request_id": "information_signal",
+      "title": "Cross-method information-signal assessment",
+      "model_alias_requested": "jev-latest",
+      "model_identifier_returned": "jev-1.13.0",
+      "http_status": 200,
+      "state": {
+        "target": {
+          "outcome": "unordered set of six distinct numbers from 1 through 42",
+          "complete_combination_probability": true
+        },
+        "mutual_information_tests": [
+          {
+            "game": "lotto_6_42",
+            "diagnostic_family": "previous_30_frequency",
+            "target_measure": "membership",
+            "observed_mutual_information_nats_per_candidate": 0.0030692974538926014,
+            "permutations": 10000,
+            "empirical_p_add_one": 0.0150984901509849,
+            "bh_q_within_game": 0.0603939606039396,
+            "null_mean": 0.0024433024642670077,
+            "null_95_percentile": 0.002905972800526249,
+            "complete_draw_rows_permuted": true,
+            "permutation_features_recomputed_from_prior_rows": true,
+            "train_only": true
+          },
+          {
+            "game": "lotto_6_42",
+            "diagnostic_family": "expanding_historical_frequency",
+            "target_measure": "membership",
+            "observed_mutual_information_nats_per_candidate": 0.0036796053644954176,
+            "permutations": 10000,
+            "empirical_p_add_one": 0.0036996300369963003,
+            "bh_q_within_game": 0.029597040295970403,
+            "null_mean": 0.002822962294279117,
+            "null_95_percentile": 0.0033307001115740554,
+            "complete_draw_rows_permuted": true,
+            "permutation_features_recomputed_from_prior_rows": true,
+            "train_only": true
+          }
+        ],
+        "complete_combination_validation": {
+          "fair_log_score_nats": -15.472935645591768,
+          "models": {
+            "beta_kappa_10": {
+              "mean_combination_nll_nats": 15.497611311865915,
+              "mean_log_score_advantage_vs_fair": -0.02467566627414937,
+              "mean_log_score_difference_vs_raw": 0.0003417694947751689,
+              "mean_hits_at_6": 0.9,
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12259441641898255
+            },
+            "beta_kappa_100": {
+              "mean_combination_nll_nats": 15.494868983395833,
+              "mean_log_score_advantage_vs_fair": -0.02193333780406394,
+              "mean_log_score_difference_vs_raw": 0.0030840979648605977,
+              "mean_hits_at_6": 0.9,
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12257827775800857
+            },
+            "beta_kappa_1000": {
+              "mean_combination_nll_nats": 15.4827024383167,
+              "mean_log_score_advantage_vs_fair": -0.00976679272493764,
+              "mean_log_score_difference_vs_raw": 0.015250643043986899,
+              "mean_hits_at_6": 0.9,
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12250666321892256
+            },
+            "fair_random": {
+              "mean_combination_nll_nats": 15.472935645591766,
+              "mean_log_score_advantage_vs_fair": 0.0,
+              "mean_log_score_difference_vs_raw": 0.025017435768924536,
+              "mean_hits_at_6": 0.84,
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12244897959183676
+            },
+            "raw_expanding_frequency": {
+              "mean_combination_nll_nats": 15.497953081360693,
+              "mean_log_score_advantage_vs_fair": -0.025017435768924536,
+              "mean_log_score_difference_vs_raw": 0.0,
+              "mean_hits_at_6": 0.9,
+              "hits_at_6_fair_expectation": 0.8571428571428571,
+              "marginal_brier": 0.12259642764550509
+            }
+          }
+        },
+        "bayesian_shrinkage": {
+          "beta_kappa_10": {
+            "prior_center": 0.14285714285714285,
+            "prior_strength": 10,
+            "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+            "mean_absolute_difference_from_raw_frequency": 6.337515595824519e-05,
+            "maximum_absolute_difference_from_raw_frequency": 0.00022355722284564394
+          },
+          "beta_kappa_100": {
+            "prior_center": 0.14285714285714285,
+            "prior_strength": 100,
+            "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+            "mean_absolute_difference_from_raw_frequency": 0.0005876156112384163,
+            "maximum_absolute_difference_from_raw_frequency": 0.0020531592633057927
+          },
+          "beta_kappa_1000": {
+            "prior_center": 0.14285714285714285,
+            "prior_strength": 1000,
+            "mean_posterior_probability_across_candidate_draws": 0.14285714285714288,
+            "mean_absolute_difference_from_raw_frequency": 0.003404051040624896,
+            "maximum_absolute_difference_from_raw_frequency": 0.011306214016107291
+          },
+          "raw_expanding_frequency": {
+            "prior_center": 0.14285714285714285,
+            "mean_posterior_probability_across_candidate_draws": 0.14285714285714285,
+            "mean_absolute_difference_from_raw_frequency": 0.0,
+            "maximum_absolute_difference_from_raw_frequency": 0.0
+          }
+        },
+        "paired_row_bootstrap": {
+          "beta_kappa_10": {
+            "bootstrap_ci95_vs_fair": [
+              -0.04369262348565588,
+              -0.006011895490789998
+            ],
+            "segment_log_score_advantage_vs_fair": [
+              -0.031215602028928126,
+              -0.013058969562252934,
+              -0.02975242723126705
+            ],
+            "segments_better_than_fair": 0,
+            "bootstrap_ci95_vs_raw_expanding": [
+              0.00017733695909651,
+              0.0005087417916796906
+            ],
+            "segment_log_score_difference_vs_raw_expanding": [
+              0.00044881051456638235,
+              0.00023920705489056005,
+              0.00033729091486856433
+            ],
+            "segments_better_than_raw_expanding": 3,
+            "bootstrap_resamples": 10000,
+            "whole_validation_draw_rows_resampled": true
+          },
+          "beta_kappa_100": {
+            "bootstrap_ci95_vs_fair": [
+              -0.03957462250534383,
+              -0.004591364595839638
+            ],
+            "segment_log_score_advantage_vs_fair": [
+              -0.02763626649930357,
+              -0.011161130511514407,
+              -0.027002616401373844
+            ],
+            "segments_better_than_fair": 0,
+            "bootstrap_ci95_vs_raw_expanding": [
+              0.0015631113667782626,
+              0.00463420262088883
+            ],
+            "segment_log_score_difference_vs_raw_expanding": [
+              0.004028146044190936,
+              0.002137046105629086,
+              0.003087101744761771
+            ],
+            "segments_better_than_raw_expanding": 3,
+            "bootstrap_resamples": 10000,
+            "whole_validation_draw_rows_resampled": true
+          },
+          "beta_kappa_1000": {
+            "bootstrap_ci95_vs_fair": [
+              -0.020024254970673967,
+              0.0003265359030290533
+            ],
+            "segment_log_score_advantage_vs_fair": [
+              -0.01220900982296861,
+              -0.0034735729479807454,
+              -0.013617795403863564
+            ],
+            "segments_better_than_fair": 0,
+            "bootstrap_ci95_vs_raw_expanding": [
+              0.006427045781892308,
+              0.02416930568639732
+            ],
+            "segment_log_score_difference_vs_raw_expanding": [
+              0.019455402720525896,
+              0.009824603669162747,
+              0.01647192274227205
+            ],
+            "segments_better_than_raw_expanding": 3,
+            "bootstrap_resamples": 10000,
+            "whole_validation_draw_rows_resampled": true
+          },
+          "fair_random": {
+            "bootstrap_ci95_vs_fair": [
+              0.0,
+              0.0
+            ],
+            "segment_log_score_advantage_vs_fair": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "segments_better_than_fair": 0,
+            "bootstrap_ci95_vs_raw_expanding": [
+              0.006185513739841156,
+              0.044212729007720546
+            ],
+            "segment_log_score_difference_vs_raw_expanding": [
+              0.03166441254349451,
+              0.013298176617143493,
+              0.030089718146135612
+            ],
+            "segments_better_than_raw_expanding": 3,
+            "bootstrap_resamples": 10000,
+            "whole_validation_draw_rows_resampled": true
+          },
+          "raw_expanding_frequency": {
+            "bootstrap_ci95_vs_fair": [
+              -0.044212729007720546,
+              -0.006185513739841158
+            ],
+            "segment_log_score_advantage_vs_fair": [
+              -0.03166441254349451,
+              -0.013298176617143493,
+              -0.030089718146135612
+            ],
+            "segments_better_than_fair": 0,
+            "bootstrap_ci95_vs_raw_expanding": [
+              0.0,
+              0.0
+            ],
+            "segment_log_score_difference_vs_raw_expanding": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "segments_better_than_raw_expanding": 0,
+            "bootstrap_resamples": 10000,
+            "whole_validation_draw_rows_resampled": true
+          }
+        },
+        "temporal_validation_segments": {
+          "beta_kappa_10": [
+            -0.031215602028928126,
+            -0.013058969562252934,
+            -0.02975242723126705
+          ],
+          "beta_kappa_100": [
+            -0.02763626649930357,
+            -0.011161130511514407,
+            -0.027002616401373844
+          ],
+          "beta_kappa_1000": [
+            -0.01220900982296861,
+            -0.0034735729479807454,
+            -0.013617795403863564
+          ],
+          "fair_random": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "raw_expanding_frequency": [
+            -0.03166441254349451,
+            -0.013298176617143493,
+            -0.030089718146135612
+          ]
+        }
+      },
+      "questions": {
+        "642_mi_real_association_under_test": {
+          "type": "noul",
+          "instructions": "Within the defined permutation test and multiple-testing procedure, does the expanding-frequency result provide evidence of a small statistical association?",
+          "criteria": {
+            "true": "The tested development data contain evidence of a small association under the stated procedure.",
+            "false": "The result does not provide evidence beyond the permutation null under the stated procedure."
+          }
+        },
+        "642_mi_establishes_predictive_utility": {
+          "type": "noul",
+          "instructions": "Does the detected mutual-information association establish useful prediction of future complete 6/42 draws?",
+          "criteria": {
+            "true": "The association translated into validated complete-draw predictive value.",
+            "false": "The association did not establish validated complete-draw predictive value."
+          }
+        },
+        "642_mi_interpretation": {
+          "type": "choice",
+          "instructions": "Which interpretation best fits the relationship between the mutual-information result and the validation results?",
+          "criteria": {
+            "VALIDATED_PREDICTIVE_SIGNAL": "The information finding produced validated improvement in future complete-draw prediction.",
+            "SMALL_ASSOCIATION_WITHOUT_PREDICTIVE_GAIN": "A small statistical association was detected but did not improve complete-draw validation performance.",
+            "LIKELY_RANDOM_FALSE_POSITIVE": "The evidence most strongly supports interpreting the result as a chance discovery.",
+            "METHOD_INVALID": "The information-test design is invalid for the stated question.",
+            "UNRESOLVED": "The evidence cannot distinguish among these interpretations."
+          }
+        }
+      },
+      "answers": {
+        "642_mi_real_association_under_test": {
+          "type": "noul",
+          "noul": 0.73
+        },
+        "642_mi_establishes_predictive_utility": {
+          "type": "noul",
+          "noul": 0.2
+        },
+        "642_mi_interpretation": {
+          "type": "choice",
+          "choice": "SMALL_ASSOCIATION_WITHOUT_PREDICTIVE_GAIN",
+          "probabilities": {
+            "METHOD_INVALID": 0.01,
+            "SMALL_ASSOCIATION_WITHOUT_PREDICTIVE_GAIN": 0.83,
+            "LIKELY_RANDOM_FALSE_POSITIVE": 0.11,
+            "VALIDATED_PREDICTIVE_SIGNAL": 0.05,
+            "UNRESOLVED": 0.0
+          },
+          "confidence": 0.79,
+          "confidence_note": "reported response-distribution information only"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "phase6a-jev-validation/v1",
+  "phase": "PHASE_6A_JEV_INTEGRATION",
+  "status": "PHASE6A_PASS_AND_PHASE6_ADJUDICATED",
+  "repository": {
+    "branch": "main",
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1"
+  },
+  "trusted_reference": {
+    "request_and_smoke_schema": "D:/Dev/Sinag/scripts/content/jev-smoke-tests.js",
+    "response_handling": "D:/Dev/Sinag/scripts/content/definition-cross-check.js",
+    "request_schema_established": true,
+    "official_api_page": "https://docs.typesafe.ai/api"
+  },
+  "smoke_test": {
+    "status": "PASS",
+    "http_status": 200,
+    "model_identifier_returned": "jev-1.13.0",
+    "typed_answer_type": "noul"
+  },
+  "phase6_adjudication": {
+    "status": "PASS",
+    "final_research_status": "STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL",
+    "claim_count": 8,
+    "claims_with_valid_typed_verdicts": 8,
+    "question_count": 63,
+    "model_identifier_returned": "jev-1.13.0"
+  },
+  "evidence_packet": {
+    "sha256": {
+      "reports/phase6_jev_adjudication.json": "5bc4963b5688fd6cf73469c9beedba0664c99c2fc14daaaa3a11cfa4dd49e827",
+      "reports/phase6_evidence_matrix.csv": "8478afcfd4ed6d9b1c438ca6c4724778190c69e2bb8ab078431ad8fc88c60443",
+      "reports/phase6_jev_evidence_review.md": "b1ba376f048c94fa48db7f84c2fd6a9fd64049dbcb7a4dff55e8960392df9b56"
+    },
+    "exact_blocked_packet_used": true,
+    "no_new_scientific_evidence_added": true
+  },
+  "security": {
+    "credential_source": "Keys.env exact TYPESAFE_API_KEY entry",
+    "credential_value_recorded": false,
+    "authorization_header_recorded": false,
+    "credential_echo_check": "PASS",
+    "keys_env_ignored": true,
+    "keys_env_tracked": false
+  },
+  "locked_test": {
+    "status": "SEALED",
+    "targets_parsed": false,
+    "metrics_calculated": false,
+    "predictions_generated": false
+  },
+  "prior_artifacts": {
+    "prior_report_json_source_files_hash_checked": 16,
+    "prior_report_json_source_files_hash_status": "PASS",
+    "phase5r_output_hashes_checked": 9,
+    "phase5r_output_hash_status": "PASS",
+    "phase5a_locked_test_flags": "PASS",
+    "phase5r_locked_test_flags": "PASS",
+    "keys_env_ignored": true,
+    "keys_env_tracked": false,
+    "locked_test_data_reopened": false
+  },
+  "validation": {
+    "python_syntax_and_import": "PASS",
+    "json_output_parse": "PASS",
+    "csv_output_parse": "PASS",
+    "claim_rows": 8,
+    "all_required_typed_fields_present": true,
+    "output_credential_scan": "PASS"
+  },
+  "git_policy": {
+    "staged": false,
+    "committed": false,
+    "pushed": false,
+    "merged": false
+  },
+  "created_at_utc": "2026-10-08T08:43:29.584378+00:00"
+}

@@ -1,0 +1,634 @@
+{
+  "configuration": {
+    "3d_lotto_order_rule": "unordered three-digit multiset; repeated digits preserved; published order retained in source",
+    "anomaly_threshold": 0.01,
+    "batch_size": 64,
+    "confirmation_simulations": 100000,
+    "initial_simulations_per_game": 10000,
+    "jev_enabled": false,
+    "lotto_6_42_order_rule": "unordered set of six distinct values",
+    "numpy_version": "2.5.3",
+    "prediction_enabled": false,
+    "python_version": "3.12.10",
+    "random_generator": "numpy.random.default_rng / PCG64",
+    "random_seed": 162,
+    "seed_stream_derivation": "SeedSequence(seed, spawn_key=(game_index, 0)) for baseline; (game_index, diagnostic_index + 1) for diagnostic-only confirmation."
+  },
+  "generated_files": [
+    "monte_carlo_baseline.py",
+    "phase3_monte_carlo_results.json",
+    "phase3_monte_carlo_random_baseline.md",
+    "phase3_simulation_distributions.csv",
+    "__pycache__/monte_carlo_baseline.cpython-312.pyc"
+  ],
+  "inputs": {
+    "3d_analysis_ready": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\swertres_9pm_analysis_ready.csv",
+      "rows": 3718,
+      "sha256": "bed32547054a819e108f18d53af73db1f74db693202db066c64572846860959b"
+    },
+    "3d_digit_frequency": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\swertres_9pm_digit_frequency.csv",
+      "rows": 10,
+      "sha256": "4ad90a87cbaaca99a08001904b7bbef18e1561ed4b9c5a138f0253729b359681"
+    },
+    "3d_phase2": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\swertres_9pm_phase2_analysis.csv",
+      "rows": 3718,
+      "sha256": "3b207b356349c0bf4e1677979c1077bea434071508e3f835e4fc75e9997d7d72"
+    },
+    "6_42_cleaned": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\lotto_6_42_cleaned_normalized.csv",
+      "rows": 1605,
+      "sha256": "980386a399077564d25de3a3a19aa3611969899895b9e3c06d7e9406599053a0"
+    },
+    "6_42_number_frequency": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\lotto_6_42_number_frequency.csv",
+      "rows": 42,
+      "sha256": "1284586aaccc86f43da2e9676f425842dbf171dde36d8d8da2b4027789252456"
+    },
+    "6_42_phase2": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\lotto_6_42_phase2_analysis.csv",
+      "rows": 1605,
+      "sha256": "a7ff6ac667ab9a4dd83c821ca6a7ad94b2866ab15299f5f0ad7e47818ac32958"
+    },
+    "phase2_report": {
+      "path": "D:\\Dev\\Repositories\\magic_Lotto\\phase2_randomness_diagnostics.md",
+      "rows": null,
+      "sha256": "c6318f74cc5685108f4bb278d6293b84771e0c29af7250888a789aec365cbce7"
+    }
+  },
+  "phase": "Phase 3 Monte Carlo Random Baseline",
+  "phase4_readiness": {
+    "boundary": "Phase 3 evidence may inform separately authorized chronological backtesting; it does not establish predictive signal or authorize Phase 4 execution.",
+    "status": "READY_FOR_HUMAN_REVIEW_AND_PHASE4_BACKTEST_PLANNING"
+  },
+  "repository": {
+    "branch": "main",
+    "configured_remotes": [],
+    "head": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+    "keys_env_contents_read": false,
+    "keys_env_ignored": true,
+    "keys_env_tracked": false,
+    "python_bytecode_cache_paths": [
+      "__pycache__/monte_carlo_baseline.cpython-312.pyc"
+    ],
+    "staged_changes": false,
+    "unexpected_worktree_changes": []
+  },
+  "results": {
+    "3d_lotto": {
+      "date_range": {
+        "end": "2026-10-07",
+        "start": "2016-01-02"
+      },
+      "derived_previous_draw_repeat_frequency": null,
+      "diagnostics": {
+        "consecutive_multiset_overlap_distribution_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Exact fair-process multiset-overlap probabilities; categories 0, 1, and 2+ shared digits.",
+          "final_empirical_p_value": 0.7361263873612639,
+          "initial_empirical_p_value": 0.7361263873612639,
+          "initial_extreme_count": 7361,
+          "initial_simulated_distribution": {
+            "maximum": 24.64529078632348,
+            "mean": 2.0577343283143104,
+            "minimum": 0.000891169171535784,
+            "quantiles": {
+              "0.01": 0.019765765825441435,
+              "0.05": 0.10422096855179952,
+              "0.50": 1.4137636226991992,
+              "0.95": 6.179537584148862,
+              "0.99": 9.831687071607778
+            },
+            "sample_standard_deviation": 2.093064527874805
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Consecutive multiset-overlap distribution chi-square",
+          "observed_statistic": 0.6246153716729533,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "consecutive_multiset_overlap_mean": {
+          "confirmation": null,
+          "fair_reference": 0.7422600000000071,
+          "final_empirical_p_value": 0.8128187181281872,
+          "initial_empirical_p_value": 0.8128187181281872,
+          "initial_extreme_count": 8128,
+          "initial_simulated_distribution": {
+            "maximum": 0.7869249394673123,
+            "mean": 0.7421399515738499,
+            "minimum": 0.6879203658864675,
+            "quantiles": {
+              "0.01": 0.7153591606133979,
+              "0.05": 0.7231638418079096,
+              "0.50": 0.7419962335216572,
+              "0.95": 0.7613666935700834,
+              "0.99": 0.7691686844229217
+            },
+            "sample_standard_deviation": 0.011635457076284899
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Mean consecutive unordered multiset overlap",
+          "observed_statistic": 0.744955609362389,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "digit_sum_mean": {
+          "confirmation": null,
+          "fair_reference": 13.5,
+          "final_empirical_p_value": 0.0822917708229177,
+          "initial_empirical_p_value": 0.0822917708229177,
+          "initial_extreme_count": 822,
+          "initial_simulated_distribution": {
+            "maximum": 13.814954276492738,
+            "mean": 13.501422727272729,
+            "minimum": 13.205217859064012,
+            "quantiles": {
+              "0.01": 13.306075847229692,
+              "0.05": 13.364712210866058,
+              "0.50": 13.50322754168908,
+              "0.95": 13.634749865519096,
+              "0.99": 13.694190424959656
+            },
+            "sample_standard_deviation": 0.08212891239083552
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Digit-sum mean",
+          "observed_statistic": 13.357181280258203,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "digit_sum_variance": {
+          "confirmation": null,
+          "fair_reference": 24.75,
+          "final_empirical_p_value": 0.7348265173482652,
+          "initial_empirical_p_value": 0.7348265173482652,
+          "initial_extreme_count": 7348,
+          "initial_simulated_distribution": {
+            "maximum": 26.64447909037218,
+            "mean": 24.751303277824597,
+            "minimum": 22.518420591432324,
+            "quantiles": {
+              "0.01": 23.582270039825456,
+              "0.05": 23.917721800870435,
+              "0.50": 24.748263253478378,
+              "0.95": 25.61441828850564,
+              "0.99": 25.971961864008804
+            },
+            "sample_standard_deviation": 0.5165174635077427
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Digit-sum sample variance",
+          "observed_statistic": 24.575642523491286,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "lag1_digit_sum_correlation": {
+          "confirmation": null,
+          "fair_reference": 0.0,
+          "final_empirical_p_value": 0.8386161383861613,
+          "initial_empirical_p_value": 0.8386161383861613,
+          "initial_extreme_count": 8386,
+          "initial_simulated_distribution": {
+            "maximum": 0.05742272300509002,
+            "mean": -0.00027064724387378575,
+            "minimum": -0.06493667710097141,
+            "quantiles": {
+              "0.01": -0.038602947294001,
+              "0.05": -0.027062206750985227,
+              "0.50": -0.00025287132479769595,
+              "0.95": 0.02594660264047041,
+              "0.99": 0.037700682017435344
+            },
+            "sample_standard_deviation": 0.016280131618913198
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Lag-1 digit-sum correlation",
+          "observed_statistic": -0.0033140660046086577,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "maximum_digit_share_deviation": {
+          "confirmation": null,
+          "fair_reference": "Maximum absolute share difference from 10%.",
+          "final_empirical_p_value": 0.3233676632336766,
+          "initial_empirical_p_value": 0.3233676632336766,
+          "initial_extreme_count": 3233,
+          "initial_simulated_distribution": {
+            "maximum": 0.013842567688721538,
+            "mean": 0.005277764030840954,
+            "minimum": 0.0014703245472476312,
+            "quantiles": {
+              "0.01": 0.002456517841133238,
+              "0.05": 0.0030840953917877084,
+              "0.50": 0.005164066702528239,
+              "0.95": 0.00794333871256947,
+              "0.99": 0.009270216962524655
+            },
+            "sample_standard_deviation": 0.001482482376649729
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Maximum absolute digit-share deviation",
+          "observed_statistic": 0.0058633674018289395,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "pooled_digit_frequency_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Equal expected frequency for digits 0 through 9.",
+          "final_empirical_p_value": 0.43115688431156884,
+          "initial_empirical_p_value": 0.43115688431156884,
+          "initial_extreme_count": 4311,
+          "initial_simulated_distribution": {
+            "maximum": 41.44916621839698,
+            "mean": 8.954243679397525,
+            "minimum": 0.8825533440918056,
+            "quantiles": {
+              "0.01": 2.1053792361484667,
+              "0.05": 3.2725479648556566,
+              "0.50": 8.279003048233816,
+              "0.95": 16.82320243858705,
+              "0.99": 21.291518737672586
+            },
+            "sample_standard_deviation": 4.245945408645358
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Pooled digit-frequency chi-square",
+          "observed_statistic": 9.053613053613052,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "repetition_pattern_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Fair probabilities: all distinct 72%, one pair 27%, triple 1%.",
+          "final_empirical_p_value": 0.44485551444855514,
+          "initial_empirical_p_value": 0.44485551444855514,
+          "initial_extreme_count": 4448,
+          "initial_simulated_distribution": {
+            "maximum": 24.80514713207021,
+            "mean": 2.0006610608052915,
+            "minimum": 0.0008915585838662686,
+            "quantiles": {
+              "0.01": 0.021810810272348727,
+              "0.05": 0.10810272348733896,
+              "0.50": 1.4006136313828619,
+              "0.95": 5.917677763831609,
+              "0.99": 9.318585260892952
+            },
+            "sample_standard_deviation": 1.9965059048994247
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Repetition-pattern chi-square",
+          "observed_statistic": 1.6441734903273366,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        }
+      },
+      "diagnostics_requiring_investigation": [],
+      "draw_count": 3718,
+      "observed_details": {
+        "consecutive_unordered_multiset_overlap_counts_0_to_3": [
+          1468,
+          1755,
+          468,
+          26
+        ],
+        "digit_counts": {
+          "0": 1154,
+          "1": 1147,
+          "2": 1123,
+          "3": 1095,
+          "4": 1122,
+          "5": 1121,
+          "6": 1091,
+          "7": 1157,
+          "8": 1050,
+          "9": 1094
+        },
+        "digit_sum_mean": 13.357181280258203,
+        "digit_sum_sample_variance": 24.575642523491286,
+        "lag1_digit_sum_correlation": -0.00331406600460865,
+        "published_digit_order_preserved_in_source": true,
+        "repetition_pattern_counts": {
+          "all_distinct": 2644,
+          "one_pair": 1033,
+          "triple": 41
+        }
+      }
+    },
+    "lotto_6_42": {
+      "date_range": {
+        "end": "2026-10-06",
+        "start": "2016-01-02"
+      },
+      "derived_previous_draw_repeat_frequency": {
+        "empirical_p_value_reference": "consecutive_set_overlap_mean",
+        "per_transition_rate": 0.864713216957606,
+        "total_repeated_number_occurrences": 1387
+      },
+      "diagnostics": {
+        "consecutive_set_overlap_distribution_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Hypergeometric probabilities; test categories 0, 1, 2, and 3+ shared numbers.",
+          "final_empirical_p_value": 0.26047395260473954,
+          "initial_empirical_p_value": 0.26047395260473954,
+          "initial_extreme_count": 2604,
+          "initial_simulated_distribution": {
+            "maximum": 19.71359837228865,
+            "mean": 3.001009896431317,
+            "minimum": 0.003956193067393183,
+            "quantiles": {
+              "0.01": 0.11324862100078142,
+              "0.05": 0.3442573240282044,
+              "0.50": 2.382291208096758,
+              "0.95": 7.758498719521446,
+              "0.99": 11.291006239105107
+            },
+            "sample_standard_deviation": 2.4595336924735687
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Consecutive set-overlap distribution chi-square",
+          "observed_statistic": 4.024440573146409,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "consecutive_set_overlap_mean": {
+          "confirmation": null,
+          "fair_reference": 0.8571428571428571,
+          "final_empirical_p_value": 0.7093290670932907,
+          "initial_empirical_p_value": 0.7093290670932907,
+          "initial_extreme_count": 7093,
+          "initial_simulated_distribution": {
+            "maximum": 0.9276807980049875,
+            "mean": 0.8575054862842894,
+            "minimum": 0.7817955112219451,
+            "quantiles": {
+              "0.01": 0.8123441396508728,
+              "0.05": 0.8248129675810474,
+              "0.50": 0.85785536159601,
+              "0.95": 0.8908977556109726,
+              "0.99": 0.9039900249376559
+            },
+            "sample_standard_deviation": 0.019933265959425503
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Mean consecutive-draw set overlap",
+          "observed_statistic": 0.864713216957606,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "draw_sum_mean": {
+          "confirmation": null,
+          "fair_reference": 129.0,
+          "final_empirical_p_value": 0.5453454654534546,
+          "initial_empirical_p_value": 0.5453454654534546,
+          "initial_extreme_count": 5453,
+          "initial_simulated_distribution": {
+            "maximum": 131.9264797507788,
+            "mean": 128.99681912772584,
+            "minimum": 126.40560747663551,
+            "quantiles": {
+              "0.01": 127.40620560747664,
+              "0.05": 127.86105919003116,
+              "0.50": 128.98940809968846,
+              "0.95": 130.15890965732086,
+              "0.99": 130.63932087227414
+            },
+            "sample_standard_deviation": 0.7003610965975543
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Draw-sum mean",
+          "observed_statistic": 128.57632398753893,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "draw_sum_variance": {
+          "confirmation": null,
+          "fair_reference": 774.0,
+          "final_empirical_p_value": 0.9365063493650635,
+          "initial_empirical_p_value": 0.9365063493650635,
+          "initial_extreme_count": 9365,
+          "initial_simulated_distribution": {
+            "maximum": 877.8386797803,
+            "mean": 773.872043636858,
+            "minimum": 674.1004599094165,
+            "quantiles": {
+              "0.01": 714.4772993761703,
+              "0.05": 732.1399604571127,
+              "0.50": 773.4826489073266,
+              "0.95": 817.0156897864372,
+              "0.99": 835.3716347060697
+            },
+            "sample_standard_deviation": 26.1310038657387
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Draw-sum sample variance",
+          "observed_statistic": 771.8478181493307,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        },
+        "marginal_number_frequency_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Equal expected appearance counts; calibration uses without-replacement histories.",
+          "final_empirical_p_value": 0.948005199480052,
+          "initial_empirical_p_value": 0.948005199480052,
+          "initial_extreme_count": 9480,
+          "initial_simulated_distribution": {
+            "maximum": 67.996261682243,
+            "mean": 35.96791302180685,
+            "minimum": 12.0398753894081,
+            "quantiles": {
+              "0.01": 19.68090965732087,
+              "0.05": 23.989595015576327,
+              "0.50": 35.456074766355144,
+              "0.95": 49.827663551401855,
+              "0.99": 56.70903426791277
+            },
+            "sample_standard_deviation": 7.897082616951465
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Marginal number-frequency chi-square",
+          "observed_statistic": 24.120872274143306,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "maximum_number_count_deviation": {
+          "confirmation": null,
+          "fair_reference": "Maximum absolute count difference from six appearances per draw distributed across 42 numbers.",
+          "final_empirical_p_value": 0.9828017198280172,
+          "initial_empirical_p_value": 0.9828017198280172,
+          "initial_extreme_count": 9828,
+          "initial_simulated_distribution": {
+            "maximum": 68.71428571428572,
+            "mean": 34.335142857142856,
+            "minimum": 18.285714285714278,
+            "quantiles": {
+              "0.01": 22.714285714285722,
+              "0.05": 25.285714285714278,
+              "0.50": 33.71428571428572,
+              "0.95": 45.71428571428572,
+              "0.99": 51.71428571428572
+            },
+            "sample_standard_deviation": 6.129918276747569
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Maximum absolute number-count deviation",
+          "observed_statistic": 23.714285714285722,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "odd_count_distribution_chi_square": {
+          "confirmation": null,
+          "fair_reference": "Hypergeometric probabilities for selecting from 21 odd and 21 even values.",
+          "final_empirical_p_value": 0.3538646135386461,
+          "initial_empirical_p_value": 0.3538646135386461,
+          "initial_extreme_count": 3538,
+          "initial_simulated_distribution": {
+            "maximum": 27.563899134760945,
+            "mean": 5.883177912656879,
+            "minimum": 0.07135711430552377,
+            "quantiles": {
+              "0.01": 0.8904766652668986,
+              "0.05": 1.6475154158531755,
+              "0.50": 5.215891644541074,
+              "0.95": 12.28891242487339,
+              "0.99": 16.102913262148736
+            },
+            "sample_standard_deviation": 3.375719772184161
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Odd-count distribution chi-square",
+          "observed_statistic": 6.471533894394328,
+          "p_value_method": "(1 + count(simulated statistic >= observed)) / (N + 1)",
+          "tail": "upper"
+        },
+        "odd_count_mean": {
+          "confirmation": null,
+          "fair_reference": 3.0,
+          "final_empirical_p_value": 0.21087891210878912,
+          "initial_empirical_p_value": 0.21087891210878912,
+          "initial_extreme_count": 2108,
+          "initial_simulated_distribution": {
+            "maximum": 3.1046728971962616,
+            "mean": 2.999826230529595,
+            "minimum": 2.884735202492212,
+            "quantiles": {
+              "0.01": 2.932710280373832,
+              "0.05": 2.953239875389408,
+              "0.50": 2.9993769470404983,
+              "0.95": 3.046728971962617,
+              "0.99": 3.06791277258567
+            },
+            "sample_standard_deviation": 0.02861547503710747
+          },
+          "initial_simulation_count": 10000,
+          "interpretation": "consistent_with_fair_random_baseline",
+          "label": "Mean odd-number count per draw",
+          "observed_statistic": 3.0361370716510905,
+          "p_value_method": "(1 + count(|simulated statistic - fair reference| >= |observed - fair reference|)) / (N + 1)",
+          "tail": "two_sided"
+        }
+      },
+      "diagnostics_requiring_investigation": [],
+      "draw_count": 1605,
+      "observed_details": {
+        "consecutive_set_overlap_counts_0_to_6": [
+          611,
+          654,
+          290,
+          43,
+          6,
+          0,
+          0
+        ],
+        "draw_sum_mean": 128.57632398753893,
+        "draw_sum_sample_variance": 771.8478181493307,
+        "number_counts": {
+          "1": 218,
+          "10": 222,
+          "11": 212,
+          "12": 244,
+          "13": 228,
+          "14": 233,
+          "15": 230,
+          "16": 243,
+          "17": 223,
+          "18": 253,
+          "19": 242,
+          "2": 226,
+          "20": 217,
+          "21": 227,
+          "22": 233,
+          "23": 235,
+          "24": 228,
+          "25": 241,
+          "26": 211,
+          "27": 228,
+          "28": 207,
+          "29": 225,
+          "3": 238,
+          "30": 218,
+          "31": 250,
+          "32": 215,
+          "33": 229,
+          "34": 218,
+          "35": 241,
+          "36": 244,
+          "37": 221,
+          "38": 216,
+          "39": 230,
+          "4": 236,
+          "40": 215,
+          "41": 250,
+          "42": 221,
+          "5": 243,
+          "6": 223,
+          "7": 238,
+          "8": 234,
+          "9": 224
+        },
+        "odd_number_count_per_draw_0_to_6": [
+          14,
+          139,
+          363,
+          526,
+          408,
+          132,
+          23
+        ],
+        "published_number_order_used_for_matching": false,
+        "repeated_number_occurrences_per_transition": 0.864713216957606,
+        "total_repeated_number_occurrences_from_previous_draw": 1387
+      }
+    }
+  },
+  "validation": {
+    "canonical_input_structure": "PASS",
+    "empirical_p_values_within_0_and_1": "PASS",
+    "jev_or_typesafe_called": false,
+    "keys_env_contents_read": false,
+    "keys_env_ignored": true,
+    "keys_env_untracked": true,
+    "lotto_6_42_unique_numbers_per_draw": "PASS",
+    "phase2_feature_consistency": "PASS",
+    "seeded_full_rerun_artifact_hash_check": "PASS: JSON, Markdown, and CSV SHA-256 values matched across complete reruns.",
+    "simulation_domain_and_history_length_checks": "PASS"
+  },
+  "verdict": "PHASE3_PASS_RANDOM_COMPATIBLE"
+}

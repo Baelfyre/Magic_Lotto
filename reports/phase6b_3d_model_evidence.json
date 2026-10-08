@@ -1,0 +1,760 @@
+{
+  "schema_version": "phase6b-typed-model-evidence/v1",
+  "phase": "PHASE_6B_JEV_MODEL_SEMANTIC_READJUDICATION",
+  "phase6b_status": "PHASE6B_MODEL_SEMANTIC_ADJUDICATION_COMPLETE",
+  "requests": [
+    {
+      "request_id": "3d_predictive",
+      "title": "3D predictive evidence and shrinkage",
+      "model_alias_requested": "jev-latest",
+      "model_identifier_returned": "jev-1.13.0",
+      "http_status": 200,
+      "state": {
+        "target": {
+          "outcome": "unordered multiset of three digits; repeated digits are preserved",
+          "complete_combination_probability": true
+        },
+        "development_periods": {
+          "train": {
+            "start_date": "2016-04-16",
+            "end_date": "2022-10-03",
+            "row_count": 2170
+          },
+          "validation": {
+            "start_date": "2022-10-04",
+            "end_date": "2024-10-07",
+            "row_count": 723
+          }
+        },
+        "model_configuration": {
+          "estimator": "regularized multinomial LogisticRegression",
+          "training_target": "expand each training draw into three digit observations weighted by target multiplicity",
+          "probability_model": "one categorical digit distribution for digits 0 through 9; unordered target likelihood includes the multinomial coefficient",
+          "scaling": "StandardScaler inside each training fold",
+          "solver": "lbfgs",
+          "regularization": "L2",
+          "max_iter": 2000,
+          "c_grid": [
+            0.1,
+            1.0,
+            10.0
+          ]
+        },
+        "feature_group_meanings": {
+          "frequency_and_deviation": {
+            "rules": [
+              "columns containing _count_prev_ except _count_prev_draw",
+              "columns ending _expanding_count",
+              "columns ending _freq_expanding",
+              "columns ending _freq_deviation_prev_100"
+            ]
+          },
+          "recency_and_gap": {
+            "rules": [
+              "columns ending _gap_since_seen",
+              "columns ending _never_seen",
+              "columns ending _seen_prev_draw",
+              "columns ending _count_prev_draw"
+            ]
+          },
+          "draw_context": {
+            "rules": [
+              "all remaining non-key feature columns, including prior draw summary, pattern, parity, sum, variance, and overlap context"
+            ]
+          },
+          "all_features": {
+            "rules": [
+              "all Phase 4 feature columns"
+            ]
+          }
+        },
+        "phase5a_validation_evidence": {
+          "primary_metric": "mean_multinomial_negative_log_likelihood_per_digit",
+          "primary_direction": "lower_is_better",
+          "validation_methods": {
+            "uniform_random": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.7732979736623027,
+              "mean_multiset_overlap": 0.7425955739972339,
+              "digit_level_multiclass_brier": 0.9000000000000002
+            },
+            "expanding_historical_frequency": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.773773474966329,
+              "mean_multiset_overlap": 0.8450899031811895,
+              "digit_level_multiclass_brier": 0.9000941272114801
+            },
+            "multinomial_logistic_regression/frequency_and_deviation": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.8324356384665115,
+              "mean_multiset_overlap": 0.8381742738589212,
+              "digit_level_multiclass_brier": 0.9132922986993006,
+              "selected_c": 0.1
+            },
+            "multinomial_logistic_regression/recency_and_gap": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.7889486656228466,
+              "mean_multiset_overlap": 0.7565698478561549,
+              "digit_level_multiclass_brier": 0.9031582743957189,
+              "selected_c": 0.1
+            },
+            "multinomial_logistic_regression/draw_context": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.7903099899924841,
+              "mean_multiset_overlap": 0.8049792531120332,
+              "digit_level_multiclass_brier": 0.9033759490913797,
+              "selected_c": 0.1
+            },
+            "multinomial_logistic_regression/all_features": {
+              "mean_multinomial_negative_log_likelihood_per_digit": 1.8992462645315555,
+              "mean_multiset_overlap": 0.7994467496542186,
+              "digit_level_multiclass_brier": 0.9295064236344662,
+              "selected_c": 0.1,
+              "random_overlap_empirical_p": 0.013598640135986401
+            }
+          },
+          "selected_chronological_folds": {
+            "multinomial_logistic_regression": [
+              {
+                "feature_group": "all_features",
+                "fold": 1,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2017-10-17",
+                "validation_start_date": "2017-10-18",
+                "validation_end_date": "2019-04-26",
+                "train_rows": 544,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 2.847356038524666,
+                "uniform_nll": 1.771551726903331,
+                "expanding_frequency_nll": 1.7736142892159636,
+                "mean_multiset_overlap": 0.6512915129151291
+              },
+              {
+                "feature_group": "all_features",
+                "fold": 2,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2019-04-26",
+                "validation_start_date": "2019-04-27",
+                "validation_end_date": "2021-03-30",
+                "train_rows": 1086,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 2.27170099901611,
+                "uniform_nll": 1.7790480166804694,
+                "expanding_frequency_nll": 1.7799573449502466,
+                "mean_multiset_overlap": 0.7398523985239852
+              },
+              {
+                "feature_group": "all_features",
+                "fold": 3,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2021-03-30",
+                "validation_start_date": "2021-03-31",
+                "validation_end_date": "2022-10-03",
+                "train_rows": 1628,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.9758685719878615,
+                "uniform_nll": 1.777093494029579,
+                "expanding_frequency_nll": 1.778046613290339,
+                "mean_multiset_overlap": 0.8025830258302583
+              },
+              {
+                "feature_group": "draw_context",
+                "fold": 1,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2017-10-17",
+                "validation_start_date": "2017-10-18",
+                "validation_end_date": "2019-04-26",
+                "train_rows": 544,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8189324399820657,
+                "uniform_nll": 1.771551726903331,
+                "expanding_frequency_nll": 1.7736142892159636,
+                "mean_multiset_overlap": 0.8745387453874539
+              },
+              {
+                "feature_group": "draw_context",
+                "fold": 2,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2019-04-26",
+                "validation_start_date": "2019-04-27",
+                "validation_end_date": "2021-03-30",
+                "train_rows": 1086,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8065203903531601,
+                "uniform_nll": 1.7790480166804694,
+                "expanding_frequency_nll": 1.7799573449502466,
+                "mean_multiset_overlap": 0.8265682656826568
+              },
+              {
+                "feature_group": "draw_context",
+                "fold": 3,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2021-03-30",
+                "validation_start_date": "2021-03-31",
+                "validation_end_date": "2022-10-03",
+                "train_rows": 1628,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.792863836263928,
+                "uniform_nll": 1.777093494029579,
+                "expanding_frequency_nll": 1.778046613290339,
+                "mean_multiset_overlap": 0.8357933579335793
+              },
+              {
+                "feature_group": "frequency_and_deviation",
+                "fold": 1,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2017-10-17",
+                "validation_start_date": "2017-10-18",
+                "validation_end_date": "2019-04-26",
+                "train_rows": 544,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 2.52286584110287,
+                "uniform_nll": 1.771551726903331,
+                "expanding_frequency_nll": 1.7736142892159636,
+                "mean_multiset_overlap": 0.7583025830258303
+              },
+              {
+                "feature_group": "frequency_and_deviation",
+                "fold": 2,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2019-04-26",
+                "validation_start_date": "2019-04-27",
+                "validation_end_date": "2021-03-30",
+                "train_rows": 1086,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 2.0846850836848794,
+                "uniform_nll": 1.7790480166804694,
+                "expanding_frequency_nll": 1.7799573449502466,
+                "mean_multiset_overlap": 0.8431734317343174
+              },
+              {
+                "feature_group": "frequency_and_deviation",
+                "fold": 3,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2021-03-30",
+                "validation_start_date": "2021-03-31",
+                "validation_end_date": "2022-10-03",
+                "train_rows": 1628,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.916240523853013,
+                "uniform_nll": 1.777093494029579,
+                "expanding_frequency_nll": 1.778046613290339,
+                "mean_multiset_overlap": 0.7988929889298892
+              },
+              {
+                "feature_group": "recency_and_gap",
+                "fold": 1,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2017-10-17",
+                "validation_start_date": "2017-10-18",
+                "validation_end_date": "2019-04-26",
+                "train_rows": 544,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8152482217327894,
+                "uniform_nll": 1.771551726903331,
+                "expanding_frequency_nll": 1.7736142892159636,
+                "mean_multiset_overlap": 0.8191881918819188
+              },
+              {
+                "feature_group": "recency_and_gap",
+                "fold": 2,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2019-04-26",
+                "validation_start_date": "2019-04-27",
+                "validation_end_date": "2021-03-30",
+                "train_rows": 1086,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8022929158531584,
+                "uniform_nll": 1.7790480166804694,
+                "expanding_frequency_nll": 1.7799573449502466,
+                "mean_multiset_overlap": 0.7933579335793358
+              },
+              {
+                "feature_group": "recency_and_gap",
+                "fold": 3,
+                "train_start_date": "2016-04-16",
+                "train_end_date": "2021-03-30",
+                "validation_start_date": "2021-03-31",
+                "validation_end_date": "2022-10-03",
+                "train_rows": 1628,
+                "validation_rows": 542,
+                "c": 0.1,
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.7912894822026448,
+                "uniform_nll": 1.777093494029579,
+                "expanding_frequency_nll": 1.778046613290339,
+                "mean_multiset_overlap": 0.8007380073800738
+              }
+            ]
+          },
+          "bootstrap": {
+            "multinomial_logistic_regression/all_features": {
+              "primary_metric_ci95": {
+                "confidence_level": 0.95,
+                "lower": 1.8766542355540519,
+                "upper": 1.9220893118368245,
+                "bootstrap_replicates": 10000
+              },
+              "difference_vs_fair_random_ci95": {
+                "confidence_level": 0.95,
+                "lower": 0.10490480004391356,
+                "upper": 0.1470364209858467,
+                "bootstrap_replicates": 10000
+              },
+              "difference_vs_historical_ci95": {
+                "expanding_historical_frequency": {
+                  "confidence_level": 0.95,
+                  "lower": 0.10426869412724533,
+                  "upper": 0.1467149532990004,
+                  "bootstrap_replicates": 10000
+                }
+              },
+              "mean_multiset_overlap_ci95": {
+                "confidence_level": 0.95,
+                "lower": 0.7510373443983402,
+                "upper": 0.8492392807745505,
+                "bootstrap_replicates": 10000
+              }
+            },
+            "multinomial_logistic_regression/frequency_and_deviation": {
+              "primary_metric_ci95": {
+                "confidence_level": 0.95,
+                "lower": 1.8160294339376688,
+                "upper": 1.848434013219841,
+                "bootstrap_replicates": 10000
+              }
+            },
+            "multinomial_logistic_regression/recency_and_gap": {
+              "primary_metric_ci95": {
+                "confidence_level": 0.95,
+                "lower": 1.7786243613475974,
+                "upper": 1.799546551205048,
+                "bootstrap_replicates": 10000
+              }
+            },
+            "multinomial_logistic_regression/draw_context": {
+              "primary_metric_ci95": {
+                "confidence_level": 0.95,
+                "lower": 1.7780505208406827,
+                "upper": 1.8029796028704708,
+                "bootstrap_replicates": 10000
+              }
+            }
+          },
+          "monte_carlo": {
+            "seed": 162,
+            "initial_simulations": 10000,
+            "confirmation_triggered": false,
+            "confirmation_simulations": 0,
+            "reproducible_from_seed": true,
+            "candidates": {
+              "multinomial_logistic_regression/all_features": {
+                "observed_score": 0.7994467496542186,
+                "random_mean": 0.7425955739972339,
+                "random_ci95": {
+                  "lower": 0.6929460580912863,
+                  "upper": 0.7925311203319502
+                },
+                "initial_simulations": 10000,
+                "final_simulations": 10000,
+                "confirmation_simulations": 0,
+                "confirmation_triggered": false,
+                "empirical_p_initial": 0.013598640135986401,
+                "empirical_p_final": 0.013598640135986401,
+                "bonferroni_candidate_count": 1,
+                "empirical_p_bonferroni": 0.013598640135986401
+              }
+            }
+          },
+          "calibration": {
+            "uniform_random": {
+              "expected_calibration_error": 0.0,
+              "sample_count": 21690,
+              "bin_count": 10
+            },
+            "expanding_historical_frequency": {
+              "expected_calibration_error": 0.002117473959092344,
+              "sample_count": 21690,
+              "bin_count": 10
+            },
+            "multinomial_logistic_regression/all_features": {
+              "expected_calibration_error": 0.0396986313869143,
+              "sample_count": 21690,
+              "bin_count": 10
+            }
+          },
+          "feature_ablation": [
+            {
+              "model": "multinomial_logistic_regression",
+              "feature_group": "frequency_and_deviation",
+              "selected_c": 0.1,
+              "metrics": {
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8324356384665115,
+                "mean_multiset_overlap": 0.8381742738589212,
+                "digit_level_multiclass_brier": 0.9132922986993006
+              }
+            },
+            {
+              "model": "multinomial_logistic_regression",
+              "feature_group": "recency_and_gap",
+              "selected_c": 0.1,
+              "metrics": {
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.7889486656228466,
+                "mean_multiset_overlap": 0.7565698478561549,
+                "digit_level_multiclass_brier": 0.9031582743957189
+              }
+            },
+            {
+              "model": "multinomial_logistic_regression",
+              "feature_group": "draw_context",
+              "selected_c": 0.1,
+              "metrics": {
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.7903099899924841,
+                "mean_multiset_overlap": 0.8049792531120332,
+                "digit_level_multiclass_brier": 0.9033759490913797
+              }
+            },
+            {
+              "model": "multinomial_logistic_regression",
+              "feature_group": "all_features",
+              "selected_c": 0.1,
+              "metrics": {
+                "mean_multinomial_negative_log_likelihood_per_digit": 1.8992462645315555,
+                "mean_multiset_overlap": 0.7994467496542186,
+                "digit_level_multiclass_brier": 0.9295064236344662
+              }
+            }
+          ]
+        },
+        "phase5r_complete_draw_evidence": {
+          "complete_combination_validation": {
+            "fair_log_score_nats": -5.319893920986909,
+            "models": {
+              "dirichlet_kappa_10": {
+                "mean_combination_nll_nats": 5.321316430249136,
+                "mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+                "mean_log_score_difference_vs_raw": 3.994649851119914e-06,
+                "marginal_brier": 0.19768435848052132
+              },
+              "dirichlet_kappa_100": {
+                "mean_combination_nll_nats": 5.321281181771342,
+                "mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+                "mean_log_score_difference_vs_raw": 3.924312764525844e-05,
+                "marginal_brier": 0.19768335645721566
+              },
+              "dirichlet_kappa_1000": {
+                "mean_combination_nll_nats": 5.3209878335657095,
+                "mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+                "mean_log_score_difference_vs_raw": 0.00033259133327784475,
+                "marginal_brier": 0.19767525830038343
+              },
+              "fair_random": {
+                "mean_combination_nll_nats": 5.319893920986909,
+                "mean_log_score_advantage_vs_fair": 0.0,
+                "mean_log_score_difference_vs_raw": 0.0014265039120780955,
+                "marginal_brier": 0.19766478976486862
+              },
+              "raw_expanding_frequency": {
+                "mean_combination_nll_nats": 5.321320424898987,
+                "mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+                "mean_log_score_difference_vs_raw": 0.0,
+                "marginal_brier": 0.19768447238313291
+              }
+            }
+          },
+          "paired_row_bootstrap": {
+            "dirichlet_kappa_10": {
+              "bootstrap_ci95_vs_fair": [
+                -0.005345350641773413,
+                0.0025205463775063346
+              ],
+              "segment_log_score_advantage_vs_fair": [
+                -0.003298730231138013,
+                -0.0018817862597737545,
+                0.0009129887042308405
+              ],
+              "segments_better_than_fair": 1,
+              "bootstrap_ci95_vs_raw_expanding": [
+                -1.0870634038415436e-06,
+                9.044679903795433e-06
+              ],
+              "segment_log_score_difference_vs_raw_expanding": [
+                6.9899895362889e-06,
+                4.377964848039952e-06,
+                6.159951690308904e-07
+              ],
+              "segments_better_than_raw_expanding": 3,
+              "bootstrap_resamples": 10000,
+              "whole_validation_draw_rows_resampled": true
+            },
+            "dirichlet_kappa_100": {
+              "bootstrap_ci95_vs_fair": [
+                -0.005264414486922492,
+                0.002511420645470164
+              ],
+              "segment_log_score_advantage_vs_fair": [
+                -0.0032369804244320845,
+                -0.0018431004879606418,
+                0.0009182985590942146
+              ],
+              "segments_better_than_fair": 1,
+              "bootstrap_ci95_vs_raw_expanding": [
+                -1.0998939873181223e-05,
+                8.917849315460758e-05
+              ],
+              "segment_log_score_difference_vs_raw_expanding": [
+                6.873979624221762e-05,
+                4.3063736661152716e-05,
+                5.9258500324049845e-06
+              ],
+              "segments_better_than_raw_expanding": 3,
+              "bootstrap_resamples": 10000,
+              "whole_validation_draw_rows_resampled": true
+            },
+            "dirichlet_kappa_1000": {
+              "bootstrap_ci95_vs_fair": [
+                -0.00456699802518088,
+                0.0024106831461200777
+              ],
+              "segment_log_score_advantage_vs_fair": [
+                -0.002717058420441277,
+                -0.001516900175846318,
+                0.0009522208598868424
+              ],
+              "segments_better_than_fair": 1,
+              "bootstrap_ci95_vs_raw_expanding": [
+                -0.00011869316366684876,
+                0.0007797788243895027
+              ],
+              "segment_log_score_difference_vs_raw_expanding": [
+                0.0005886618002330251,
+                0.00036926404877547634,
+                3.9848150825032736e-05
+              ],
+              "segments_better_than_raw_expanding": 3,
+              "bootstrap_resamples": 10000,
+              "whole_validation_draw_rows_resampled": true
+            },
+            "fair_random": {
+              "bootstrap_ci95_vs_fair": [
+                0.0,
+                0.0
+              ],
+              "segment_log_score_advantage_vs_fair": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "segments_better_than_fair": 0,
+              "bootstrap_ci95_vs_raw_expanding": [
+                -0.0025215451918323725,
+                0.00535448430037557
+              ],
+              "segment_log_score_difference_vs_raw_expanding": [
+                0.003305720220674302,
+                0.0018861642246217943,
+                -0.0009123727090618096
+              ],
+              "segments_better_than_raw_expanding": 2,
+              "bootstrap_resamples": 10000,
+              "whole_validation_draw_rows_resampled": true
+            },
+            "raw_expanding_frequency": {
+              "bootstrap_ci95_vs_fair": [
+                -0.005354484300375572,
+                0.0025215451918323716
+              ],
+              "segment_log_score_advantage_vs_fair": [
+                -0.003305720220674302,
+                -0.0018861642246217943,
+                0.0009123727090618096
+              ],
+              "segments_better_than_fair": 1,
+              "bootstrap_ci95_vs_raw_expanding": [
+                0.0,
+                0.0
+              ],
+              "segment_log_score_difference_vs_raw_expanding": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "segments_better_than_raw_expanding": 0,
+              "bootstrap_resamples": 10000,
+              "whole_validation_draw_rows_resampled": true
+            }
+          },
+          "fair_random_monte_carlo": {
+            "initial_simulations_per_model": 10000,
+            "confirmation_simulations": 100000,
+            "escalated_models": [],
+            "models": {
+              "dirichlet_kappa_10": {
+                "confirmation_escalated": false,
+                "empirical_p_add_one": 0.48555144485551444,
+                "initial_empirical_p_add_one": 0.48555144485551444,
+                "initial_simulations": 10000,
+                "observed_mean_log_score_advantage_vs_fair": -0.0014225092622269758,
+                "simulations": 10000
+              },
+              "dirichlet_kappa_100": {
+                "confirmation_escalated": false,
+                "empirical_p_add_one": 0.48485151484851513,
+                "initial_empirical_p_add_one": 0.48485151484851513,
+                "initial_simulations": 10000,
+                "observed_mean_log_score_advantage_vs_fair": -0.0013872607844328372,
+                "simulations": 10000
+              },
+              "dirichlet_kappa_1000": {
+                "confirmation_escalated": false,
+                "empirical_p_add_one": 0.48135186481351866,
+                "initial_empirical_p_add_one": 0.48135186481351866,
+                "initial_simulations": 10000,
+                "observed_mean_log_score_advantage_vs_fair": -0.0010939125788002508,
+                "simulations": 10000
+              },
+              "raw_expanding_frequency": {
+                "confirmation_escalated": false,
+                "empirical_p_add_one": 0.48555144485551444,
+                "initial_empirical_p_add_one": 0.48555144485551444,
+                "initial_simulations": 10000,
+                "observed_mean_log_score_advantage_vs_fair": -0.0014265039120780955,
+                "simulations": 10000
+              }
+            }
+          },
+          "bayesian_shrinkage": {
+            "dirichlet_kappa_10": {
+              "prior_center": 0.1,
+              "prior_strength": 10,
+              "mean_posterior_probability_across_candidate_draws": 0.1,
+              "mean_absolute_difference_from_raw_frequency": 3.493008053911096e-06,
+              "maximum_absolute_difference_from_raw_frequency": 8.27859740255843e-06
+            },
+            "dirichlet_kappa_100": {
+              "prior_center": 0.1,
+              "prior_strength": 100,
+              "mean_posterior_probability_across_candidate_draws": 0.1,
+              "mean_absolute_difference_from_raw_frequency": 3.453062211465053e-05,
+              "maximum_absolute_difference_from_raw_frequency": 8.174259947552054e-05
+            },
+            "dirichlet_kappa_1000": {
+              "prior_center": 0.1,
+              "prior_strength": 1000,
+              "mean_posterior_probability_across_candidate_draws": 0.1,
+              "mean_absolute_difference_from_raw_frequency": 0.00030989292896307935,
+              "maximum_absolute_difference_from_raw_frequency": 0.0007259344644381382
+            },
+            "raw_expanding_frequency": {
+              "prior_center": 0.1,
+              "mean_posterior_probability_across_candidate_draws": 0.1,
+              "mean_absolute_difference_from_raw_frequency": 0.0,
+              "maximum_absolute_difference_from_raw_frequency": 0.0
+            }
+          },
+          "calibration": {
+            "dirichlet_kappa_10": {
+              "bootstrap_resamples": 10000,
+              "ece": 0.00025789558133781356,
+              "screen_passes": true,
+              "whole_draw_rows_resampled": true
+            },
+            "dirichlet_kappa_100": {
+              "bootstrap_resamples": 10000,
+              "ece": 0.00025728665488903354,
+              "screen_passes": true,
+              "whole_draw_rows_resampled": true
+            },
+            "dirichlet_kappa_1000": {
+              "bootstrap_resamples": 10000,
+              "ece": 0.0002521919005545018,
+              "screen_passes": true,
+              "whole_draw_rows_resampled": true
+            },
+            "fair_random": {
+              "bootstrap_resamples": 10000,
+              "ece": 0.00023098201936385448,
+              "screen_passes": true,
+              "whole_draw_rows_resampled": true
+            },
+            "raw_expanding_frequency": {
+              "bootstrap_resamples": 10000,
+              "ece": 0.0002579645511131657,
+              "screen_passes": true,
+              "whole_draw_rows_resampled": true
+            }
+          }
+        }
+      },
+      "questions": {
+        "3d_logistic_beats_fair_probability_baseline": {
+          "type": "noul",
+          "instructions": "Does the 3D logistic model show evidence that it assigns better probabilities to future complete draws than the fair baseline?",
+          "criteria": {
+            "true": "The primary proper-scoring evidence supports predictive improvement.",
+            "false": "The primary proper-scoring evidence does not support predictive improvement."
+          }
+        },
+        "3d_logistic_improvement_temporally_stable": {
+          "type": "noul",
+          "instructions": "Is any apparent 3D logistic advantage directionally stable across chronological periods?",
+          "criteria": {
+            "true": "The evidence shows consistent temporal improvement.",
+            "false": "The apparent advantage is absent, inconsistent, or unstable across time."
+          }
+        },
+        "3d_logistic_failure_interpretation": {
+          "type": "choice",
+          "instructions": "Which interpretation best matches the 3D logistic evidence?",
+          "criteria": {
+            "PREDICTIVE_IMPROVEMENT": "The model demonstrates meaningful improvement in complete-draw probability prediction.",
+            "SECONDARY_METRIC_ONLY": "Some secondary metric appears favorable, but the primary probability evidence does not support improvement.",
+            "NO_OBSERVED_IMPROVEMENT": "The model does not outperform the relevant probability baselines.",
+            "MODEL_SEMANTICS_INVALID": "The model or metric does not represent the intended prediction target.",
+            "INSUFFICIENT_EVIDENCE": "The available evidence cannot resolve the model's predictive value."
+          }
+        },
+        "3d_shrinkage_beats_fair": {
+          "type": "noul",
+          "instructions": "Did any evaluated 3D Bayesian-shrinkage setting improve complete-combination probability scoring over the fair baseline?",
+          "criteria": {
+            "true": "At least one shrinkage model has supported improvement.",
+            "false": "No tested shrinkage setting established improvement."
+          }
+        }
+      },
+      "answers": {
+        "3d_logistic_beats_fair_probability_baseline": {
+          "type": "noul",
+          "noul": 0.19
+        },
+        "3d_logistic_improvement_temporally_stable": {
+          "type": "noul",
+          "noul": 0.3
+        },
+        "3d_logistic_failure_interpretation": {
+          "type": "choice",
+          "choice": "SECONDARY_METRIC_ONLY",
+          "probabilities": {
+            "NO_OBSERVED_IMPROVEMENT": 0.35,
+            "INSUFFICIENT_EVIDENCE": 0.01,
+            "MODEL_SEMANTICS_INVALID": 0.09,
+            "PREDICTIVE_IMPROVEMENT": 0.12,
+            "SECONDARY_METRIC_ONLY": 0.43
+          },
+          "confidence": 0.29,
+          "confidence_note": "reported response-distribution information only"
+        },
+        "3d_shrinkage_beats_fair": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      }
+    }
+  ]
+}
