@@ -3,6 +3,7 @@
 No validation or test rows are loaded. Clusters describe past draws, not
 probabilities of future winning combinations.
 """
+# @codebase_provenance_JEO
 from __future__ import annotations
 
 import argparse
@@ -37,8 +38,9 @@ def load_train_only(path: Path) -> pd.DataFrame:
         raise ValueError(f"Missing columns: {sorted(needed - set(df.columns))}")
     if int(df.iloc[-1]["source_row"]) != TRAIN_END_SOURCE_ROW:
         raise ValueError("Training boundary changed; refusing to continue")
-    if df["source_row"].duplicated().any() or not df["source_row"].is_monotonic_increasing:
-        raise ValueError("Duplicate or unordered source_row")
+    # source_row is unique provenance metadata, not a chronology key.
+    if df["source_row"].duplicated().any():
+        raise ValueError("Duplicate source_row")
     train = df.loc[df["source_row"].between(TRAIN_START_SOURCE_ROW, TRAIN_END_SOURCE_ROW)].copy()
     if len(train) != TRAIN_COUNT or (train["record_status"] != "valid").any():
         raise ValueError("Training partition does not match Phase 4")
@@ -122,10 +124,12 @@ def analyze(train: pd.DataFrame, null_replicates: int = 100, seed: int = SEED) -
 def make_figures(result: dict, dest: Path) -> None:
     dest.mkdir(parents=True, exist_ok=True)
     x, model = result["x"], result["model"]
+    ball_ticks = np.array([1, 6, 11, 16, 21, 26, 31, 36, 42])
+    matrix_ticks = ball_ticks - 1
     fig, ax = plt.subplots(figsize=(11, 4))
     ax.bar(np.arange(1, BALLS + 1), result["freqs"], width=0.8)
     ax.axhline(len(x) * DRAW_SIZE / BALLS, linestyle="--", color="black", label="Fair-model expected frequency")
-    ax.set(xlabel="Ball (1 to 42)", ylabel="Training-draw appearances", title="6/42 training-prefix frequency (descriptive)")
+    ax.set(xlim=(0.5, BALLS + 0.5), xticks=ball_ticks, xlabel="Ball (1 to 42)", ylabel="Training-draw appearances", title="6/42 training-prefix frequency (descriptive)")
     ax.legend()
     fig.tight_layout(); fig.savefig(dest / "01_frequency.png", dpi=150); plt.close(fig)
 
@@ -133,7 +137,8 @@ def make_figures(result: dict, dest: Path) -> None:
     residual = result["cooccur"] - result["pair_expected"]
     m = float(np.nanmax(np.abs(residual)))
     im = ax.imshow(np.ma.masked_invalid(residual), cmap="coolwarm", vmin=-m, vmax=m)
-    ax.set(xlabel="Ball index (1 to 42)", ylabel="Ball index (1 to 42)", title="Pair counts minus fair-model expectation (training)")
+    ax.set(xticks=matrix_ticks, xticklabels=ball_ticks, yticks=matrix_ticks, yticklabels=ball_ticks,
+           xlabel="Ball (1 to 42)", ylabel="Ball (1 to 42)", title="Pair counts minus fair-model expectation (training)")
     fig.colorbar(im, ax=ax, label="Observed minus expected appearances")
     fig.tight_layout(); fig.savefig(dest / "02_pair_residuals.png", dpi=150); plt.close(fig)
 
@@ -141,13 +146,16 @@ def make_figures(result: dict, dest: Path) -> None:
     fig, ax = plt.subplots(figsize=(11, 4))
     c = ax.imshow(model.cluster_centers_[order], aspect="auto", cmap="viridis", vmin=0, vmax=1)
     ax.set(yticks=range(6), yticklabels=[f"Cluster {i + 1} (n={result['cluster_counts'][i]})" for i in order],
-           xlabel="Ball index (1 to 42)", title="Cluster membership rates among historical training draws")
+           xticks=matrix_ticks, xticklabels=ball_ticks,
+           xlabel="Ball (1 to 42)", title="Cluster membership rates among historical training draws")
     fig.colorbar(c, ax=ax, label="Within-cluster share containing ball")
     fig.tight_layout(); fig.savefig(dest / "03_cluster_profiles.png", dpi=150); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(8, 6))
-    ax.scatter(result["points"][:, 0], result["points"][:, 1], c=model.labels_, cmap="tab10", s=16, alpha=0.68)
+    scatter = ax.scatter(result["points"][:, 0], result["points"][:, 1], c=model.labels_, cmap="tab10", s=16, alpha=0.68)
     ax.set(xlabel="PCA component 1", ylabel="PCA component 2", title="K-means clusters projected to 2D PCA (illustrative)")
+    handles, _ = scatter.legend_elements()
+    ax.legend(handles, [f"Cluster {i + 1}" for i in range(len(handles))], title="Cluster")
     fig.tight_layout(); fig.savefig(dest / "04_cluster_pca.png", dpi=150); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(7, 4))

@@ -59,4 +59,4 @@ The [Phase 6B review notebook](notebooks/lotto_phase6b_model_semantic_review.ipy
 
 An isolated, train-only K-means experiment explores how historical Lotto 6/42 draws cluster and compares their compactness against fair-random simulated draws. It does **not** overturn the project's STOP decision or unseal the locked test.
 
-See the [experiment method and graph previews](docs/PHASE7_KMEANS_DESCRIPTIVE.md) and [Colab-friendly notebook](notebooks/lotto_phase7_kmeans_descriptive.ipynb). Run the Python analysis to generate six additional graphs and a JSON evidence summary.
+See the [experiment method and graph previews](docs/PHASE7_KMEANS_DESCRIPTIVE.md) and [Colab-friendly notebook](notebooks/lotto_phase7_kmeans_descriptive.ipynb). Its first code cell initializes Colab or local Jupyter, installs the Phase 7 requirements in the active kernel, and validates imports before analysis. Run the Python analysis to generate six graphs and a JSON evidence summary.
