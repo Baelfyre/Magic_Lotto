@@ -54,3 +54,9 @@ The [Phase 6B review notebook](notebooks/lotto_phase6b_model_semantic_review.ipy
 - Test whether prediction methods perform better than random guessing.
 - Check whether small patterns help estimate complete future combinations.
 - Review the evidence before deciding whether more prediction testing is justified.
+
+## Experimental Phase 7: K-means visualization
+
+An isolated, train-only K-means experiment explores how historical Lotto 6/42 draws cluster and compares their compactness against fair-random simulated draws. It does **not** overturn the project's STOP decision or unseal the locked test.
+
+See the [experiment method and graph previews](docs/PHASE7_KMEANS_DESCRIPTIVE.md) and [Colab-friendly notebook](notebooks/lotto_phase7_kmeans_descriptive.ipynb). Run the Python analysis to generate six additional graphs and a JSON evidence summary.
