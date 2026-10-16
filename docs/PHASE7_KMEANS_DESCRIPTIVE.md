@@ -47,3 +47,14 @@ The preliminary outcome does not establish compactness beyond the fair-random re
 Historical clusters always exist after K-means fitting, even when every combination is generated independently and uniformly. Any result from this work remains exploratory, especially given prior exploration of the dataset and prior validation usage. Do not reopen sealed test targets, use cluster patterns as probability claims, or promote this analysis to an approved forecast.
 
 No TypeSafe/JEV call is required to adjudicate this bounded descriptive experiment; any future predictive phase would require a separately reviewed design and authorization.
+
+## Preliminary SVG previews saved in this branch
+
+These four figures were generated directly from the existing training CSV with an independent JavaScript analysis, **not** from the Python notebook. They are useful previews but are not a substitute for the reproducible Python execution:
+
+- [Ball frequency preview](../reports/phase7_kmeans_642/preliminary/01_frequency.svg)
+- [Pair residual heatmap](../reports/phase7_kmeans_642/preliminary/02_pair_residuals.svg)
+- [Cluster membership heatmap](../reports/phase7_kmeans_642/preliminary/03_cluster_profiles.svg)
+- [Fair-null inertia histogram](../reports/phase7_kmeans_642/preliminary/04_null_inertia.svg)
+
+The preliminary comparison used 100 simulated fair histories and gave an observed inertia of 4167.34 versus a fair-reference mean of 4156.41, lower-tail simulation p = 0.911. This is not a statistically unusual *low* inertia, and it provides no evidence that these groups are useful for future-draw prediction.
