@@ -1,11 +1,14 @@
 """Lightweight shape, reproducibility and partition-guard checks."""
 # @codebase_provenance_JEO
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import sys
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
+from threadpoolctl import threadpool_info, threadpool_limits
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from phase7_kmeans_642 import (
@@ -18,6 +21,7 @@ from phase7_kmeans_642 import (
     fair_null_draws,
     load_train_only,
 )
+from magic_lotto.research.kmeans_642 import fit_kmeans
 
 
 class KMeansExplorationTests(unittest.TestCase):
@@ -48,6 +52,37 @@ class KMeansExplorationTests(unittest.TestCase):
         a = fair_null_draws(40, np.random.default_rng(162))
         np.testing.assert_array_equal(a, fair_null_draws(40, np.random.default_rng(162)))
         self.assertTrue(np.all(np.diff(np.sort(a, axis=1), axis=1) > 0))
+
+    def test_seeded_kmeans_uses_single_native_thread_and_is_repeatable(self):
+        # Synthetic draws only: no validation or locked-test data is read.
+        rng = np.random.default_rng(53)
+        draws = np.array(
+            [rng.choice(np.arange(1, 43), size=6, replace=False) for _ in range(90)]
+        )
+        encoded = encode_draws(draws)
+        observed_threads = []
+        original_fit = KMeans.fit
+
+        def observe_fit(estimator, values, *args, **kwargs):
+            counts = [
+                library["num_threads"]
+                for library in threadpool_info()
+                if library.get("user_api") in ("blas", "openmp")
+            ]
+            observed_threads.append(counts)
+            return original_fit(estimator, values, *args, **kwargs)
+
+        # Simulate a multi-threaded host; the fit must override it locally.
+        with patch("magic_lotto.research.kmeans_642.KMeans.fit", new=observe_fit):
+            with threadpool_limits(limits=4):
+                first = fit_kmeans(encoded, k=4, seed=162)
+                second = fit_kmeans(encoded, k=4, seed=162)
+
+        self.assertTrue(observed_threads, "Native thread limit was not inspected")
+        self.assertTrue(all(counts and all(n == 1 for n in counts)
+                            for counts in observed_threads))
+        self.assertEqual(first.inertia_, second.inertia_)
+        np.testing.assert_array_equal(first.labels_, second.labels_)
 
     def test_refuses_bad_training_prefix_without_touching_suffix(self):
         with TemporaryDirectory() as p:
