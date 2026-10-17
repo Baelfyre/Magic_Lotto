@@ -17,8 +17,10 @@ from pathlib import Path
 
 import numpy as np
 
+from magic_lotto.paths import REPOSITORY_ROOT, repository_path
 
-ROOT = Path(__file__).resolve().parent
+
+ROOT = REPOSITORY_ROOT
 SEED = 162
 INITIAL_SIMULATIONS = 10_000
 CONFIRMATION_SIMULATIONS = 100_000
@@ -36,10 +38,10 @@ INPUT_FILES = {
 }
 
 OUTPUT_FILES = {
-    "script": "monte_carlo_baseline.py",
-    "json": "phase3_monte_carlo_results.json",
-    "report": "phase3_monte_carlo_random_baseline.md",
-    "distributions": "phase3_simulation_distributions.csv",
+    "script": "research/legacy/scripts/monte_carlo_baseline.py",
+    "json": "reports/phase3_monte_carlo_results.json",
+    "report": "docs/research/phase3_monte_carlo_random_baseline.md",
+    "distributions": "reports/phase3_simulation_distributions.csv",
 }
 
 THREED_METRICS = [
@@ -138,7 +140,7 @@ def verify_repository_and_secret_boundary() -> dict[str, object]:
 
 
 def read_csv(name: str) -> tuple[list[str], list[dict[str, str]]]:
-    path = ROOT / name
+    path = repository_path(ROOT, name)
     require(path.is_file(), f"BLOCKED: required canonical input is missing: {name}")
     with path.open("r", newline="", encoding="utf-8-sig") as stream:
         reader = csv.DictReader(stream)
@@ -165,7 +167,7 @@ def parse_date_rows(name: str, rows: list[dict[str, str]], key: str = "draw_date
 
 def file_sha256(name: str) -> str:
     digest = hashlib.sha256()
-    with (ROOT / name).open("rb") as stream:
+    with repository_path(ROOT, name).open("rb") as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
@@ -177,7 +179,7 @@ def validate_inputs() -> tuple[dict[str, object], dict[str, object]]:
         for key, name in INPUT_FILES.items()
         if name.lower().endswith(".csv")
     }
-    report_path = ROOT / INPUT_FILES["phase2_report"]
+    report_path = repository_path(ROOT, INPUT_FILES["phase2_report"])
     require(report_path.is_file(), "BLOCKED: Phase 2 report is missing")
 
     h3, rows3 = loaded["3d_analysis_ready"]
@@ -282,7 +284,7 @@ def validate_inputs() -> tuple[dict[str, object], dict[str, object]]:
 
     paths = {
         key: {
-            "path": str((ROOT / name).resolve()),
+            "path": str(repository_path(ROOT, name).resolve()),
             "sha256": file_sha256(name),
             "rows": len(loaded[key][1]) if key in loaded else None,
         }
@@ -828,7 +830,7 @@ def render_report(result: dict[str, object]) -> str:
         "- Reproducibility was checked by rerunning the complete script with the recorded seed and comparing the generated artifact hashes.",
         "- Phase 3 is ready for human review and Phase 4 chronological-backtest planning. This result does not authorize Phase 4 execution or support a prediction claim.",
         "",
-        "The compact simulated-distribution summaries are in `phase3_simulation_distributions.csv`; machine-readable statistics and p-value counts are in `phase3_monte_carlo_results.json`.",
+        "The compact simulated-distribution summaries are in `reports/phase3_simulation_distributions.csv`; machine-readable statistics and p-value counts are in `reports/phase3_monte_carlo_results.json`.",
         "",
     ])
     return "\n".join(lines)

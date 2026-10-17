@@ -16,6 +16,13 @@ from typing import Any
 
 import numpy as np
 
+if __package__:
+    from .notebook_bootstrap import build_bootstrap_cell
+    from .repository_paths import repository_path
+else:
+    from notebook_bootstrap import build_bootstrap_cell
+    from repository_paths import repository_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = 162
@@ -45,7 +52,6 @@ EXPECTED_SPLITS = {
 }
 
 EXPECTED_PREEXISTING_UNTRACKED = {
-    "__pycache__/monte_carlo_baseline.cpython-312.pyc",
     "data/features/3d_features.csv",
     "data/features/3d_targets.csv",
     "data/features/642_features.csv",
@@ -53,13 +59,13 @@ EXPECTED_PREEXISTING_UNTRACKED = {
     "data/features/chronological_splits.json",
     "data/features/feature_dictionary.json",
     "models/phase5a_model_config.json",
-    "monte_carlo_baseline.py",
+    "scripts/monte_carlo_baseline.py",
     "notebooks/lotto_phase4_feature_engineering.ipynb",
     "notebooks/lotto_phase5a_ml_validation.ipynb",
     "notebooks/lotto_statistical_analysis.ipynb",
-    "phase3_monte_carlo_random_baseline.md",
-    "phase3_monte_carlo_results.json",
-    "phase3_simulation_distributions.csv",
+    "docs/research/phase3_monte_carlo_random_baseline.md",
+    "reports/phase3_monte_carlo_results.json",
+    "reports/phase3_simulation_distributions.csv",
     "reports/phase4_feature_engineering.md",
     "reports/phase4_validation.json",
     "reports/phase5a_metrics.json",
@@ -188,11 +194,11 @@ def verify_prior_phase_state() -> tuple[dict[str, Any], dict[str, str]]:
     require(current_prior == EXPECTED_PREEXISTING_UNTRACKED,
             f"BLOCKED: pre-existing untracked state differs: {sorted(current_prior ^ EXPECTED_PREEXISTING_UNTRACKED)}")
 
-    required_files = {path for path in PRIOR_PHASE_FILES if path != "__pycache__/monte_carlo_baseline.cpython-312.pyc"}
-    missing = sorted(path for path in required_files if not (ROOT / path).is_file())
+    required_files = set(PRIOR_PHASE_FILES)
+    missing = sorted(path for path in required_files if not repository_path(ROOT, path).is_file())
     require(not missing, f"BLOCKED: canonical Phase 1 through Phase 5A artifacts missing: {missing}")
 
-    p3 = read_json(ROOT / "phase3_monte_carlo_results.json")
+    p3 = read_json(repository_path(ROOT, "phase3_monte_carlo_results.json"))
     p4 = read_json(ROOT / "reports/phase4_validation.json")
     p5a = read_json(ROOT / "reports/phase5a_validation.json")
     require(p3.get("verdict") == "PHASE3_PASS_RANDOM_COMPATIBLE", "BLOCKED: Phase 3 verdict changed")
@@ -274,11 +280,14 @@ def verify_prior_phase_state() -> tuple[dict[str, Any], dict[str, str]]:
     recorded_p5a_hashes = p5a.get("artifact_hashes", {})
     require(bool(recorded_p5a_hashes), "BLOCKED: Phase 5A saved artifact hashes missing")
     for relative_path, expected_hash in recorded_p5a_hashes.items():
-        path = ROOT / relative_path
+        path = repository_path(ROOT, relative_path)
         require(path.is_file() and sha256_file(path) == expected_hash,
                 f"BLOCKED: Phase 5A canonical artifact hash mismatch: {relative_path}")
 
-    prior_hashes = {relative_path: sha256_file(ROOT / relative_path) for relative_path in PRIOR_PHASE_FILES}
+    prior_hashes = {
+        relative_path: sha256_file(repository_path(ROOT, relative_path))
+        for relative_path in PRIOR_PHASE_FILES
+    }
     state = {
         "repository": str(ROOT.resolve()),
         "branch": branch.stdout.strip(),
@@ -1657,18 +1666,30 @@ def build_notebook(evidence: dict[str, Any]) -> Any:
     nb = nbformat.v4.new_notebook()
     nb.metadata = {
         "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-        "language_info": {"name": "python", "version": sys.version.split()[0]},
+        "language_info": {"name": "python"},
     }
     cells = [nbformat.v4.new_markdown_cell(
         "# Phase 5R Predictive Information and Conditional Combination Modeling\n\nThis executed notebook reads Phase 5R result artifacts only. It does not open the Phase 4 target matrix or any locked-test target row."
     )]
+    cells.append(nbformat.v4.new_code_cell(build_bootstrap_cell(
+        required_modules=("magic_lotto", "numpy", "pandas", "matplotlib", "IPython"),
+        required_paths=(
+            "reports/phase5r_evidence.json",
+            "reports/phase5r_information_tests.csv",
+            "reports/phase5r_information_permutations.csv",
+            "reports/phase5r_temporal_dependence.csv",
+            "reports/phase5r_stationarity.csv",
+            "reports/phase5r_bayesian_shrinkage.csv",
+            "reports/phase5r_combination_probability_metrics.csv",
+        ),
+    )))
     setup = """from pathlib import Path
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from IPython.display import display
 
-ROOT = Path.cwd()
+ROOT = REPO_ROOT
 EVIDENCE = json.loads((ROOT / 'reports/phase5r_evidence.json').read_text(encoding='utf-8'))
 INFO = pd.read_csv(ROOT / 'reports/phase5r_information_tests.csv')
 PERM = pd.read_csv(ROOT / 'reports/phase5r_information_permutations.csv')
@@ -1752,7 +1773,10 @@ def execute_notebook(notebook: Any) -> tuple[Any, dict[str, Any]]:
 
 
 def validate_prior_phase_unchanged(prior_hashes: dict[str, str]) -> dict[str, Any]:
-    after = {relative_path: sha256_file(ROOT / relative_path) for relative_path in prior_hashes}
+    after = {
+        relative_path: sha256_file(repository_path(ROOT, relative_path))
+        for relative_path in prior_hashes
+    }
     changed = sorted(path for path in prior_hashes if after[path] != prior_hashes[path])
     require(not changed, f"FAILED: canonical Phase 1 through Phase 5A artifacts changed: {changed}")
     return {"all_prior_phase_artifacts_unchanged": True, "artifact_count": len(after), "prior_artifact_hashes": after}

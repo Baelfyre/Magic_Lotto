@@ -15,6 +15,13 @@ from pathlib import Path
 
 import numpy as np
 
+if __package__:
+    from .notebook_bootstrap import build_bootstrap_cell
+    from .repository_paths import repository_path
+else:
+    from notebook_bootstrap import build_bootstrap_cell
+    from repository_paths import repository_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MIN_HISTORY = 101
@@ -33,12 +40,11 @@ PHASE4_FILES = {
     "notebooks/lotto_phase4_feature_engineering.ipynb",
 }
 PRIOR_PHASE_ARTIFACTS = {
-    "__pycache__/monte_carlo_baseline.cpython-312.pyc",
-    "monte_carlo_baseline.py",
+    "research/legacy/scripts/monte_carlo_baseline.py",
     "notebooks/lotto_statistical_analysis.ipynb",
-    "phase3_monte_carlo_random_baseline.md",
-    "phase3_monte_carlo_results.json",
-    "phase3_simulation_distributions.csv",
+    "docs/research/phase3_monte_carlo_random_baseline.md",
+    "reports/phase3_monte_carlo_results.json",
+    "reports/phase3_simulation_distributions.csv",
 }
 CANONICAL_INPUTS = {
     "3d_analysis_ready": "swertres_9pm_analysis_ready.csv",
@@ -117,7 +123,7 @@ def preflight(root: Path) -> dict[str, object]:
 
 
 def read_csv(root: Path, name: str) -> tuple[list[str], list[dict[str, str]]]:
-    path = root / name
+    path = repository_path(root, name)
     require(path.is_file(), f"BLOCKED: required canonical input is missing: {name}")
     with path.open("r", newline="", encoding="utf-8-sig") as stream:
         reader = csv.DictReader(stream)
@@ -169,9 +175,9 @@ def phase3_and_input_validation(root: Path) -> tuple[dict[str, object], dict[str
     for name in [*CANONICAL_INPUTS.values(), "phase3_monte_carlo_results.json",
                  "phase3_monte_carlo_random_baseline.md", "phase3_simulation_distributions.csv",
                  "monte_carlo_baseline.py", "notebooks/lotto_statistical_analysis.ipynb"]:
-        require((root / name).is_file(), f"BLOCKED: required Phase 1 through Phase 3 artifact is missing: {name}")
+        require(repository_path(root, name).is_file(), f"BLOCKED: required Phase 1 through Phase 3 artifact is missing: {name}")
 
-    phase3 = json.loads((root / "phase3_monte_carlo_results.json").read_text(encoding="utf-8"))
+    phase3 = json.loads(repository_path(root, "phase3_monte_carlo_results.json").read_text(encoding="utf-8"))
     require(phase3.get("verdict") == "PHASE3_PASS_RANDOM_COMPATIBLE", "BLOCKED: Phase 3 verdict is not validated")
     p3v = phase3.get("validation", {})
     require(
@@ -186,7 +192,7 @@ def phase3_and_input_validation(root: Path) -> tuple[dict[str, object], dict[str
         name = Path(entry.get("path", "")).name
         expected = next((v for v in CANONICAL_INPUTS.values() if v == name), None)
         if expected:
-            require(sha256_file(root / expected) == entry.get("sha256"), f"BLOCKED: Phase 3 input hash mismatch: {expected}")
+            require(sha256_file(repository_path(root, expected)) == entry.get("sha256"), f"BLOCKED: Phase 3 input hash mismatch: {expected}")
 
     nb = json.loads((root / "notebooks/lotto_statistical_analysis.ipynb").read_text(encoding="utf-8"))
     code_cells = [cell for cell in nb.get("cells", []) if cell.get("cell_type") == "code"]
@@ -242,7 +248,7 @@ def phase3_and_input_validation(root: Path) -> tuple[dict[str, object], dict[str
         prior6 = draw
     return phase3, {
         "3d_rows": rows3, "6_42_rows": rows6, "3d_draws": draws3, "6_42_draws": draws6,
-        "input_hashes": {name: sha256_file(root / name) for name in CANONICAL_INPUTS.values()},
+        "input_hashes": {name: sha256_file(repository_path(root, name)) for name in CANONICAL_INPUTS.values()},
         "phase3_verdict": phase3["verdict"],
         "phase3_notebook_code_cells": len(code_cells),
     }
@@ -773,7 +779,21 @@ def notebook_cells() -> list[dict[str, object]]:
         "diagnostics": """fig, ax = plt.subplots(figsize=(8, 3.2))\nax.bar(['3D gap nulls', '6/42 gap nulls'], [validation['games']['3d_lotto']['gap_null_cells'], validation['games']['lotto_6_42']['gap_null_cells']], color=['#466a8a', '#8a6da8'])\nax.set(title='Never-seen gap values after required-history filtering', ylabel='Nullable gap cells', xlabel='Game')\nfig.tight_layout()""",
     }
     cells: list[dict[str, object]] = []
-    setup = """from pathlib import Path\nimport json, sys\nimport pandas as pd\nimport matplotlib.pyplot as plt\nsys.dont_write_bytecode = True\nROOT = next((candidate for candidate in [Path.cwd().resolve(), *Path.cwd().resolve().parents] if (candidate / 'scripts/phase4_feature_engineering.py').is_file()), None)\nassert ROOT is not None, 'Open this notebook from within the magic_Lotto repository.'\nsys.path.insert(0, str(ROOT))\nfrom scripts.phase4_feature_engineering import build_core\npayloads, validation = build_core(ROOT)\nfor relative, content in payloads.items():\n    assert (ROOT / relative).read_bytes() == content, f'Saved artifact differs: {relative}'\nfeatures3 = pd.read_csv(ROOT / 'data/features/3d_features.csv')\ntargets3 = pd.read_csv(ROOT / 'data/features/3d_targets.csv')\nfeatures6 = pd.read_csv(ROOT / 'data/features/642_features.csv')\ntargets6 = pd.read_csv(ROOT / 'data/features/642_targets.csv')\ndictionary = json.loads((ROOT / 'data/features/feature_dictionary.json').read_text(encoding='utf-8'))\nsplit_manifest = json.loads((ROOT / 'data/features/chronological_splits.json').read_text(encoding='utf-8'))\nvalidation = json.loads((ROOT / 'reports/phase4_validation.json').read_text(encoding='utf-8'))\nprint('Saved core artifacts match a fresh deterministic build.')"""
+    setup = """import json
+import pandas as pd
+import matplotlib.pyplot as plt
+from scripts.phase4_feature_engineering import build_core
+payloads, validation = build_core(ROOT)
+for relative, content in payloads.items():
+    assert (ROOT / relative).read_bytes() == content, f'Saved artifact differs: {relative}'
+features3 = pd.read_csv(ROOT / 'data/features/3d_features.csv')
+targets3 = pd.read_csv(ROOT / 'data/features/3d_targets.csv')
+features6 = pd.read_csv(ROOT / 'data/features/642_features.csv')
+targets6 = pd.read_csv(ROOT / 'data/features/642_targets.csv')
+dictionary = json.loads((ROOT / 'data/features/feature_dictionary.json').read_text(encoding='utf-8'))
+split_manifest = json.loads((ROOT / 'data/features/chronological_splits.json').read_text(encoding='utf-8'))
+validation = json.loads((ROOT / 'reports/phase4_validation.json').read_text(encoding='utf-8'))
+print('Saved core artifacts match a fresh deterministic build.')"""
     cells.append(nbf.v4.new_code_cell(setup))
     for heading, text, code_key in sections:
         cells.append(nbf.v4.new_markdown_cell(f"## {heading}\n\n{text}"))
@@ -812,11 +832,34 @@ def notebook_execution_status(root: Path) -> dict[str, object]:
 def make_notebook(root: Path) -> bytes:
     import nbformat as nbf
 
+    cells = notebook_cells()
+    first_code_index = next(i for i, cell in enumerate(cells) if cell["cell_type"] == "code")
+    cells.insert(first_code_index, nbf.v4.new_code_cell(build_bootstrap_cell(
+        required_modules=("magic_lotto", "numpy", "pandas", "matplotlib", "scripts.phase4_feature_engineering"),
+        required_paths=(
+            "scripts/phase4_feature_engineering.py",
+            "research/legacy/scripts/monte_carlo_baseline.py",
+            "data/raw/6-42.csv",
+            "data/raw/swertres9pm.md",
+            "data/processed/lotto_6_42_cleaned_normalized.csv",
+            "data/processed/swertres_9pm_cleaned_normalized.csv",
+            "data/processed/swertres_9pm_analysis_ready.csv",
+            "data/analysis/phase2/lotto_6_42_number_frequency.csv",
+            "data/analysis/phase2/lotto_6_42_phase2_analysis.csv",
+            "data/analysis/phase2/swertres_9pm_digit_frequency.csv",
+            "data/analysis/phase2/swertres_9pm_phase2_analysis.csv",
+            "reports/phase3_monte_carlo_results.json",
+            "data/features/3d_features.csv",
+            "data/features/3d_targets.csv",
+            "data/features/642_features.csv",
+            "data/features/642_targets.csv",
+        ),
+    )))
     notebook = nbf.v4.new_notebook(
-        cells=notebook_cells(),
+        cells=cells,
         metadata={
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-            "language_info": {"name": "python", "version": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"},
+            "language_info": {"name": "python"},
         },
     )
     nbf.validate(notebook)
@@ -844,7 +887,7 @@ def validation_report(
             "phase3_verdict": details["phase3_verdict"],
             "phase3_notebook_code_cells": details["phase3_notebook_code_cells"],
         },
-        "canonical_input_paths": {key: str((root / name).resolve()) for key, name in CANONICAL_INPUTS.items()},
+        "canonical_input_paths": {key: str(repository_path(root, name).resolve()) for key, name in CANONICAL_INPUTS.items()},
         "canonical_input_hashes": details["canonical_input_hashes"],
         "games": details["games"],
         "split_manifest_path": str((root / "data/features/chronological_splits.json").resolve()),

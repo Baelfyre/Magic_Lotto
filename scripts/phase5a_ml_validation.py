@@ -14,6 +14,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+if __package__:
+    from .notebook_bootstrap import build_bootstrap_cell
+    from .repository_paths import repository_path
+else:
+    from notebook_bootstrap import build_bootstrap_cell
+    from repository_paths import repository_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "models" / "phase5a_model_config.json"
@@ -75,11 +82,10 @@ PHASE5_OUTPUT_PATHS = (
 )
 
 PHASE3_PRIOR_PATHS = (
-    "__pycache__/monte_carlo_baseline.cpython-312.pyc",
-    "monte_carlo_baseline.py",
-    "phase3_monte_carlo_random_baseline.md",
-    "phase3_monte_carlo_results.json",
-    "phase3_simulation_distributions.csv",
+    "research/legacy/scripts/monte_carlo_baseline.py",
+    "docs/research/phase3_monte_carlo_random_baseline.md",
+    "reports/phase3_monte_carlo_results.json",
+    "reports/phase3_simulation_distributions.csv",
     "notebooks/lotto_statistical_analysis.ipynb",
 )
 
@@ -243,6 +249,7 @@ def verify_initial_status(phase4: dict, run_mode: bool) -> dict:
     }
     allowed = (
         set(PHASE1_TO3_HASHES)
+        | {repository_path(ROOT, name).relative_to(ROOT).as_posix() for name in PHASE1_TO3_HASHES}
         | set(PHASE4_OUTPUT_PATHS)
         | set(PHASE3_PRIOR_PATHS)
         | set(PHASE5_OUTPUT_PATHS)
@@ -317,21 +324,21 @@ def validate_phase4_artifacts(np, pd, config: dict) -> dict:
         "Phase 4 scope or test boundary is inconsistent.",
     )
     for name, expected in p4["canonical_input_hashes"].items():
-        path = ROOT / name
+        path = repository_path(ROOT, name)
         require(path.is_file(), f"Phase 2 canonical input missing: {name}")
         require(sha256_file(path) == expected, f"Phase 2 input hash mismatch: {name}")
-    p3 = read_json(ROOT / "phase3_monte_carlo_results.json")
+    p3 = read_json(repository_path(ROOT, "phase3_monte_carlo_results.json"))
     require(p3.get("verdict") == "PHASE3_PASS_RANDOM_COMPATIBLE", "Phase 3 verdict is not PASS.")
     for entry in p3.get("inputs", {}).values():
         name = Path(entry.get("path", "")).name
         if name in p4["canonical_input_hashes"]:
             require(
-                sha256_file(ROOT / name) == entry.get("sha256"),
+                sha256_file(repository_path(ROOT, name)) == entry.get("sha256"),
                 f"Phase 3 recorded input hash mismatch: {name}",
             )
 
     for name, expected in PHASE1_TO3_HASHES.items():
-        path = ROOT / name
+        path = repository_path(ROOT, name)
         require(path.is_file(), f"Phase 1 through Phase 3 artifact missing: {name}")
         require(sha256_file(path) == expected, f"Phase 1 through Phase 3 hash mismatch: {name}")
     p4_output_hashes = p4["reproducibility"]["artifact_hashes"]
@@ -925,6 +932,20 @@ def make_notebook(metrics: dict) -> None:
             }
         )
 
+    pycell(
+        "magic-lotto-bootstrap-v1",
+        build_bootstrap_cell(
+            required_modules=("magic_lotto", "numpy", "pandas", "matplotlib", "IPython"),
+            required_paths=(
+                "reports/phase5a_metrics.json",
+                "reports/phase5a_validation.json",
+                "reports/phase5a_validation_predictions/3d_validation_predictions.csv",
+                "reports/phase5a_validation_predictions/642_validation_predictions.csv",
+                "reports/phase5a_random_baseline_distributions.csv",
+                "data/features/chronological_splits.json",
+            ),
+        ),
+    )
     markdown(
         1,
         "Phase 5A Objective and Evidence Boundary",
@@ -940,9 +961,7 @@ def make_notebook(metrics: dict) -> None:
         "import numpy as np\n"
         "import pandas as pd\n"
         "import matplotlib.pyplot as plt\n"
-        "ROOT = Path.cwd()\n"
-        "if not (ROOT / 'reports/phase5a_metrics.json').is_file():\n"
-        "    ROOT = next(parent for parent in Path.cwd().parents if (parent / 'reports/phase5a_metrics.json').is_file())\n"
+        "ROOT = REPO_ROOT\n"
         "metrics = json.loads((ROOT / 'reports/phase5a_metrics.json').read_text(encoding='utf-8'))\n"
         "validation = json.loads((ROOT / 'reports/phase5a_validation.json').read_text(encoding='utf-8'))\n"
         "pred3 = pd.read_csv(ROOT / 'reports/phase5a_validation_predictions/3d_validation_predictions.csv')\n"
@@ -1255,7 +1274,7 @@ def make_notebook(metrics: dict) -> None:
                 "language": "python",
                 "name": "python3",
             },
-            "language_info": {"name": "python", "version": sys.version.split()[0]},
+            "language_info": {"name": "python"},
         },
         "nbformat": 4,
         "nbformat_minor": 5,
@@ -2695,14 +2714,14 @@ def finalize_outputs() -> None:
     current_phase4 = read_json(PHASE4_REPORT_PATH)
     require(
         all(
-            sha256_file(ROOT / name) == expected
+            sha256_file(repository_path(ROOT, name)) == expected
             for name, expected in PHASE1_TO3_HASHES.items()
         ),
         "A Phase 1 through Phase 3 artifact changed after Phase 5A.",
     )
     require(
         all(
-            sha256_file(ROOT / name) == expected
+            sha256_file(repository_path(ROOT, name)) == expected
             for name, expected in current_phase4["canonical_input_hashes"].items()
         ),
         "A Phase 2 canonical input changed after Phase 5A.",
