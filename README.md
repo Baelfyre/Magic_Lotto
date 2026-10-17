@@ -1,62 +1,58 @@
 # Magic Lotto
 
-Magic Lotto is a simple exploratory project that looks at past 3D Lotto 9PM and Lotto 6/42 results to see whether previous draws contain any useful pattern that may help estimate the next number combination.
+Magic Lotto is an educational research repository for analyzing historical Philippine lottery draws. It contains earlier work on 3D Lotto 9PM and Lotto 6/42; the Phase 8 proposal itself is scoped to Lotto 6/42 only.
 
-## What is this project about?
+## Research status
 
-It explores whether past draws can help estimate complete combinations for future draws. It focuses on full combinations, not on finding numbers that appeared most often.
+The recorded research verdict remains `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`. Existing analyses did not establish reproducible predictive signal. This does not prove prediction is impossible; it records that the tested data and methods established no reliable advantage. The repository is not a lottery prediction service, and this structural refactor does not add predictive behavior or change that verdict. Validation and locked-test partitions remain sealed.
 
-## Purpose
-
-The project tests whether past results can provide useful information for future draws. It does not assume that often repeated numbers are more likely to appear.
-
-## What is the project trying to achieve?
-
-It compares different ways of studying past draws with normal random guessing. The goal is to see whether any method can estimate complete combinations more reliably.
-
-## Current assessment
-
-The research found a few small patterns in past data, including one in historical Lotto 6/42 results. They did not consistently help estimate complete future combinations better than random guessing. The current status is `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`, so further prediction testing with this dataset has stopped.
-
-The locked test data remains unopened.
-
-## Important note
-
-These results do not prove that lottery prediction is impossible. They only show that the data and methods tested so far did not find a reliable advantage.
-
-## Project structure
+## Repository layout
 
 ```text
 Magic_Lotto/
-├── data/        Data used during the research
-├── scripts/     Programs used to clean and study the data
-├── notebooks/   Step-by-step research notebooks
-├── models/      Saved settings used during testing
-├── reports/     Results and checks from each research stage
-├── docs/        Final project documentation
-└── README.md    Overview of the project
+├── data/
+│   ├── analysis/phase2/        Existing Phase 2 tables
+│   ├── features/               Existing protected Phase 4 artifacts
+│   ├── processed/              Existing normalized datasets
+│   └── raw/                    Existing source files
+├── docs/
+│   ├── architecture/           Architecture and migration guides
+│   └── research/               Historical Phase 1 through Phase 3 reports
+├── models/                     Existing model configuration
+├── notebooks/                  Six existing research notebooks
+├── reports/                    Existing Phase 3 and later evidence
+├── research/legacy/scripts/    Historical Phase 3 Monte Carlo source
+├── scripts/                    Existing phase utilities and compatibility entrypoints
+├── src/magic_lotto/            Layered package for the train-only Phase 7 workflow
+└── tests/                      Regression and notebook/path checks
 ```
 
-Some earlier research files remain in the top folder because the saved scripts and records refer to them there.
+See [repository structure](docs/REPOSITORY_STRUCTURE.md), the [architecture](docs/architecture/REPOSITORY_ARCHITECTURE.md), and the [file migration map](docs/architecture/FILE_MIGRATION_MAP.md). Exact old and new byte counts and SHA-256 values are recorded in [the migration manifest](docs/REPOSITORY_LAYOUT_MIGRATION.json).
 
-## Research files
+## Install and run Phase 7
 
-The project keeps the original data, cleaned data, scripts, notebooks, and reports so the work can be reviewed and repeated. The `data/` folder currently contains files prepared for later analysis.
+Python 3.10 or newer is required. Install the local package and notebook dependencies with:
 
-The [Phase 6B review notebook](notebooks/lotto_phase6b_model_semantic_review.ipynb) explains how the tested models and patterns were reviewed before deciding whether any model was ready for final testing.
+```bash
+python -m pip install -e ".[notebook]"
+```
 
-## Research stages
+Run the existing descriptive analysis from the repository root:
 
-- Clean and check the historical lottery data.
-- Look for patterns and unusual results.
-- Compare the real results with random simulated draws.
-- Prepare past-draw information without looking at future results.
-- Test whether prediction methods perform better than random guessing.
-- Check whether small patterns help estimate complete future combinations.
-- Review the evidence before deciding whether more prediction testing is justified.
+```bash
+magic-lotto-phase7 --null-replicates 100 --seed 162
+```
 
-## Experimental Phase 7: K-means visualization
+The compatibility command remains available:
 
-An isolated, train-only K-means experiment explores how historical Lotto 6/42 draws cluster and compares their compactness against fair-random simulated draws. It does **not** overturn the project's STOP decision or unseal the locked test.
+```bash
+python scripts/phase7_kmeans_642.py --null-replicates 100 --seed 162
+```
 
-See the [experiment method and graph previews](docs/PHASE7_KMEANS_DESCRIPTIVE.md) and [Colab-friendly notebook](notebooks/lotto_phase7_kmeans_descriptive.ipynb). Its first code cell initializes Colab or local Jupyter, installs the Phase 7 requirements in the active kernel, and validates imports before analysis. Run the Python analysis to generate six graphs and a JSON evidence summary.
+Phase 7 reads only the first 1,003 normalized records and validates its 902-draw training boundary. Its default outputs are written under `reports/phase7_kmeans_642/`. The analysis is descriptive; it does not use validation or locked-test records or reverse the recorded research verdict.
+
+## Notebooks
+
+Each notebook's first code cell finds or validates the repository root, installs the editable package and notebook extra in the active kernel, checks required inputs and imports, and reports the checkout identity. For local Jupyter, open the notebook from this checkout or set `MAGIC_LOTTO_ROOT` to it. In Colab, setup clones `main` into `/content/Magic_Lotto` only when it cannot find a checkout; set `MAGIC_LOTTO_REF` to request another branch. Setup never switches, resets, cleans, or overwrites an existing checkout.
+
+See the [notebook execution guide](docs/architecture/NOTEBOOK_EXECUTION_GUIDE.md) for the six-notebook inventory and execution boundaries. Actual hosted Colab execution has not been verified in this refactor. For the Phase 7 method and limitations, see [the research note](docs/PHASE7_KMEANS_DESCRIPTIVE.md) and [the notebook](notebooks/lotto_phase7_kmeans_descriptive.ipynb). The [Phase 6B review notebook](notebooks/lotto_phase6b_model_semantic_review.ipynb) records the prior model-readiness review.

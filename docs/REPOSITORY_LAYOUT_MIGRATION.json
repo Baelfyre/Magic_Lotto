@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "source_revision": "b67e31572187001c89266839871c9e28456b90e8",
+  "captured_at": "2026-10-17",
+  "status": "DATA_AND_FROZEN_ARTIFACT_MOVES_VERIFIED_WITH_ONE_PATH_ADAPTED_SCRIPT",
+  "entries": [
+    {
+      "from": "6-42.csv",
+      "to": "data/raw/6-42.csv",
+      "status": "MOVED",
+      "bytes_before_move": 102424,
+      "sha256_before_move": "9d8bf396373cd20ac197f423ed245407fa701bbd28895b2bb55e1dca92e3e8a8",
+      "reason": "Original Lotto 6/42 source data.",
+      "bytes_after_move": 102424,
+      "sha256_after_move": "9d8bf396373cd20ac197f423ed245407fa701bbd28895b2bb55e1dca92e3e8a8"
+    },
+    {
+      "from": "swertres9pm.md",
+      "to": "data/raw/swertres9pm.md",
+      "status": "MOVED",
+      "bytes_before_move": 160563,
+      "sha256_before_move": "b8c1e1f762c8b3059956d96b344804498bc20bc9f174a358fc616ae115ecb1a3",
+      "reason": "Original 3D Lotto source data.",
+      "bytes_after_move": 160563,
+      "sha256_after_move": "b8c1e1f762c8b3059956d96b344804498bc20bc9f174a358fc616ae115ecb1a3"
+    },
+    {
+      "from": "lotto_6_42_cleaned_normalized.csv",
+      "to": "data/processed/lotto_6_42_cleaned_normalized.csv",
+      "status": "MOVED",
+      "bytes_before_move": 160157,
+      "sha256_before_move": "980386a399077564d25de3a3a19aa3611969899895b9e3c06d7e9406599053a0",
+      "reason": "Existing cleaned Lotto 6/42 data; bytes and row order are preserved.",
+      "bytes_after_move": 160157,
+      "sha256_after_move": "980386a399077564d25de3a3a19aa3611969899895b9e3c06d7e9406599053a0"
+    },
+    {
+      "from": "swertres_9pm_cleaned_normalized.csv",
+      "to": "data/processed/swertres_9pm_cleaned_normalized.csv",
+      "status": "MOVED",
+      "bytes_before_move": 222781,
+      "sha256_before_move": "3118bc4972bbff55db6029342701c870ca3e4735e26ddcdf6bbe86ee018836cc",
+      "reason": "Existing cleaned 3D Lotto data; bytes and row order are preserved.",
+      "bytes_after_move": 222781,
+      "sha256_after_move": "3118bc4972bbff55db6029342701c870ca3e4735e26ddcdf6bbe86ee018836cc"
+    },
+    {
+      "from": "swertres_9pm_analysis_ready.csv",
+      "to": "data/processed/swertres_9pm_analysis_ready.csv",
+      "status": "MOVED",
+      "bytes_before_move": 222461,
+      "sha256_before_move": "bed32547054a819e108f18d53af73db1f74db693202db066c64572846860959b",
+      "reason": "Existing analysis-ready 3D Lotto data; bytes and row order are preserved.",
+      "bytes_after_move": 222461,
+      "sha256_after_move": "bed32547054a819e108f18d53af73db1f74db693202db066c64572846860959b"
+    },
+    {
+      "from": "lotto_6_42_number_frequency.csv",
+      "to": "data/analysis/phase2/lotto_6_42_number_frequency.csv",
+      "status": "MOVED",
+      "bytes_before_move": 2790,
+      "sha256_before_move": "afbc1af5b4044c5f3bef21044e66c45817c2b5904de3407e6896b7f86c8df640",
+      "reason": "Existing Phase 2 Lotto 6/42 frequency result.",
+      "bytes_after_move": 2790,
+      "sha256_after_move": "afbc1af5b4044c5f3bef21044e66c45817c2b5904de3407e6896b7f86c8df640"
+    },
+    {
+      "from": "lotto_6_42_phase2_analysis.csv",
+      "to": "data/analysis/phase2/lotto_6_42_phase2_analysis.csv",
+      "status": "MOVED",
+      "bytes_before_move": 174466,
+      "sha256_before_move": "d1ebb6a5a11f2797cd1cd208e11d0e25513e9cc04698d62e387db0e78e53b41c",
+      "reason": "Existing Phase 2 Lotto 6/42 result.",
+      "bytes_after_move": 174466,
+      "sha256_after_move": "d1ebb6a5a11f2797cd1cd208e11d0e25513e9cc04698d62e387db0e78e53b41c"
+    },
+    {
+      "from": "swertres_9pm_digit_frequency.csv",
+      "to": "data/analysis/phase2/swertres_9pm_digit_frequency.csv",
+      "status": "MOVED",
+      "bytes_before_move": 581,
+      "sha256_before_move": "149f19971509ccc0ecf98578b113046eebc0123db7335876e8bff7d37b9b9e80",
+      "reason": "Existing Phase 2 3D Lotto frequency result.",
+      "bytes_after_move": 581,
+      "sha256_after_move": "149f19971509ccc0ecf98578b113046eebc0123db7335876e8bff7d37b9b9e80"
+    },
+    {
+      "from": "swertres_9pm_phase2_analysis.csv",
+      "to": "data/analysis/phase2/swertres_9pm_phase2_analysis.csv",
+      "status": "MOVED",
+      "bytes_before_move": 310257,
+      "sha256_before_move": "1525ff66f234aa2780b74c8372f40300e02cb314b576a38318ae3f5dbedc7eeb",
+      "reason": "Existing Phase 2 3D Lotto result.",
+      "bytes_after_move": 310257,
+      "sha256_after_move": "1525ff66f234aa2780b74c8372f40300e02cb314b576a38318ae3f5dbedc7eeb"
+    },
+    {
+      "from": "monte_carlo_baseline.py",
+      "to": "research/legacy/scripts/monte_carlo_baseline.py",
+      "status": "MOVED_WITH_PATH_ADAPTATION",
+      "bytes_before_move": 51798,
+      "sha256_before_move": "89e992f18f7afd096d5aa5dca8d81f2d1204db50f48710794648b923721e50e5",
+      "reason": "Historical Phase 3 script moved to the legacy research area. Repository-root and current artifact-path references were updated; statistical calculations were preserved. The original Git revision and path remain verifiable below.",
+      "sha256_at_planning": "0e3d8ce2db104c8c24299b8556e4269211f3f18b498a4da969fb1e43590d580c",
+      "bytes_at_planning": 51569,
+      "bytes_after_move": 51749,
+      "sha256_after_move": "4b952712bb7ffdb6b78e6bbf63dd7d0dce7c3f39b23daa98075bc8b52bd057f6",
+      "historical_source_revision": "12007b11786118bbc1a368d725e0627f922f2b8a",
+      "historical_source_path": "monte_carlo_baseline.py",
+      "historical_source_sha256": "31cd14b519af3457f2de5f55e836a1899d8751a8bb492faeb663b5ba10f7fe19"
+    },
+    {
+      "from": "lotto_data_cleaning_report.md",
+      "to": "docs/research/lotto_data_cleaning_report.md",
+      "status": "MOVED",
+      "bytes_before_move": 3307,
+      "sha256_before_move": "8860f040ec18308cfe96d0ee822378ce6959fe0d3d35d49db2ba4baef07b541f",
+      "reason": "Historical cleaning report; content and recorded provenance remain unchanged.",
+      "bytes_after_move": 3307,
+      "sha256_after_move": "8860f040ec18308cfe96d0ee822378ce6959fe0d3d35d49db2ba4baef07b541f"
+    },
+    {
+      "from": "phase2_randomness_diagnostics.md",
+      "to": "docs/research/phase2_randomness_diagnostics.md",
+      "status": "MOVED",
+      "bytes_before_move": 5944,
+      "sha256_before_move": "164e39efcfc3931a4e0bf2fbc944efccf28f483024132bf0df5babea4d42a966",
+      "reason": "Historical Phase 2 report; content and recorded provenance remain unchanged.",
+      "bytes_after_move": 5944,
+      "sha256_after_move": "164e39efcfc3931a4e0bf2fbc944efccf28f483024132bf0df5babea4d42a966"
+    },
+    {
+      "from": "phase3_monte_carlo_random_baseline.md",
+      "to": "docs/research/phase3_monte_carlo_random_baseline.md",
+      "status": "MOVED",
+      "bytes_before_move": 8674,
+      "sha256_before_move": "f4105e6a40277c40e5374c9120e853050931b25b1dbb62a0b70fefee2c603f73",
+      "reason": "Historical Phase 3 report; content and recorded provenance remain unchanged.",
+      "bytes_after_move": 8674,
+      "sha256_after_move": "f4105e6a40277c40e5374c9120e853050931b25b1dbb62a0b70fefee2c603f73"
+    },
+    {
+      "from": "phase3_monte_carlo_results.json",
+      "to": "reports/phase3_monte_carlo_results.json",
+      "status": "MOVED",
+      "bytes_before_move": 26116,
+      "sha256_before_move": "79d131a68f913e43f3f8eabfac3f7ab557017216c623b893f283b72d8bbaa3b3",
+      "reason": "Historical Phase 3 machine-readable evidence; content and recorded provenance remain unchanged.",
+      "bytes_after_move": 26116,
+      "sha256_after_move": "79d131a68f913e43f3f8eabfac3f7ab557017216c623b893f283b72d8bbaa3b3"
+    },
+    {
+      "from": "phase3_simulation_distributions.csv",
+      "to": "reports/phase3_simulation_distributions.csv",
+      "status": "MOVED",
+      "bytes_before_move": 5360,
+      "sha256_before_move": "c8dc4d390ae941bef8429f9d9c9564897b98f61e80eeb5738614e35ce161f43a",
+      "reason": "Historical Phase 3 simulation summary; content and recorded provenance remain unchanged.",
+      "bytes_after_move": 5360,
+      "sha256_after_move": "c8dc4d390ae941bef8429f9d9c9564897b98f61e80eeb5738614e35ce161f43a"
+    }
+  ],
+  "not_applicable": [
+    {
+      "path": "data/features/",
+      "status": "NOT_APPLICABLE",
+      "reason": "The Phase 4 feature and target artifacts retain their current paths and bytes."
+    },
+    {
+      "path": "reports/phase4+",
+      "status": "NOT_APPLICABLE",
+      "reason": "Existing Phase 4 and later reports retain their current paths and bytes."
+    },
+    {
+      "path": "models/",
+      "status": "NOT_APPLICABLE",
+      "reason": "Model configuration filenames and contents remain unchanged."
+    },
+    {
+      "path": "notebooks/*.ipynb",
+      "status": "NOT_APPLICABLE",
+      "reason": "Notebook filenames remain stable; only bootstrap, active paths, and generic environment metadata are updated."
+    }
+  ],
+  "blocked_moves": [],
+  "historical_hash_references": [
+    {
+      "paths": [
+        "swertres_9pm_phase2_analysis.csv",
+        "swertres_9pm_digit_frequency.csv",
+        "lotto_6_42_phase2_analysis.csv",
+        "lotto_6_42_number_frequency.csv",
+        "lotto_data_cleaning_report.md",
+        "phase2_randomness_diagnostics.md"
+      ],
+      "verification_revision": "7eeca79065d5f3f83ff476dbe377076376ff87e1",
+      "status": "RECORDED_HASHES_MATCH_ORIGINAL_GIT_BLOBS",
+      "current_snapshot_note": "The six current relocated files have different hashes from these historical Phase 1 through Phase 3 references. Their current bytes match the selected base revision and were preserved during this move."
+    },
+    {
+      "paths": [
+        "monte_carlo_baseline.py",
+        "notebooks/lotto_statistical_analysis.ipynb"
+      ],
+      "verification_revision": "12007b11786118bbc1a368d725e0627f922f2b8a",
+      "status": "RECORDED_HASHES_MATCH_ORIGINAL_GIT_SOURCES",
+      "current_snapshot_note": "The current script and notebook were updated for package paths and notebook startup. Their original hash expectations remain unchanged."
+    }
+  ],
+  "historical_evidence_policy": "Historical reports, verdicts, locked-test boundaries, recorded absolute paths, and expected hash constants are not rewritten. Unchanged moved data and evidence retain their selected-base bytes and SHA-256 values. Historical Phase 1 through Phase 3 hash expectations that differ from the current snapshot were verified against their original Git revisions and paths; the current snapshot is not represented as reproducing those older inputs. The Phase 3 script and notebook hashes change only in the current working tree for path and startup updates."
+}

@@ -11,3 +11,9 @@ Keys.env
 .env
 *.env
 .env.*
+
+# Python bytecode
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
