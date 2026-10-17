@@ -6,6 +6,8 @@
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
+**Scope:** Philippine Lotto 6/42 only. 3D Lotto, other lottery games, and unrelated prediction systems are outside this design.
+
 ## System context diagram
 
 ```mermaid
@@ -16,7 +18,13 @@ flowchart LR
   Python[Offline Python research engine]
   Git[Git-reviewed repository history]
   TSA[Independent RFC 3161 timestamp authority]
-  Results[Authorized future draw source]
+  PCSO[PCSO official result page]
+  ThirdParty[LottoPCSO.com independent reference]
+  Registry[Source registry: access, terms, robots, reuse]
+  Gate[Source eligibility gate]
+  Adapter[Disabled Python source adapter]
+  Parser[Versioned parse, normalize, validate]
+  Quarantine[Quarantine and human review]
   Reviewers[Research and source reviewers]
 
   Visitor -->|local generation and download| Static
@@ -25,11 +33,18 @@ flowchart LR
   Python -->|hash and register change| Git
   Python -->|manifest hash before target draw| TSA
   TSA -->|timestamp token| Git
-  Results -.->|only after permission and review| Python
+  Registry --> Gate
+  PCSO -.->|public factual results candidate| Gate
+  ThirdParty -.->|secondary comparison candidate| Gate
+  Gate -.->|eligible request only| Adapter
+  Adapter --> Parser
+  Parser -->|uncertain or conflicting| Quarantine
+  Parser -->|verified and reuse-approved| Artifacts
+  Quarantine -->|reviewed correction or disposition| Artifacts
   Reviewers -->|approve artifacts and protocol| Git
 ```
 
-Dashed source flow is disabled by default and blocked pending source authorization. The visitor's generated combinations do not flow to the repository, a collector, or a service.
+Dashed source flow is design-only and disabled by default. PCSO is the authoritative source candidate; LottoPCSO.com is a secondary independent reference and cannot confer official verification without PCSO cross-check. Source eligibility includes current terms, robots rules, ordinary access conditions, applicable reuse limits, pacing, and review expiry. Public visibility is not permission. The visitor's generated combinations do not flow to the repository, a collector, or a service.
 
 ## Major components and responsibilities
 
@@ -40,7 +55,7 @@ Dashed source flow is disabled by default and blocked pending source authorizati
 | Static web client | C3 | Read approved artifacts, run local generation, display explanations, export visitor output | Browser-local; no central write endpoint |
 | Public registry view | C4 | Render frozen project-generated research manifests as static read-only pages | Publishes only after pre-draw timestamp evidence is verified |
 | Evaluation process | C5 | Apply frozen metrics to authorized post-registration outcomes | Append-only result event; cannot tune registered models in place |
-| Source adapter boundary | C6 | Specify future access/normalization interface and quarantine uncertain data | Disabled until source access and reuse approval |
+| Source adapter boundary | C6 | Check source eligibility; define ordinary retrieval, versioned parsing, normalization, deduplication, independent cross-check, quarantine, and correction flow | Disabled until current source-specific access/reuse review and human feasibility approval |
 | Independent timestamp service | C7 | Timestamp the canonical manifest hash before the target draw | External evidence; token and verification details retained |
 
 ## User journeys for G0, G1, and G2
@@ -93,6 +108,24 @@ For G1/G2 only, the client first reads the approved static model artifact. Model
 ## Historical results exploration
 
 The frontend reads only public result artifacts whose source review is approved and whose record-level verification state is visible. It can filter by game/date and present counts, but every chart must show its source, time span, missing-data status, and that historical frequencies do not imply predictive value. A correction does not overwrite an observation; the UI shows the corrected state and links to its correction event. If source reuse is not approved, hide the dataset and show a source-status notice instead of copying results into the app.
+
+## Probability calculation and display
+
+```mermaid
+flowchart LR
+  Fair[Fair independent Lotto 6/42 assumption] --> Exact[1 / C(42,6) = 1 / 5,245,786]
+  Model[G1/G2 model artifact] --> Normalize[Validate target distribution and normalizer]
+  Normalize -->|validated| ModelP[Model selection probability P_model(S)]
+  Normalize -->|not validated| NA[Not calculated / Not established]
+  Train[Approved 902-draw training sample] --> Feature[Versioned feature definition and count]
+  Feature --> Frequency[Historical frequency count / N]
+  Exact --> Labels[Display as separate labelled measures]
+  ModelP --> Labels
+  NA --> Labels
+  Frequency --> Labels
+```
+
+The fair-draw value is the chance that the draw exactly matches one specified line; every valid line has the same value under the fair independent model. A model-selection probability describes the named generator's normalized output distribution and is not the chance of winning. A historical frequency describes a stated sample and pattern definition only. Historical displays include the dataset count, date range, data/model version, and feature definition; unavailable quantities show “Not calculated” or “Not established.” None of these displays authorizes predictive claims.
 
 ## Offline Python model-building workflow
 
@@ -151,9 +184,15 @@ A future confirmatory evaluation should declare a primary proper score, such as 
 
 ## Separately gated official collector workflow
 
-The collector remains a design seam only. Before activation, obtain documented source identity, permitted access method, terms/reuse review, rate limits, owner, error policy, data fields, and approvals. Then an adapter may retrieve data without bypassing authentication, WAF, robots or rate limits; normalize into `DrawObservation`; validate six unique in-range balls, draw date and game; deduplicate; preserve source snapshot/hash; and quarantine conflicts for human review. Missing source values are `null`.
+The collector remains disabled and design-only. The Python DrawSourceAdapter operations are check_access_conditions, health_check, fetch_draws, parse_response, normalize_records, and report_source_status. A disabled adapter and its health check make no network requests. Before any live pilot, a human-reviewed feasibility report must record source identity, current terms and robots findings, permitted ordinary request method, reuse scope, pacing, error/denial behavior, review owner, and expiry. Written permission is required only when applicable law, terms, or a source-specific restriction requires it; no blanket permission prerequisite is asserted.
 
-The current source matrix and block status are in [05 Backend and Data Schema](05_BACKEND_AND_DATA_SCHEMA.md). LottoMatik's published terms currently prohibit automated access without express written permission and restrict redistribution/copying without permission. That source must not be scraped or copied to a public artifact absent express approval. The PCSO result page is a source lead, but this review did not confirm a public machine interface or reuse permission.
+The proposed pipeline is: source eligibility; ordinary permitted public retrieval; source-specific HTML or structured-response parsing under a versioned parser; date and number normalization; exact game/date/combination validation for Lotto 6/42; stable deduplication; independent cross-verification; quarantine of incomplete, malformed, conflicting, or unverified records; versioned storage with source/payload/parser/revision provenance; then downstream use only for authorized post-registration outcomes. Missing source values remain null. No records are repaired by guessing, and no original dataset is edited or reordered.
+
+PCSO's public result page currently exposes start/end date fields, a game selector, and a mixed-game result table. Whether an ordinary GET or POST request, hidden ASP.NET WebForms state, pagination, or historical date filters are usable remains unverified. LottoPCSO.com has a 6/42 history table and its disclaimer directs users to PCSO for verification while identifying the site as unaffiliated; it is secondary and requires its own current terms, robots, and reuse review. LottoMatik remains excluded from automation based on the prior documented restriction; its current terms were not reverified here. FOI is not a collection dependency. See the current matrix in [05 Backend and Data Schema](05_BACKEND_AND_DATA_SCHEMA.md).
+
+Parser feasibility testing is offline and synthetic. Fixtures cover date formats, published versus sorted order, missing fields, duplicate rows, incomplete combinations, unexpected headers, placeholders, malformed markup, pagination/date filters, markup changes, access denial, timeout/server failure, cross-source conflicts, and official corrections. The implementation language remains Python. requests or httpx, the standard-library HTML parser, BeautifulSoup4, lxml, Pandas, and Pydantic/JSON Schema are evaluation candidates only; no new dependency is approved. Do not run scraping, live network tests, or collector activation as part of this design.
+
+If later approved, collection should run at low frequency after result publication, with the current official draw timetable verified before a schedule is selected. Request pacing and bounded retries must follow current source conditions; stop on access denial, clear prohibition, or unresolved restrictions. Do not use CAPTCHA solving, stealth browsers, proxy rotation, or WAF circumvention. A scheduled workflow is not exact timestamp evidence.
 
 ## Failure and recovery scenarios
 
@@ -187,12 +226,16 @@ The current source matrix and block status are in [05 Backend and Data Schema](0
 | FR-003, FR-009 | C1, C2, C3 | TEST-005, TEST-012 | 8B, 8C |
 | FR-004 | C1, C2, C3 | TEST-006, TEST-007, TEST-013 | 8B, 8C |
 | FR-005, FR-006 | C1, C3 | TEST-002, TEST-004 | 8A, 8C |
-| FR-007, NFR-003 | C3, C5 | TEST-014, TEST-019 | 8B, 8C, 8F |
-| FR-008 | C2, C3, C6 | TEST-008, TEST-015 | 8C, 8D |
+| FR-007, FR-015, FR-016, NFR-003 | C3, C5 | TEST-014, TEST-019 | 8B, 8C, 8F |
+| FR-008, FR-017 | C2, C3, C6 | TEST-008, TEST-015, TEST-020, TEST-024 | 8C, 8D |
 | FR-010, NFR-001 | C3 | TEST-016 | 8C |
 | FR-011 | C2, C4, C7 | TEST-011, TEST-017 | 8E |
 | FR-012 | C5, C7 | TEST-018, TEST-019 | 8F |
 | FR-013 | C6 | TEST-010, TEST-020 | 8D |
+| FR-014 | C1, C2, C3, C6 | TEST-023 | 8A, 8C, 8D |
+| TR-013, DATA-016, DATA-017 | C2, C6 | TEST-008, TEST-015, TEST-020, TEST-024 | 8D |
+| TR-014, DATA-018 | C1, C2, C3 | TEST-008, TEST-014 | 8A, 8C |
+| DATA-015 | C1, C2, C5, C6 | TEST-009, TEST-018, TEST-023 | 8A, 8D, 8F |
 | NFR-002, NFR-006, NFR-007 | C3, C2 | TEST-008, TEST-021 and measured performance review | 8B, 8C |
 | NFR-004, NFR-008 | C1, C2, C3 | TEST-008, TEST-009, TEST-011 | 8A, 8B, 8E |
 

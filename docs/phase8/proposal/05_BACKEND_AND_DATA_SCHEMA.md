@@ -6,6 +6,8 @@
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
+**Scope:** Philippine Lotto 6/42 only. Draw records and source adapters for 3D Lotto, other lottery games, or unrelated prediction systems are excluded.
+
 ## Storage requirements and rationale
 
 V1 uses versioned JSON for structured snapshots and JSONL for append-only event streams, reviewed through Git. This matches the proposed offline research engine and static read-only client without adding a service or database. The repository stores only public/approved research artifacts and synthetic fixtures; it does not store visitor-generated combinations.
@@ -62,37 +64,41 @@ erDiagram
 | DATA-012 | Quarantine and correction shall preserve the original record, reason, reviewer role, and successor reference. |
 | DATA-013 | Frozen hashes shall cover canonical serialized bytes; RFC 3161 token and verification evidence shall bind to the manifest hash. |
 | DATA-014 | No visitor-generated combination or profile shall be persisted centrally in v1. |
+| DATA-015 | Phase 8 draw records shall use game ID lotto-6-42 only; post-cutoff observations remain in a separate prospective store and never modify the 902-draw training source or sealed partitions. |
+| DATA-016 | Draw provenance shall include source classification and identity, retrieval time, parser version, payload hash when allowed, access/reuse review states, record revision, and supersession links. |
+| DATA-017 | Source access and reuse reviews shall be separate, current, conditional on applicable restrictions, and fail closed; written permission is required only where law, terms, or source-specific conditions require it. |
+| DATA-018 | Probability metadata shall identify fair-draw probability, model-selection probability, or historical pattern frequency and include the applicable model/data/feature version and denominator. |
 
 ## Schema conventions
 
 - Dates use ISO 8601 calendar date (`YYYY-MM-DD`); instants use UTC RFC 3339 (`YYYY-MM-DDThh:mm:ssZ`).
-- Ball arrays contain six distinct integer values sorted ascending.
+- Canonical ball arrays contain six distinct integer values sorted ascending as winning_numbers_sorted. Preserve the source-published order separately when the source supplies it.
 - Monetary values, if later included, use decimal strings plus currency codes; do not store floating-point currency.
 - Unknown source fields use `null`. Empty string means a known empty text value only when the source explicitly provides it.
-- `verification_status` and `reuse_status` are independent; a source may be official while machine access/reuse remains unapproved.
+- `verification_status`, `access_review_status`, and `reuse_review_status` are independent; a source may be official while automated access or reuse remains unreviewed or disallowed.
 - Personal data are excluded by design. Reviewer identity uses a project role or approved reviewer ID; do not add personal details without a separate governance decision.
 
 ## DrawObservation schema
 
-Required fields: `schema_version`, `record_type`, `draw_observation_id`, `record_class`, `game_id`, `draw_date`, `winning_numbers`, `verification_status`, `source_refs`, `retrieved_at`, and `created_at`. Nullable source values include jackpot amount and currency, jackpot winner count, source draw identifier, and source-provided publication time. The logical duplicate check uses a reviewed game/date/source draw key; it must not mutate the source file or treat repository row number as chronology.
+Required fields: `schema_version`, `record_type`, `record_id`, `record_class`, `game_id`, `draw_date`, `winning_numbers_sorted`, `published_combination`, `source_id`, `source_url`, `source_classification`, `retrieved_at`, `parser_version`, `payload_sha256`, `verification_status`, `access_review_status`, `reuse_review_status`, `record_revision`, `supersedes_record_id`, `source_refs`, and `created_at`. Optional fields include jackpot amount/currency, winner count, source draw ID and publication timestamp, source snapshot reference, and cross-verified source IDs. A required field may be null only where the field rules below explicitly allow it.
 
-`record_class` is `public_observation` or `synthetic_fixture`. `verification_status` is `synthetic`, `pending_review`, `verified`, `quarantined`, or `superseded`. Only `verified` observations from an approved source/reuse scope may appear in official-results views or authorized outcome evaluation.
+`record_class` is `public_observation` or `synthetic_fixture`; `game_id` is always `lotto-6-42`. `winning_numbers_sorted` is the canonical ascending six-number set. `published_combination` preserves the source's visible order when present and is null when unavailable. `payload_sha256` is null if no payload was retrieved or if retaining/hash recording is not allowed by the reviewed source conditions. Verification states distinguish provisional, pending cross-check, verified official, verified third-party cross-check, quarantined, superseded, and synthetic. Only an appropriately verified observation with approved source-specific reuse status may appear in a results view or authorized outcome evaluation.
 
 ## SourceRegistry, SourceReview, and provenance records
 
-`SourceRegistry` fields: `source_id`, `schema_version`, `publisher_name`, `source_name`, `source_url`, `official_status` (`official`, `unverified`, or `third_party`), `access_method_status` (`not_reviewed`, `human_view_only`, `express_permission_required`, `approved`, or `denied`), `reuse_status` (`not_reviewed`, `permission_pending`, `approved`, or `denied`), `terms_url`, `collector_enabled`, `last_reviewed_at`, and `notes`. `collector_enabled` defaults to `false`; changing it requires a separately authorized deployment/operations action. `official_status=official` does not imply that access or reuse is approved.
+`SourceRegistry` is proposed at schema version 2.0. Its fields are `source_id`, `schema_version`, `publisher_name`, `source_name`, `source_url`, `source_classification` (`official`, `third_party`, or `unverified`), `priority`, `terms_url`, `robots_url`, `access_review_status`, `reuse_review_status`, `reviewed_request_method`, `request_limits`, `review_conditions`, `last_reviewed_at`, `review_expires_at`, `collector_enabled`, and notes. Review states are `not_reviewed`, `review_required`, `conditional`, `approved`, `denied`, or `expired`. The exact conditions field records when applicable law, terms, or source-specific restrictions require written permission; written permission is not a blanket prerequisite. `collector_enabled` defaults to `false`; changing it requires separate activation approval. Official classification does not imply access or reuse approval.
 
-`SourceReview` fields: `source_review_id`, `source_id`, `review_scope` (`identity`, `access`, `reuse`, `privacy`, or `provenance`), `decision` (`pending`, `approved`, `denied`, `expired`, or `needs_review`), `reviewed_at`, `reviewer_role`, `evidence_refs`, `conditions`, and nullable `expires_at`. Access and reuse must have separate decisions.
+`SourceReview` fields: `source_review_id`, `source_id`, `review_scope` (`identity`, `access`, `reuse`, `privacy`, or `provenance`), `decision` (`pending`, `approved`, `denied`, `expired`, or `needs_review`), `reviewed_at`, `reviewer_role`, `evidence_refs`, `conditions`, and nullable `expires_at`. Access and reuse require separate decisions; each must be rechecked when a source changes its terms or access behavior.
 
-Provenance references include `source_id`, `source_url`, `retrieved_at`, nullable `source_published_at`, `source_snapshot_sha256`, `source_locator`, `review_status`, and `source_review_id`. Preserve raw source evidence only where lawfully obtained and approved; otherwise keep the source URL and review note without copying the content.
+Provenance references include primary `source_id`, `source_url`, `source_classification`, `retrieved_at`, parser version, nullable payload hash, nullable source publication time, optional snapshot hash/locator, review IDs, and cross-verification references. Preserve raw source evidence only where current review allows it; otherwise keep approved metadata and a source URL without copying page content. FOI is excluded as an operational acquisition dependency.
 
 ## ModelSpec schema
 
-Required fields: `schema_version`, `record_type`, `model_id`, `model_version`, `algorithm_id` (`G0`, `G1`, `G2`), `status` (`baseline`, `experimental_control`, `pending_calibration`, `approved_for_experimental_use`, or `retired`), `feature_definition_version`, `training_dataset_sha256` or `null` for G0, `training_cutoff` or `null` for G0, `fit_revision`, `parameter_artifact_sha256`, `normalizer`, `sampler_contract_version`, `created_at`, and `review_refs`. G2 includes calibration method, regularization configuration, chronological fold definition, and approval status. G1 includes smoothing configuration and fixed-cardinality normalizer version. Released G1/G2 `review_refs` must include evidence that the concentration diagnostic and threshold were approved before fitting and passed. No unapproved parameters belong in a released model artifact.
+Required fields: `schema_version`, `record_type`, `model_id`, `model_version`, `algorithm_id` (`G0`, `G1`, `G2`), `status` (`baseline`, `experimental_control`, `pending_calibration`, `approved_for_experimental_use`, or `retired`), `feature_definition_version`, `training_dataset_sha256` or `null` for G0, `training_cutoff` or `null` for G0, `fit_revision`, `parameter_artifact_sha256`, `normalizer`, `sampler_contract_version`, `created_at`, and `review_refs`. Optional `probability_disclosure_refs` link typed probability metadata to this model version. G2 includes calibration method, regularization configuration, chronological fold definition, and approval status. G1 includes smoothing configuration and fixed-cardinality normalizer version. Released G1/G2 `review_refs` must include evidence that the concentration diagnostic and threshold were approved before fitting and passed. No unapproved parameters belong in a released model artifact.
 
 ## StudyManifest schema
 
-Required fields: `schema_version`, `record_type`, `study_id`, `manifest_version`, `status`, `target_game_id`, `target_draw_date`, `target_draw_at_utc`, `target_draw_time_zone`, `frozen_at`, `protocol_version`, `model_refs`, `batch_refs`, `primary_endpoint`, `secondary_endpoints`, `multiplicity_policy`, `power_analysis_ref`, `stopping_rule`, `outcome_source_review_id`, `manifest_sha256`, `timestamp_evidence`, `created_at`, and `supersedes_manifest_id` (nullable). In `draft`, target time, freeze time, digest, timestamp evidence, and outcome-source review may be null; a non-confirmatory operations-only pilot may have a null power-analysis reference. Freezing requires a confirmed target UTC instant, nonempty model and batch references, a canonical digest, and a defined protocol. A confirmatory manifest also requires approved outcome-source review and a completed power/sensitivity reference. `timestamp_evidence` remains null until a verified TSA response is attached. `timestamp_evidence` identifies RFC 3161 TSA, token file/hash, verified imprint, token time, policy, signature status, and verifier/tool version. Registration is complete only after the token verifies and precedes `target_draw_at_utc`; static publication is a later state.
+Required fields: `schema_version`, `record_type`, `study_id`, `manifest_version`, `status`, `target_game_id`, `target_draw_date`, `target_draw_at_utc`, `target_draw_time_zone`, `frozen_at`, `protocol_version`, `model_refs`, `batch_refs`, `primary_endpoint`, `secondary_endpoints`, `multiplicity_policy`, `power_analysis_ref`, `stopping_rule`, `outcome_source_review_id`, `manifest_sha256`, `timestamp_evidence`, `created_at`, and `supersedes_manifest_id` (nullable). `target_game_id` must be `lotto-6-42`. In `draft`, target time, freeze time, digest, timestamp evidence, and outcome-source review may be null; a non-confirmatory operations-only pilot may have a null power-analysis reference. Freezing requires a confirmed target UTC instant, nonempty model and batch references, a canonical digest, and a defined protocol. A confirmatory manifest also requires approved outcome-source review and a completed power/sensitivity reference. `timestamp_evidence` remains null until a verified TSA response is attached. `timestamp_evidence` identifies RFC 3161 TSA, token file/hash, verified imprint, token time, policy, signature status, and verifier/tool version. Registration is complete only after the token verifies and precedes `target_draw_at_utc`; static publication is a later state.
 
 Lifecycle: `draft` → `frozen` → `timestamped` → `published` → `awaiting_outcome` → `evaluated`. `quarantined`, `withdrawn`, and `superseded` are terminal/non-editing states with a reference to the reason or successor. `frozen` has a canonical manifest hash but no timestamp token; `timestamped` requires a verified token. If the target draw is rescheduled before it occurs, do not silently edit the frozen manifest: create and timestamp a superseding manifest before the new target event. The external timestamp establishes time evidence for a hash, not validity of the model or data.
 
@@ -104,29 +110,43 @@ Required fields: `schema_version`, `record_type`, `batch_id`, `study_id`, `manif
 
 Required fields: `schema_version`, `record_type`, `evaluation_event_id`, `study_id`, `manifest_version`, `manifest_sha256`, `target_draw_observation_id`, `evaluation_revision`, `metric_version`, `metrics`, `executed_at`, `software_revision`, and `event_status`. `metrics` distinguishes per-line match counts, full-combination hit indicator, log score, aggregate distribution metrics, and uncertainty summaries; only endpoints frozen in the manifest may be confirmatory. Missing observations remain pending; they are not replaced with guessed values.
 
+## ProbabilityDisclosure schema
+
+Required fields: `schema_version`, `record_type`, `record_id`, `measure_type`, `status`, `value_exact`, `percentage`, and `evidence_refs`. `measure_type` is `fair_draw_probability`, `model_selection_probability`, or `historical_pattern_frequency`. `status` is `calculated`, `not_calculated`, or `not_established`; unavailable values are null.
+
+For fair-draw probability, record the fair-independent-draw assumption, numerator 1, denominator 5,245,786, and display percentage 0.00001906% (approximately). For model-selection probability, include model ID/version, algorithm ID, normalizer reference, normalization and sampler validation evidence, and feature-definition version. A numeric value is permitted only for a normalized and validated model distribution approved for experimental display; it describes generator selection, not the draw or win probability. For historical pattern frequency, record numerator/count, denominator/sample size, dataset hash/version, start/end dates, and feature-definition ID/version. The established training sample is 902 draws from 2016-08-30 to 2022-11-12; later observations use separate prospective evidence and cannot be silently combined with it.
+
 ## Field-level type and nullability constraints
 
-The tables define the v1 JSON contract at the field level. “Required” means the key is present; state-dependent `null` is explicitly described. Unknown source values use JSON `null`.
+The tables define the proposed JSON contracts at the field level. “Required” means the key is present; state-dependent `null` is explicitly described. Unknown source values use JSON `null`.
 
 ### DrawObservation
 
 | Field | JSON type | Constraint |
 | --- | --- | --- |
-| `schema_version`, `draw_observation_id`, `game_id` | string | Required; stable ID, supported game ID `lotto-6-42` |
+| `schema_version`, `record_id`, `game_id` | string | Required; proposed DrawObservation schema version 2.0; game ID must be `lotto-6-42` |
 | `record_type` | string | Literal `DrawObservation` |
 | `record_class` | string | `public_observation` or `synthetic_fixture` |
 | `draw_date` | string | ISO date `YYYY-MM-DD`; verified only after source review |
-| `winning_numbers` | integer array | Exactly 6 distinct values in 1..42, ascending canonical order |
-| `jackpot_amount` | string or null | Decimal string; paired with currency; null when source omits it |
-| `jackpot_currency` | string or null | ISO currency code from source; null if amount is unknown |
+| `winning_numbers_sorted` | integer array | Exactly 6 distinct values in 1..42, ascending canonical order |
+| `published_combination` | integer array or null | Six distinct source-displayed values in published order; null if not supplied or unknown |
+| `source_id`, `source_url` | string or null | Required for public records; null only for synthetic/offline fixtures |
+| `source_classification` | string | `official`, `third_party`, or `unverified`; classification does not imply access/reuse approval |
+| `retrieved_at` | string or null | UTC RFC 3339; null only for synthetic/offline fixture |
+| `parser_version` | string | Required parser/normalization contract version; fixture-specific for synthetic records |
+| `payload_sha256` | string or null | Lowercase SHA-256 of retrieved bytes when allowed and available; null for synthetic/no payload or when review conditions do not allow recording |
+| `verification_status` | string | `provisional`, `pending_cross_check`, `verified_official`, `verified_third_party_cross_checked`, `quarantined`, `superseded`, or `synthetic` |
+| `access_review_status`, `reuse_review_status` | string | Each uses `not_reviewed`, `review_required`, `conditional`, `approved`, `denied`, or `expired` |
+| `record_revision` | integer | Positive revision number; first accepted observation is 1 |
+| `supersedes_record_id` | string or null | Stable ID of prior revision; null for an initial record |
+| `cross_verified_source_ids` | string array | Optional source IDs used for independent cross-verification |
+| `jackpot_amount`, `jackpot_currency` | string or null | Decimal amount and source currency; null when absent or unknown |
 | `jackpot_winner_count` | integer or null | Nonnegative source value; null when absent, never inferred |
 | `source_draw_id`, `source_published_at` | string or null | Source identifier and UTC RFC 3339 instant when provided |
-| `verification_status` | string | `synthetic`, `pending_review`, `verified`, `quarantined`, or `superseded` |
 | `source_refs` | array of objects | Empty only for synthetic fixtures; public records require provenance reference(s) |
-| `retrieved_at` | string or null | UTC RFC 3339; null only for synthetic/offline fixture |
 | `created_at` | string | UTC RFC 3339 record-creation instant |
 
-Each `source_refs` object contains `source_id` and `source_url` strings, `retrieved_at` UTC string, nullable `source_published_at`, nullable `source_snapshot_sha256`, nullable `source_locator`, `review_status`, and `source_review_id`. `source_snapshot_sha256` is null when retaining a source copy is not permitted; do not copy content solely to populate it.
+Each `source_refs` object records source ID/URL/classification, retrieval time, nullable publication time, nullable payload/snapshot hash and locator, review IDs, and whether that source independently verified the normalized draw. A source snapshot hash is null when recording it is unavailable or not allowed; never copy source content solely to populate a provenance field.
 
 ### SourceRegistry and SourceReview
 
@@ -136,17 +156,35 @@ Each `source_refs` object contains `source_id` and `source_url` strings, `retrie
 | `schema_version` | string | Required on each record |
 | `record_type` | string | Literal `SourceRegistry` or `SourceReview` |
 | `publisher_name`, `source_name`, `source_url` | string | Required; identity claims remain reviewable |
-| `official_status` | string | `official`, `unverified`, or `third_party`; does not imply reuse approval |
-| `access_method_status` | string | `not_reviewed`, `human_view_only`, `express_permission_required`, `approved`, or `denied` |
-| `reuse_status` | string | `not_reviewed`, `permission_pending`, `approved`, or `denied` |
-| `terms_url` | string or null | Null when no terms URL is verified |
+| `source_classification` | string | `official`, `third_party`, or `unverified`; does not imply access/reuse approval |
+| `priority` | string | `primary`, `secondary`, or `excluded_from_automation` |
+| `access_review_status`, `reuse_review_status` | string | Each uses `not_reviewed`, `review_required`, `conditional`, `approved`, `denied`, or `expired` |
+| `terms_url`, `robots_url` | string or null | Null only when no URL has been identified; review status remains separate |
+| `reviewed_request_method`, `request_limits` | string/object or null | Current ordinary method and pacing/limits; null until reviewed |
 | `collector_enabled` | boolean | Defaults to false; activation requires separate approval |
-| `last_reviewed_at` | string or null | UTC RFC 3339; null until source review occurs |
+| `last_reviewed_at`, `review_expires_at` | string or null | UTC RFC 3339; null until source review occurs |
 | `review_scope` | string | `identity`, `access`, `reuse`, `privacy`, or `provenance` |
 | `decision` | string | `pending`, `approved`, `denied`, `expired`, or `needs_review` |
 | `reviewed_at`, `expires_at` | string or null | UTC RFC 3339; `reviewed_at` null only while pending |
 | `reviewer_role` | string | Role/approved reviewer ID; no personal profile fields |
 | `evidence_refs`, `conditions` | arrays | Evidence references and explicit restrictions; empty for unreviewed record |
+
+### ProbabilityDisclosure
+
+| Field | JSON type | Constraint |
+| --- | --- | --- |
+| `record_id`, `schema_version` | string | Stable record ID and declared schema version |
+| `record_type` | string | Literal `ProbabilityDisclosure` |
+| `record_class` | string or null | Optional; use `synthetic_fixture` only for labelled synthetic examples |
+| `measure_type` | string | `fair_draw_probability`, `model_selection_probability`, or `historical_pattern_frequency` |
+| `status` | string | `calculated`, `not_calculated`, or `not_established`; unavailable numeric fields are null |
+| `value_exact`, `percentage` | string or null | Exact fraction/decimal and display percentage; model values require a normalized, validated distribution |
+| `numerator`, `denominator` | integer or null | Fair probability uses 1/5,245,786; historical frequency records count/N |
+| `model_id`, `model_version`, `algorithm_id` | string or null | Required for model-selection probability; model is reviewed for experimental display |
+| `normalizer_ref`, `normalization_status`, `sampler_validation_ref` | string or null | Model-selection probability requires validated normalization and sampler evidence |
+| `dataset_sha256`, `dataset_count`, `date_start`, `date_end` | string/integer or null | Required for historical frequency; records source sample and interval |
+| `feature_definition_id`, `feature_definition_version` | string or null | Required for historical pattern frequency and applicable model distributions |
+| `assumption`, `evidence_refs` | string/array | Identifies fair-draw premise or model/data validation records |
 
 ### ModelSpec, StudyManifest, GeneratedBatch, and EvaluationEvent
 
@@ -158,6 +196,7 @@ Each `source_refs` object contains `source_id` and `source_url` strings, `retrie
 | `training_dataset_sha256`, `training_cutoff` | string or null | Null for G0 and unfit candidates; required for a released trained model |
 | `parameter_artifact_sha256` | string or null | Null for G0 or pending/unfitted candidate; required for released G1/G2 |
 | `normalizer` | string or object | Versioned normalizer ID/config; synthetic placeholder only in synthetic fixture |
+| `probability_disclosure_refs` | string array or null | Optional links to typed probability disclosure records for this immutable model version |
 | `review_refs` | string array | Required; at least one approval reference for released G1/G2 |
 | `study_id`, `batch_id`, `evaluation_event_id` | string | Stable IDs on respective records |
 | `manifest_version`, `evaluation_revision`, `line_count` | integer | Positive integer; `line_count` equals `ticket_lines` length |
@@ -191,21 +230,32 @@ Every example below is synthetic test data. It is not an official draw, actual r
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "record_type": "DrawObservation",
-  "draw_observation_id": "syn-draw-0001",
+  "record_id": "syn-draw-0001",
   "record_class": "synthetic_fixture",
   "game_id": "lotto-6-42",
   "draw_date": "2030-01-01",
-  "winning_numbers": [2, 8, 14, 23, 31, 42],
+  "winning_numbers_sorted": [2, 8, 14, 23, 31, 42],
+  "published_combination": null,
+  "source_id": null,
+  "source_url": null,
+  "source_classification": "unverified",
+  "retrieved_at": null,
+  "parser_version": "synthetic-fixture-v1",
+  "payload_sha256": null,
+  "verification_status": "synthetic",
+  "access_review_status": "not_reviewed",
+  "reuse_review_status": "not_reviewed",
+  "record_revision": 1,
+  "supersedes_record_id": null,
+  "cross_verified_source_ids": [],
   "jackpot_amount": null,
   "jackpot_currency": null,
   "jackpot_winner_count": null,
   "source_draw_id": null,
   "source_published_at": null,
-  "verification_status": "synthetic",
   "source_refs": [],
-  "retrieved_at": null,
   "created_at": "2030-01-02T00:00:00Z"
 }
 ```
@@ -214,7 +264,7 @@ Every example below is synthetic test data. It is not an official draw, actual r
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "record_type": "ModelSpec",
   "model_id": "syn-model-g2",
   "model_version": "0.0.0-synthetic",
@@ -227,8 +277,40 @@ Every example below is synthetic test data. It is not an official draw, actual r
   "parameter_artifact_sha256": null,
   "normalizer": "synthetic-placeholder",
   "sampler_contract_version": "synthetic-v1",
+  "probability_disclosure_refs": [],
   "created_at": "2030-01-02T00:00:00Z",
   "review_refs": []
+}
+```
+
+### Synthetic ProbabilityDisclosure fixture
+
+```json
+{
+  "schema_version": "1.0",
+  "record_type": "ProbabilityDisclosure",
+  "record_id": "syn-probability-fair-0001",
+  "record_class": "synthetic_fixture",
+  "measure_type": "fair_draw_probability",
+  "status": "calculated",
+  "value_exact": "1/5245786",
+  "percentage": "0.00001906%",
+  "numerator": 1,
+  "denominator": 5245786,
+  "model_id": null,
+  "model_version": null,
+  "algorithm_id": null,
+  "normalizer_ref": null,
+  "normalization_status": "not_applicable",
+  "sampler_validation_ref": null,
+  "dataset_sha256": null,
+  "dataset_count": null,
+  "date_start": null,
+  "date_end": null,
+  "feature_definition_id": null,
+  "feature_definition_version": null,
+  "assumption": "fair_independent_draw",
+  "evidence_refs": ["synthetic-mathematical-contract"]
 }
 ```
 
@@ -267,15 +349,17 @@ The examples intentionally use `null` for unknown source values and absent evide
 
 ## Schema versions and stable identifiers
 
-Use explicit semantic schema versions. Additive optional fields may remain in a compatible minor version only after consumers are tested. Breaking field meaning/type, enum, canonicalization, or lifecycle changes require a new major schema version. Preserve stable IDs when a record is corrected; link the successor. Never reuse a deleted ID. Persist schema migration provenance and old hashes. Avoid generating identifiers from mutable row positions.
+Use explicit semantic schema versions. The proposed DrawObservation and SourceRegistry contracts use version 2.0 because required fields/status meanings change from the earlier draft; this version is not implemented. ModelSpec version 1.1 adds the optional probability-disclosure reference. Additive optional fields may remain in a compatible minor version only after consumers are tested. Breaking field meaning/type, enum, canonicalization, or lifecycle changes require a new major schema version. Preserve stable IDs when a record is corrected; link the successor. Never reuse a deleted ID. Persist schema migration provenance and old hashes. Avoid generating identifiers from mutable row positions.
 
 ## Data validation and deduplication
 
-Validate JSON schema, types, nullability, game ID, six-ball uniqueness/range/sorted canonical form, ISO date, source refs, hashes, and lifecycle transitions. Deduplicate only against a reviewed logical game/draw key and source evidence. Conflicts go to quarantine for human adjudication. Keep `source_row` as original provenance metadata and enforce its uniqueness where applicable; chronological order is checked by `draw_date`, not `source_row`. Do not rewrite or reorder source datasets.
+Validate JSON schema, types, nullability, game ID `lotto-6-42`, six-ball uniqueness/range/sorted canonical form, ISO date, source refs, hashes, and lifecycle transitions. Deduplicate by reviewed game/draw and source identifiers without overwriting; keep competing source observations linked for cross-check and quarantine conflicts for human adjudication. Keep `source_row` as original provenance metadata and enforce its uniqueness where applicable; chronological order is checked by `draw_date`, not `source_row`. Do not rewrite or reorder source datasets.
 
 ## Training and prospective dataset isolation
 
 Historical development may use only approved training data. The currently documented training boundary is 902 records, 2016-08-30 through 2022-11-12. Validation and locked-test records are sealed and outside Phase 8 access. Future prospective outcomes reside in a separate path and identifier namespace and are read only after the manifest timestamp and target draw. Outcomes from a registered study cannot be used to tune that frozen study. Any later training use requires a new protocol, data permission, and artifact version; this proposal does not authorize it.
+
+New post-cutoff observations must not be merged into or used to modify the original training source, validation partition, or locked-test partition.
 
 ## Data lifecycle and correction handling
 
@@ -316,13 +400,15 @@ No visitor combinations, account data, or personal profiles are persisted centra
 
 ## Source feasibility matrix
 
-Checked 2026-10-17 using primary public materials. Status is a planning assessment, not legal advice or authorization.
+Reviewed 2026-10-17 using the public pages linked below. This is a design-feasibility record, not a legal conclusion, access grant, API confirmation, or collector approval. A page's public visibility and the absence of an explicit ban do not establish reuse permission.
 
-| Candidate | Identity/result access evidence | Automated access | Reuse status | Decision |
+| Candidate and role | Current public evidence | Access/automation state | Reuse state | Design disposition |
 | --- | --- | --- | --- | --- |
-| PCSO official website results page | Official PCSO-domain search result identifies a results page; direct page was inaccessible in the live page-open check. No public machine-readable API or documented feed was confirmed. | `NOT_VERIFIED`; do not assume API, scrape, or bypass controls | `NOT_REVIEWED`; source terms/reuse scope not confirmed | Candidate for official-source inquiry. Manual or automated ingestion and republication remain blocked pending access/reuse review |
-| PCSO 2025 Citizen's Charter | Official PCSO PDF exists and references PCSO public information/result service processes; it does not by itself document a public API or third-party reuse grant | Not applicable | Does not establish reuse permission | Context only; obtain source-specific written guidance |
-| LottoMatik results page | Current results page is public; current Terms identify DFNN/partners and describe the site's relationship with PCSO | Current terms prohibit crawler/spider/scraper or other automated access absent express written permission; they prohibit bypassing access restrictions | Current terms restrict copying/distribution/reproduction/derivative works without express permission | `BLOCKED_PENDING_EXPRESS_PERMISSION`; no scraping or public copying |
-| Other third-party results sites | No source-specific review in this proposal | Unknown | Unknown | Not approved; do not ingest by default |
+| PCSO official results page; primary | The official page at the stated URL is currently visible with start/end date controls, a game selector, and a mixed-game table containing game, combination, draw date, jackpot, and winners. | Public UI observed. Ordinary GET/POST behavior, hidden WebForms state, pagination, historical coverage, and robots rules are unresolved. No documented API contract was confirmed. | Not reviewed. Applicable terms and source-specific reuse conditions remain unresolved. | Preferred official adapter candidate. Keep disabled until current access/terms/robots/reuse review and a human feasibility approval. Request written permission only if applicable law, terms, or source-specific restrictions require it. |
+| LottoPCSO.com 6/42 history; independent third-party secondary source | Current page has a 6/42 history table with date, winning combination, and jackpot. Its disclaimer says the site is unaffiliated, disclaims completeness/accuracy, and directs readers to PCSO for verification. | Terms, robots rules, automated request conditions, layout stability, and historical coverage require review before adapter work. | Not reviewed; public display is not a redistribution grant. | Secondary comparison only. Any result requires cross-check against PCSO before it can be described as officially verified. |
+| LottoMatik results; third-party-operated service excluded from automation | Public results page was visible. The prior project review recorded restrictive automated-access and reuse terms; the current terms page could not be reverified in this review. | Excluded from automation pending current terms/access review. | Current reuse conditions not reverified; restrictions remain unresolved. | No adapter. Optional manual comparison only after current terms review; do not change this exclusion without an approved policy decision. |
+| FOI workflow | Not applicable to ordinary public-result retrieval. | Excluded as an operational dependency. | Not applicable. | Do not gate automated updates on an FOI request. |
 
-Primary sources: [PCSO official results page](https://www.pcso.gov.ph/?content=hasil), [PCSO Citizen's Charter](https://www.pcso.gov.ph/pcsofiles/transparency/2025%20PCSO%20Citizen%27s%20Charter%202nd.pdf), [LottoMatik results](https://lottomatik.pcso.gov.ph/lotto-results), [LottoMatik Terms](https://lottomatik.pcso.gov.ph/terms), and [RFC 3161](https://www.rfc-editor.org/info/rfc3161/). The direct PCSO page did not load during review; the result-page listing was discoverable in search, but its machine access and reuse terms are unverified. LottoMatik terms checked on the date above expressly reserve automated access and copying/reuse pending permission. Obtain written confirmation and governance review before activation.
+Source precedence is: (1) PCSO result independently verified against the official record; (2) third-party observation cross-checked against PCSO; (3) provisional unverified observation. Conflicting numbers or corrected results are quarantined and linked to append-only revisions; a third-party record never becomes an official record by its own label.
+
+Current source references: [PCSO official result search page](https://www.pcso.gov.ph/searchlottoresult.aspx), [LottoPCSO.com 6/42 history](https://www.lottopcso.com/6-42-lotto-result-history-and-summary/), [LottoPCSO.com disclaimer](https://www.lottopcso.com/disclaimer/), [LottoMatik results](https://lottomatik.pcso.gov.ph/lotto-results), and [LottoMatik terms](https://lottomatik.pcso.gov.ph/terms). The PCSO page content was visible, but its robots file could not be read in the source review; do not treat the failed lookup as a permissive result. The LottoMatik terms page could not be reverified; preserve its prior exclusion until current terms are reviewed. No source is approved for collection or reuse by this proposal.

@@ -4,11 +4,12 @@
 - **Status:** Proposal for human review; not implementation authorization
 - **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
 - **Prepared:** 2026-10-17
+- **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
 ## Executive overview
 
-Phase 8 proposes a transparent Lotto 6/42 research randomizer and static web client. The product separates a uniform fair-random generator (G0), an experimental historical-weighting control (G1), and a calibrated soft-constraint experiment (G2). G0 is the default. Historical resemblance, descriptive structure, and generator fidelity are not evidence of predictive advantage.
+Phase 8 proposes a transparent educational and experimental randomizer for the Philippine Lotto 6/42 only. It excludes 3D Lotto, every other lottery game, and unrelated prediction systems. The product separates a uniform fair-random generator (G0), an experimental historical-weighting control (G1), and a calibrated soft-constraint experiment (G2). G0 is the default. Historical resemblance, descriptive structure, and generator fidelity are not evidence of predictive advantage.
 
 Versioned JSON and JSONL research artifacts are the proposed v1 storage. The web client is static and runs generation in the visitor's browser. It does not upload or centrally store visitor combinations. A separate, read-only public registry may display frozen project research batches after they have been registered before a draw. It is not a submission endpoint. Official-result collection is blocked pending verified access and reuse authority. The existing validation and locked-test partitions remain sealed, and the STOP verdict remains in force.
 
@@ -72,7 +73,11 @@ Each requirement is proposed and requires approval. Acceptance evidence is plann
 | FR-010 | Visitors shall be able to copy or download their locally generated combinations without an account or network submission. | Should | `TEST-016` |
 | FR-011 | A public prospective registry, if approved, shall be read-only and shall display only project-generated batches frozen before the corresponding draw. | Must | `TEST-017` |
 | FR-012 | Evaluation shall use only outcomes after a frozen registration, and it shall follow a predeclared metric and analysis plan. | Must | `TEST-018`, `TEST-019` |
-| FR-013 | Any official-results collector shall remain disabled until source access, reuse rights, operating limits, and a review owner are documented and approved. | Must | `TEST-020` |
+| FR-013 | Any result collector shall remain disabled until source identity, ordinary access conditions, applicable terms and robots rules, reuse scope, operating limits, and a human review owner are documented and approved. Written permission is required only when applicable law, source terms, or a source-specific restriction requires it. | Must | `TEST-020` |
+| FR-014 | All product models, result records, filters, and research displays shall be restricted to Philippine Lotto 6/42; other games shall be rejected or ignored. | Must | `TEST-023` |
+| FR-015 | The interface shall distinguish fair-draw probability, model selection probability, and historical pattern frequency, with their separate meanings and denominators. | Must | `TEST-014` |
+| FR-016 | The product shall present an independent educational-project disclaimer and shall not imply PCSO or government affiliation, guaranteed wins, or established predictive effectiveness. | Must | `TEST-014` |
+| FR-017 | Future result ingestion shall use source-specific adapters, normalized Lotto 6/42 records, provenance, conflict quarantine, and offline parser fixtures before any separately approved live pilot. | Must | `TEST-024`, `TEST-020` |
 
 ## Nonfunctional requirements
 
@@ -107,9 +112,21 @@ The expectation is `E[K]=6/7`. The denominator is `C(42,6)=5,245,786`. The exact
 
 For two six-number sets with intersection size `r`, Jaccard distance is `d_J = 1 - r/(12-r) = (12-2r)/(12-r)`. If an explicitly selected rule requires `d_J >= d_min`, then `r <= floor(12(1-d_min)/(2-d_min))`; because `r` is an integer from 0 through 6, apply the bound to this discrete set. The possible distances for `r=0..6` are `1, 10/11, 4/5, 2/3, 1/2, 2/7, 0`. A diversity rule changes the sampling distribution and is not imposed on G0. All empirical visualizations must show their sample, source, cutoff, and comparison baseline. Claims of accuracy, significance, entropy, or generator acceptance rate require actual, reviewed evidence and are not supplied by this proposal.
 
+Display and store three distinct probability categories:
+
+1. **Fair-draw probability:** under a fair, independent Lotto 6/42 draw, one specified valid combination has probability `1/5,245,786`, approximately `0.00001906%`, of matching all six numbers. Every valid combination has this same jackpot probability.
+2. **Model selection probability:** `P_G1(S)` or `P_G2(S)` is the probability that a specified, validated generator distribution selects combination `S`. It describes the model's output distribution and is not the draw's probability of producing `S` or a probability of winning. Show exact model values or percentages only after mathematical normalization and validation; otherwise show “Not calculated” or “Not established.”
+3. **Historical pattern frequency:** the observed count of a precisely defined pattern divided by the stated dataset size. Training summaries must state the 902-record sample, 2016-08-30 through 2022-11-12 date range, dataset/version hash, and feature definition. These are descriptive measurements, not future probabilities.
+
+Never describe generated combinations as guaranteed winning numbers or advertise predictive effectiveness without independently verified evidence. When a probability is unavailable, do not replace it with a model score or an estimate from an undefined denominator.
+
 ## Official results exploration requirements
 
-The UI may provide a source-aware explorer only after a result source and reuse mode have been approved. A PCSO-hosted results page is a candidate official source, but the machine-access method and reuse terms were not verified in this review. LottoMatik's current Terms of Use prohibit automated crawler/scraper access without express written permission and restrict copying, republication, or derivative works without express permission. Therefore, do not activate automated collection or publish copied result records from that source without written permission and review. Missing winner counts or other source fields must be stored as `null`, never inferred or fabricated.
+The UI may provide a source-aware explorer only after a result source and reuse mode have been reviewed. PCSO is the authoritative publisher and the preferred source candidate: its public search page exposes date and game controls and a results table, but the request method, hidden WebForms state, pagination, robots rules, and applicable reuse terms remain unverified. No API or reuse permission is claimed. LottoPCSO.com is an independent third-party comparison source, not an official publisher; its disclaimer says results are informational, may not be complete or accurate, and directs readers to PCSO for verification. Its terms, robots rules, automated-access conditions, and reuse scope require review before any adapter or republication. LottoMatik is excluded from automation for now; an earlier source review recorded restrictions on automated access and reuse, while its current terms could not be reverified in this review. It may be considered only for manual comparison after current terms review. FOI is not an operational acquisition dependency. Public accessibility or the absence of an explicit notice is not permission. Written permission is required when applicable law, terms, or source-specific restrictions require it. Missing values remain `null`, never inferred or fabricated.
+
+## Project disclaimer
+
+Magic Lotto is an independent educational and experimental project focused only on Philippine Lotto 6/42. It is not affiliated with, authorized by, sponsored by, or endorsed by the Philippine Charity Sweepstakes Office (PCSO) or any Philippine government agency. Its research purposes include machine learning experimentation, probability theory, statistical pattern analysis, random-behavior analysis, probabilistic combination generation, and statistical simulation and comparison. Generated combinations are not predictions or guaranteed winning numbers. Under a fair draw, every valid Lotto 6/42 combination has the same 1 in 5,245,786 jackpot probability. A model's probability of selecting a combination describes its own output distribution, not the chance that the draw will produce that combination. Historical pattern frequencies describe recorded data and do not establish future predictive effectiveness. Magic Lotto does not sell lottery tickets, accept wagers, or operate games. PCSO is identified as the authoritative draw-result publisher; independent reference sites are labelled third-party and remain subject to access and reuse review.
 
 The initial client can ship without a results explorer if no reviewed result artifact exists. It may explain the source-status gate and link to the publisher, but it must not imply that a linked source has approved project reuse.
 
@@ -124,9 +141,9 @@ The initial client can ship without a results explorer if no reviewed result art
 
 ## In-scope and out-of-scope features
 
-**In scope for the proposal:** mathematical and artifact contracts; local G0 product behavior; gated G1/G2 capabilities; source-status presentation; read-only static registration; future testing, accessibility, privacy, and research gates.
+**In scope for the proposal:** Philippine Lotto 6/42 only; mathematical and artifact contracts; local G0 product behavior; gated G1/G2 capabilities; source-status presentation; a reviewed, low-frequency public factual-result acquisition design; read-only static registration; future testing, accessibility, privacy, and research gates.
 
-**Out of scope for v1:** ticket sales, payments, account profiles, gambling transactions, visitor-combination uploads, public comments, central analytics of generated lines, a database, an API backend, an enabled collector, forecasting claims, automated wager advice, and access to the existing validation or locked-test partitions.
+**Out of scope for Phase 8/v1:** 3D Lotto, all other lottery games, unrelated prediction systems, ticket sales, payments, account profiles, gambling transactions, visitor-combination uploads, public comments, central analytics of generated lines, a database, an API backend, an enabled collector, forecasting claims, automated wager advice, an FOI-dependent collection process, and access to the existing validation or locked-test partitions.
 
 ## Minimum viable product definition
 
@@ -150,7 +167,10 @@ The proposed first release contains a static, accessible G0 generator, client-si
 | AGY reconciled proposal | `[NEEDS SOURCE]` Not found in supplied attachments or repository during this task | Provide the exact proposal before claiming AGY-specific reconciliation |
 | Codex reconciled proposal | Conversation-history source; no standalone repository artifact found | Human reviewer may supply a canonical saved copy |
 | Framework | Vite/React/TypeScript is a proposal; no frontend exists on the baseline | Approve stack and browser support policy before implementation |
-| Official source access/reuse | `BLOCKED_PENDING_AUTHORIZATION` | Obtain and review authoritative access and reuse terms; confirm machine-access method |
+| PCSO automated access/reuse | `REVIEW_REQUIRED` | Review current terms, robots rules, ordinary WebForms behavior, coverage, and applicable reuse conditions; request written permission only if required; do not enable an adapter before human review |
+| LottoPCSO.com automated access/reuse | `REVIEW_REQUIRED` | Review current terms, robots rules, accuracy/correction handling, and reuse scope; cross-check any observation with PCSO before official verification |
+| LottoMatik automation | `EXCLUDED_PENDING_CURRENT_TERMS_REVIEW` | Keep the adapter excluded; reverify the previously recorded restrictions before any policy change |
+| FOI acquisition | `EXCLUDED` | No FOI workflow is required for ordinary automated updates; source-specific access and reuse review still applies |
 | Hosting provider | Unresolved; evaluate GitHub Pages and Cloudflare Pages | Privacy, build, URL, deployment control, and operational review |
 | G2 parameters | Uncalibrated and unapproved | Fit on approved training folds; independent review and freeze |
 | Prospective sample size | Unset | Complete a power/sensitivity analysis for a predeclared primary endpoint |
@@ -161,4 +181,4 @@ The proposed first release contains a static, accessible G0 generator, client-si
 
 Repository facts were checked at baseline `b67e31572187001c89266839871c9e28456b90e8`: [README](../../../README.md), [Phase 7 report](../../PHASE7_KMEANS_DESCRIPTIVE.md), [Phase 5R report](../../../reports/phase5r_predictive_information.md), [Phase 6B adjudication](../../../reports/phase6b_642_semantic_adjudication.json), and [repository structure](../../REPOSITORY_STRUCTURE.md). The Phase 7 report states that it uses only the established 902-row training partition and that `source_row` is provenance metadata, not a chronological key.
 
-External sources checked 2026-10-17: [PCSO official results search result](https://www.pcso.gov.ph/?content=hasil), [LottoMatik results page](https://lottomatik.pcso.gov.ph/lotto-results), [LottoMatik Terms and Conditions](https://lottomatik.pcso.gov.ph/terms), [RFC 3161](https://www.rfc-editor.org/info/rfc3161/), [GitHub Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [Cloudflare Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/), and [GitHub Actions scheduled-workflow limits](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows). The direct PCSO results page could not be opened in the browser source review; the result page's existence is treated as a candidate lead, not evidence of an API or reuse permission. The AGY proposal remains unavailable.
+External sources checked 2026-10-17: [PCSO official Lotto result search page](https://www.pcso.gov.ph/searchlottoresult.aspx), [LottoPCSO.com 6/42 history](https://www.lottopcso.com/6-42-lotto-result-history-and-summary/), [LottoPCSO.com disclaimer](https://www.lottopcso.com/disclaimer/), [LottoMatik result page](https://lottomatik.pcso.gov.ph/lotto-results), [LottoMatik terms](https://lottomatik.pcso.gov.ph/terms), [RFC 3161](https://www.rfc-editor.org/info/rfc3161/), [GitHub Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [Cloudflare Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/), and [GitHub Actions scheduled-workflow limits](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows). The PCSO page was visible with date/game search controls and a mixed-game results table, but its request mechanics, robots rules, and reuse conditions were not resolved; visibility does not establish an API or permission. LottoPCSO.com was visible with 6/42 history and a disclaimer identifying it as unaffiliated and directing readers to PCSO for verification; its current automation/reuse terms remain unreviewed. The LottoMatik terms page could not be reverified in this review, so its prior exclusion remains. FOI is excluded as a collection dependency. The AGY proposal remains unavailable.

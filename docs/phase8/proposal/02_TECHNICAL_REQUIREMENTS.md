@@ -27,7 +27,9 @@ The baseline is a research repository, not a deployed application. Existing Pyth
 | TR-009 | The client shall target WCAG 2.2 AA and include manual accessibility evidence. | TEST-021 |
 | TR-010 | The initial client shall meet the proposed, device-specific performance target only after measurement on an agreed reference browser/device. | TEST-022 |
 | TR-011 | Hosting shall serve static files/artifacts; host selection, provider privacy, deployment triggers, and public release require a separate review. | TEST-017, deployment review |
-| TR-012 | A collector implementation shall make no network request by default and shall fail closed without a current approval record. | TEST-010, TEST-020 |
+| TR-012 | A collector implementation shall make no network request by default and shall fail closed without a current source-specific access/reuse review record. | TEST-010, TEST-020 |
+| TR-013 | A future Python result collector shall use source-specific adapters, ordinary retrieval and parsing rules, provenance-preserving normalization, conflict quarantine, and offline synthetic parser fixtures before any separately approved live pilot. | TEST-008, TEST-015, TEST-020, TEST-024 |
+| TR-014 | Probability APIs and displays shall distinguish fair-draw probability, validated model-selection probability, and observed historical pattern frequency; unavailable measures shall remain explicitly unavailable. | TEST-014 |
 
 ## Technology stack and alternatives
 
@@ -89,6 +91,14 @@ The numerator sum equals the denominator. For `M` distinct lines where `0 <= M <
 
 For two valid six-number sets whose intersection has `r` elements, `Jaccard distance = d_J = 1 - r/(12-r) = (12-2r)/(12-r)`, where `r` is an integer in `[0,6]`. If an explicitly selected rule requires `d_J >= d_min`, then `r <= floor(12(1-d_min)/(2-d_min))`; verify equality against the discrete distance table because strict thresholds have different edge behavior. The distances for `r=0..6` are `1, 10/11, 4/5, 2/3, 1/2, 2/7, 0`. A thresholded distance filter changes the probability law and must not be applied to G0. If an explicitly user-selected diversity feature is ever added, show its threshold and altered sampling design; it is outside this proposal's MVP.
 
+Probability outputs have separate contracts:
+
+- **Fair-draw probability:** for one specified valid line, `1/5,245,786` (approximately `0.00001906%`) is its exact six-match probability under the fair independent draw assumption. This is equal for every valid line.
+- **Model selection probability:** `P_G1(S)` or `P_G2(S)` describes the chance that a named generator selects `S`. It is not the fair draw's chance of selecting `S`, nor the probability of winning. Show an exact value/percentage only when the target distribution is normalized and validated. Otherwise report `Not calculated` or `Not established`.
+- **Historical pattern frequency:** `count(pattern)/N` is an empirical frequency for an explicit feature definition and source sample. For the established training analysis, display `N=902`, date range 2016-08-30 to 2022-11-12, data/model version, and feature definition. Do not label it a future probability.
+
+No probability number may imply a guaranteed outcome or predictive effectiveness. Summary metadata must state the category and its applicable denominator, dataset, time span, model version, and feature definition; inapplicable fields are null rather than inferred.
+
 ### G0 uniform fair-random
 
 Sample six distinct integers without replacement using a uniform method. In Python runtime generation, use a standard-library cryptographic bounded-integer source such as [`secrets.randbelow`](https://docs.python.org/3/library/secrets.html); in browsers, use the Web Crypto API (see the current [W3C Web Cryptography publication](https://www.w3.org/TR/webcrypto/)) with rejection sampling for bounded integers so modulo reduction does not introduce bias. The linked Web Cryptography Level 2 document is a Working Draft at this review date; confirm API support against the approved browser matrix before implementation. If Web Crypto is unavailable, fail closed. A deterministic injected source may be used for tests and research reproduction, but production browser randomness is not replayable unless its seed/source is actually recorded and suitable for that purpose.
@@ -139,6 +149,38 @@ Only approved training inputs may be read during model development. Keep the exi
 
 Treat `source_row` as provenance metadata, never as a chronological key. Enforce uniqueness of source identifiers and chronological order by validated draw date. Do not modify or reorder original datasets.
 
+New post-cutoff observations belong in a separate prospective store and shall not be merged into the original training source or the sealed validation/locked-test partitions, or retroactively treated as training data for a frozen study.
+
+## Source acquisition and parser contract
+
+Collection is design-only and disabled. The proposed Python `DrawSourceAdapter` contract is:
+
+```text
+check_access_conditions() -> SourceEligibility
+health_check() -> SourceStatus
+fetch_draws(date_range, game_id="lotto-6-42") -> SourceResponse
+parse_response(response, parser_version) -> ParsedSourceRecords
+normalize_records(records) -> DrawObservation candidates
+report_source_status() -> SourceStatus
+```
+
+No health check or adapter operation may make a network request while its source is disabled or lacks a current approved access/reuse review. Eligibility checks include the current source identity, terms, robots rules, allowed request method, pacing, and any conditions or expiry. A written permission record is required only when applicable law, source terms, or source-specific restrictions require it; this is not a blanket prerequisite for every public page. A human-reviewed feasibility report is required before a production collection pilot.
+
+The proposed ingestion stages are: (1) source eligibility; (2) ordinary permitted public retrieval; (3) source-specific HTML or structured-response parsing under a versioned parser; (4) date and combination normalization; (5) validation of Lotto 6/42 identity, date and exactly six distinct integers in 1..42; (6) stable game/draw deduplication without rewriting source files; (7) independent source cross-check where available; (8) quarantine of malformed, incomplete, conflicting, or unverified observations; (9) versioned JSON/JSONL storage with provenance and revisions; and (10) downstream use only for approved, verified post-registration outcomes.
+
+Feasibility inputs and current limits:
+
+- **PCSO official** `https://www.pcso.gov.ph/searchlottoresult.aspx` is the preferred authority. The public page currently exposes start/end date controls, a game selector, and a result table with game, combination, draw date, jackpot, and winners. Investigate ordinary WebForms GET/POST behavior, hidden form state, date filtering, pagination, and historical coverage. This page review did not establish its submission method, a documented API, robots rules, or reuse permission.
+- **LottoPCSO.com** `https://www.lottopcso.com/6-42-lotto-result-history-and-summary/` is an independent third-party comparison candidate. Its visible history includes date, winning combination, and jackpot fields; its disclaimer says it is not affiliated with PCSO, disclaims completeness/accuracy, and directs readers to PCSO for verification. Review current terms, robots rules, and reuse scope before automation; never grant official verification without an authoritative cross-check.
+- **LottoMatik** remains excluded from automation. The prior project review recorded restrictions on automated collection and redistribution; current terms could not be reverified in this review. Do not implement an adapter unless current restrictions are reviewed and resolved.
+- FOI is excluded as an operational data-acquisition dependency. Public visibility and absence of an explicit ban do not by themselves establish permission.
+
+Candidate implementation libraries for later evaluation, not approved dependencies: `requests` or `httpx` for ordinary HTTP; Python standard-library `html.parser` as a minimal alternative; BeautifulSoup4 or `lxml` for HTML parsing; Pandas only if its tabular handling is needed; and Pydantic or JSON Schema validation for contract checks. Reuse repository/platform code or installed dependencies first and record a compatibility rationale before adding any dependency.
+
+Offline fixture design must cover differing date formats; published versus sorted number order; missing jackpot/winner fields; duplicate rows; incomplete/duplicate/out-of-range combinations; unexpected headers; unavailable placeholders; malformed markup; pagination and date-range boundaries; changed markup; HTTP denial, timeout and server failure; conflicts between sources; and corrected official results. Unresolved values remain null or quarantined; never infer a replacement. Preserve the original published combination separately from its canonical ascending numbers. Do not run live scraping or network tests as part of this proposal.
+
+If a future scheduled collector is approved, retrieve at low frequency after result publication, verify the current PCSO draw timetable before configuring a schedule, and use bounded retries and configurable pacing that follows source-specific rules. A GitHub Actions schedule is not proof of exact execution time and must not be used as pre-draw timestamp evidence. Stop on access denial, clear prohibition, or unresolved restriction. No CAPTCHA solving, stealth browser, proxy rotation, authentication evasion, or WAF circumvention is allowed.
+
 ## Build and deployment architecture
 
 Python commands validate and emit versioned JSON/JSONL artifacts. A static frontend build reads only approved public artifacts and emits static files. There is no v1 API, server-side generator, public write route, or app database. Compare GitHub Pages and Cloudflare Pages in a later deployment review; do not choose a host in this proposal. [GitHub Pages documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) describes static HTML/CSS/JavaScript hosting from a repository and says visitor IP addresses are logged and stored for security. [Cloudflare Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/) documents automatic deployments on branch pushes and preview builds. Either can publish a static read-only registry, but neither by itself resolves public write registration.
@@ -178,15 +220,17 @@ Target WCAG 2.2 AA, verified by manual and automated checks. Preserve keyboard a
 | TEST-011 | Registration-integrity test | Canonical manifest hash, TSA token, token verification, target draw, and frozen output agree |
 | TEST-012 | Provenance rendering test | UI exposes generator/model version, data hash/cutoff, and experimental status |
 | TEST-013 | G2 release gate | Independent reviewer signs calibration, normalization, sampler fidelity, compute-cost, and predeclared concentration-guardrail evidence before UI enablement |
-| TEST-014 | Research-copy and plot review | Exact match law, fair chance, source/sample/cutoff, and limitations are correct and accessible |
-| TEST-015 | Results provenance test | Only reviewed/permitted artifacts render; corrections and missing source values remain explicit |
+| TEST-014 | Research-copy and plot review | Exact match law, all three probability categories, fair chance, source/sample/cutoff, disclaimers, and limitations are correct and accessible |
+| TEST-015 | Results provenance test | Only reviewed/reuse-approved artifacts render; source classification, corrections, cross-verification, and missing source values remain explicit |
 | TEST-016 | Local download/privacy test | Copy/download works; generated lines are absent from network requests and central storage |
 | TEST-017 | Read-only registry test | Static registry has no visitor write route and lists only pre-draw frozen project batches |
 | TEST-018 | Evaluation isolation test | Evaluation reads only outcomes after frozen timestamp and target draw; protocol cannot mutate in place |
 | TEST-019 | Statistical plan test | Primary metric, multiplicity, uncertainty, power/sensitivity, and stopping rule frozen before outcomes |
-| TEST-020 | Collector authorization gate | Activation blocked unless access method, reuse rights, rate limits, owner, and approvals are documented |
+| TEST-020 | Collector eligibility gate | Activation blocked unless ordinary access conditions, current terms/robots review, applicable reuse conditions, rate limits, owner, expiry, and approvals are documented; require written permission only where applicable |
 | TEST-021 | A11y and compatibility review | WCAG 2.2 AA target assessed across keyboard, assistive technology, responsive states, and supported browsers |
 | TEST-022 | G0 performance benchmark | 100-line generation meets the proposed 1-second p95 target on an agreed reference device/browser after page load; report exact environment and distribution |
+| TEST-023 | Exclusive game-scope test | Inputs, artifacts, filters, and source parsers accept only Philippine Lotto 6/42 and reject or ignore other games |
+| TEST-024 | Offline parser-contract fixtures | Synthetic fixtures cover normalization, malformed/missing/conflicting data, duplicate/correction handling, and disabled-source behavior without network requests |
 
 Statistical tests are safeguards, not evidence of predictive advantage. Keep verification of source legality, privacy, accessibility, and actual hosted behavior distinct from unit-test evidence.
 

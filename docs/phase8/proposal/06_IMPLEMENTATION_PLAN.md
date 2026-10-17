@@ -10,6 +10,8 @@
 
 Deliver a small, reproducible G0-first randomizer and research artifact pipeline with a static client, explicit provenance, and separately gated prospective evaluation. The Python research engine and versioned JSON/JSONL artifacts are the proposed foundation. No item in this plan authorizes implementation, dataset changes, source collection, deployment, or changes to the current STOP verdict.
 
+**Research scope:** Philippine Lotto 6/42 only. 3D Lotto, all other lottery games, and unrelated prediction systems are excluded. Phase 8 remains an educational and experimental project, not an affiliated PCSO product or a predictive service.
+
 Hard constraints throughout delivery:
 
 - Use only explicitly approved training inputs; preserve the documented 902-row training boundary and the 2016-08-30 through 2022-11-12 interval.
@@ -17,8 +19,10 @@ Hard constraints throughout delivery:
 - Do not modify or reorder original or cleaned datasets.
 - Keep G0 uniform and default; G1/G2 are experimental, and G2 needs calibration and release review.
 - Use synthetic fixtures for source or schema tests unless and until a source is approved.
+- Distinguish fair-draw probability, validated model-selection probability, and historical pattern frequency; unavailable values remain “Not calculated” or “Not established.”
 - Keep visitor generation browser-local; no central visitor-combination collection.
-- Keep official-result collection disabled until source access/reuse approval.
+- Keep all result collection disabled until source identity, ordinary access conditions, current terms/robots findings, applicable reuse conditions, operating limits, and a human-reviewed feasibility report are approved. Written permission is required only when law, terms, or source-specific restrictions require it.
+- Do not depend on an FOI workflow for ordinary collection; keep LottoMatik excluded from automation pending current terms review.
 - Do not make predictive, accuracy, significance, acceptance-rate, or entropy claims without actual reviewed evidence.
 - Do not deploy or merge as part of a milestone without separate approval.
 
@@ -58,15 +62,23 @@ The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was r
 
 **Definition of done:** UI review, supported-browser behavior, keyboard/screen-reader/contrast/zoom evidence, local-download validation, no visitor-data network flow, and reviewed artifact integrity. Hosting/deployment remains a separate approval checkpoint.
 
-## Milestone 8D: Authorized draw collection
+## Milestone 8D: Source feasibility and conditional collection
 
-**Scope:** This milestone is blocked until access and reuse rights are verified for a source and the responsible reviewers approve an adapter. Source investigation and randomizer work are separate. An adapter interface may be specified earlier, but it must remain disabled and make no network requests.
+**Scope:** 8D is separate from randomizer development. All adapters remain disabled throughout this proposal stage, and source-policy review does not itself activate collection. PCSO is the primary source candidate; LottoPCSO.com is secondary and requires cross-checking; LottoMatik is excluded from automation pending current terms review. FOI is not an operational dependency.
 
-**Tasks after gate:** Obtain source identity and terms; document official access method or written permission; define respectful request limits, timeout/retry policy and monitoring; implement one source adapter; normalize into `DrawObservation`; add duplicate/correction/quarantine handling; test against approved synthetic fixtures and only permitted live evidence; preserve raw provenance where allowed.
+**8D.1 Offline parser feasibility:** Specify the DrawSourceAdapter methods, versioned normalization, schema/provenance, error states, deduplication, correction, quarantine, and source-status reporting. Build only from synthetic offline HTML fixtures representing the observed source layouts and edge cases. Evaluate existing/standard-library options before approving dependencies. Disabled adapters and health checks make no network requests.
 
-**Acceptance:** TEST-008, TEST-010, TEST-015, and TEST-020 pass; source review is current and scope-specific; disabled mode has zero network access; live access is bounded and authorized; unknown source values remain `null`; conflicting records quarantine; no protected historical or test partition is touched.
+**Acceptance:** TEST-008, TEST-015, TEST-023, and TEST-024 pass on synthetic fixtures. Tests cover date formats, published versus sorted order, missing optional fields, duplicate and incomplete records, unexpected headers, placeholders, malformed markup, pagination/date boundaries, layout changes, access denial, timeout/server failure, conflicting sources, and corrections. No live request or copied protected result row is used.
 
-**Definition of done:** Source/reuse approval, reviewed adapter and operating limits, successful authorized verification, alert/recovery runbook, and explicit activation approval. If permission is unavailable, the collector remains disabled with no substitute scraper.
+**8D.2 Source-policy and feasibility review:** Recheck the PCSO result page's ordinary form/request behavior, source terms and robots rules, historical coverage, update behavior, and applicable reuse scope. Repeat the same source-specific review for LottoPCSO.com before any secondary adapter. Record unresolved questions and a human-reviewed recommendation. Treat public access or absence of an explicit ban as insufficient proof of reuse permission. Written permission is a condition only where applicable law, terms, or source-specific restrictions require it.
+
+**Acceptance:** TEST-020 has a current, source-specific record for identity, ordinary access method, terms/robots review, applicable reuse conditions, request pacing, reviewer, and expiry. If a source is denied or uncertain, its adapter stays disabled. Source review does not require or await an FOI response.
+
+**8D.3 Conditional live pilot:** Only after separate human approval, pilot one eligible source with a low-frequency request after draw-result publication, bounded retries, configurable pacing, monitored failures, and idempotent writes. Verify the current PCSO draw timetable before configuring any schedule. Do not use a scheduled workflow as exact-time evidence. Stop on access denial, clear prohibition, or changed/unresolved terms. Do not use CAPTCHA solving, stealth browsers, proxy rotation, or WAF/authentication circumvention.
+
+**Acceptance:** TEST-010, TEST-015, and TEST-020 pass; a disabled adapter makes zero requests; an enabled pilot follows the approved source limits; unknown values remain null; conflicts and corrections create quarantined or superseding records; only Lotto 6/42 observations reach the approved prospective store; original datasets and sealed partitions remain untouched.
+
+**Definition of done:** Offline parser contract is reviewed; source feasibility and current policy status are documented; any live pilot is separately approved and bounded; source record revisions and recovery procedure are retained. No source approval or human activation means no collection.
 
 ## Milestone 8E: Prospective research registry
 
@@ -96,7 +108,7 @@ For a two-sided normal-approximation sensitivity calculation, `n ≈ ((z_(1-alph
 2. Complete 8A mathematical contracts and G0 reference; review before fitting.
 3. Complete 8B statistical and model gates; leave G2 unavailable if it fails.
 4. Complete 8C static client and accessibility/privacy review.
-5. Decide independently whether 8D source work has legal/access authority; it is not a prerequisite to G0.
+5. Review 8D source feasibility and applicable access/reuse conditions independently; it is not a prerequisite to G0.
 6. Approve timestamp provider, canonicalization, registration protocol, and read-only hosting for 8E.
 7. Approve the power/sensitivity analysis and prospective outcomes source before 8F.
 8. At every gate, review exact diff, tests, data-access audit, and evidence against the current branch/commit. Deployment, merge, and publication each require separate authorization.
@@ -118,15 +130,17 @@ For a two-sided normal-approximation sensitivity calculation, `n ≈ ((z_(1-alph
 | TEST-011 | Timestamp and manifest | 8E, 8F | Canonical hash, token verification, time precedes target draw |
 | TEST-012 | Provenance presentation | 8B, 8C | Model/version/cutoff/status visible |
 | TEST-013 | G2 release review | 8B | Calibration, exact normalization, sampler fidelity, concentration-guardrail, and compute-cost approval |
-| TEST-014 | Scientific display | 8C | Exact chance law and limitations shown; no unsupported claims |
-| TEST-015 | Result provenance | 8C, 8D | Only permitted verified records, correction states and nulls displayed |
+| TEST-014 | Scientific display | 8C | Fair-draw probability, model-selection probability, and historical frequency are separately labelled; exact values and limitations are correct |
+| TEST-015 | Result provenance | 8C, 8D | Only reuse-approved verified records, source classes, cross-checks, correction states and nulls are displayed |
 | TEST-016 | Visitor privacy | 8C | No generated line in network requests or central persistence |
 | TEST-017 | Static registry | 8E | Read-only published view; only frozen pre-draw project batches |
 | TEST-018 | Evaluation isolation | 8E, 8F | Authorized outcomes only, after freeze/draw, append-only protocol |
 | TEST-019 | Statistical plan | 8F | Primary endpoint, power, multiplicity, uncertainty, stopping rule frozen |
-| TEST-020 | Source authorization | 8D | Access/reuse approvals and limits precede activation |
+| TEST-020 | Source eligibility and policy review | 8D.2, 8D.3 | Current terms/robots, ordinary access method, applicable reuse conditions, pacing, reviewer, and expiry precede activation; written permission only where applicable |
 | TEST-021 | Accessibility/compatibility | 8C | WCAG 2.2 AA target and browser support matrix manually reviewed |
 | TEST-022 | G0 performance | 8C | 100-line batch meets proposed 1-second p95 target on agreed device/browser; actual environment recorded |
+| TEST-023 | Lotto 6/42-only scope | 8A, 8C, 8D | Inputs, artifacts, filters, and parsers reject or ignore all other games |
+| TEST-024 | Offline source parser contract | 8D.1 | Synthetic fixtures validate parsing, normalization, nulls, duplicates, conflict/correction handling, and disabled-source zero-network behavior |
 
 The tests above are future acceptance criteria. They have not been run by this proposal. Source rights, real browser behavior, screen-reader behavior, and actual Colab/hosted behavior require their own evidence class.
 
@@ -152,7 +166,7 @@ Integration tests should trace `ModelSpec` to generated output to frozen manifes
 | 8A | 4-6 person-days | One Python engineer familiar with current repository, focused G0/contracts work, no source-data repair |
 | 8B | 5-8 person-days | Approved data access and independent statistical reviewer available; G2 may remain blocked |
 | 8C | 8-13 person-days | One frontend engineer; approved stack, design review, no backend or deployment operations |
-| 8D | 5-10 person-days after approval | One source only, access/reuse permission already resolved; legal response and source-owner delays excluded |
+| 8D | 5-10 person-days after feasibility review | One source first; source-specific access/reuse conditions resolved, written permission only if required; source-owner delays excluded |
 | 8E | 4-7 person-days | TSA and verification process selected; no public submission API |
 | 8F | 4-8 person-days plus prospective draw period | Frozen protocol and source are ready; calendar wait for draws excluded |
 
@@ -165,7 +179,8 @@ Total engineering effort is a rough 30-52 person-days before external approval d
 | Users interpret experimental distribution as better odds | Misleading product claim | G0 default, persistent notices, experimental labels, independent copy review |
 | Model overfit through feature exploration | False discovery | Chronological training-only folds, frozen feature search, multiplicity correction, no holdout access |
 | G2 exact sampler too slow or implementation diverges | Incorrect or unusable output | Decomposable feature contract, exact toy-space tests, cross-runtime parity; hide G2 if gate fails |
-| Source access/reuse not authorized | Legal/operational exposure | Disabled collector, written source approval, separate access/reuse review, no scraping fallback |
+| Source access/reuse unresolved or changes | Operational or rights exposure | Disabled adapter, current source-specific terms/robots/reuse review, written permission only where required, stop on denial/change, no circumvention |
+| HTML layout or pagination changes | Missed, duplicated, or malformed result records | Versioned parser rules, synthetic fixtures, schema validation, quarantine, and manual source-status review |
 | Static registration lacks write endpoint | Missing or late registration | Maintainer-controlled manifest process, pre-draw independent timestamp, static read-only display |
 | GitHub scheduled workflow delay/disablement | Missed collection or timing | Do not use a scheduled job as timestamp evidence; monitoring/recovery and host review if later needed |
 | Timestamp proof misunderstood | False pre-draw claim | Verify token imprint, signature, policy and UTC time; distinguish timestamp from deployment and truth |
@@ -185,7 +200,7 @@ For each milestone, record baseline commit, exact implementation commit, working
 2. **Data boundary:** approve exact training source/hash and test protections before model work.
 3. **Model release:** independent approval for G1/G2 calibration, normalization, sampler fidelity, and claims.
 4. **Privacy/accessibility:** approve host, provider data flows, privacy notice, and accessibility evidence before deployment.
-5. **Source rights:** approve source identity, access method, reuse, request controls, and source adapter separately from generator development.
+5. **Source feasibility and policy:** approve source-specific identity, terms/robots findings, ordinary access method, applicable reuse conditions, request controls, and expiry separately from generator development. Written permission is required only where applicable; FOI is not a prerequisite. Keep LottoMatik excluded unless current restrictions are resolved.
 6. **Registration:** approve TSA, canonicalization, preregistration process, public static artifacts, and retention before any study batch is registered.
 7. **Confirmatory evaluation:** approve endpoint, minimum meaningful effect, power/sensitivity, multiplicity, stopping rule, outcome access, and independent reviewer before prospective outcomes.
 8. **Publication/deployment/merge:** each is a separate authorization; completion of a milestone does not authorize any of them.
@@ -207,6 +222,9 @@ Components: C1 Python research core, C2 artifact repository, C3 static client, C
 | FR-011 | C2, C4, C7 | TEST-011, TEST-017 | 8E |
 | FR-012 | C5, C7 | TEST-018, TEST-019 | 8F |
 | FR-013 | C6 | TEST-010, TEST-020 | 8D |
+| FR-014 | C1, C2, C3, C6 | TEST-023 | 8A, 8C, 8D |
+| FR-015, FR-016 | C3, C5 | TEST-014 | 8C |
+| FR-017 | C2, C3, C6 | TEST-015, TEST-020, TEST-024 | 8D |
 | NFR-001, DATA-014 | C3 | TEST-016 | 8C |
 | NFR-002, TR-009 | C3 | TEST-021 | 8C |
 | NFR-003 | C1, C3, C5 | TEST-014, TEST-019 | 8B, 8C, 8F |
@@ -221,6 +239,8 @@ Components: C1 Python research core, C2 artifact repository, C3 static client, C
 | TR-004 | C1, C5 | TEST-009, TEST-018 | 8A, 8F |
 | TR-005 | C2 | TEST-008 | 8A, 8B, 8E |
 | TR-006, TR-012 | C6 | TEST-010, TEST-020 | 8D |
+| TR-013 | C2, C6 | TEST-008, TEST-015, TEST-020, TEST-024 | 8D |
+| TR-014 | C1, C3 | TEST-014 | 8A, 8C |
 | TR-007 | C2, C4, C7 | TEST-011, TEST-017 | 8E |
 | TR-008 | C3 | TEST-016 | 8C |
 | TR-009 | C3 | TEST-021 | 8C |
@@ -238,6 +258,9 @@ Components: C1 Python research core, C2 artifact repository, C3 static client, C
 | DATA-012 | C2, C6 | TEST-008, TEST-015 | 8D |
 | DATA-013 | C2, C7 | TEST-011 | 8E |
 | DATA-014 | C3 | TEST-016 | 8C |
+| DATA-015 | C1, C2, C5, C6 | TEST-009, TEST-018, TEST-023 | 8A, 8D, 8F |
+| DATA-016, DATA-017 | C2, C6 | TEST-008, TEST-015, TEST-020, TEST-024 | 8D |
+| DATA-018 | C1, C2, C3 | TEST-008, TEST-014 | 8A, 8C |
 
 The exact data-field contract is in [05 Backend and Data Schema](05_BACKEND_AND_DATA_SCHEMA.md). All requirements and acceptance tests are proposed; none is evidence of implementation or research success.
 

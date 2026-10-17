@@ -6,9 +6,11 @@
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
+**Scope:** Philippine Lotto 6/42 only. Exclude 3D Lotto, all other lottery games, and unrelated prediction systems from controls, results, and research views.
+
 ## Design objectives and audience
 
-The interface should help visitors generate valid Lotto 6/42 combinations and understand how the generator relates to the fair-random chance model. Research readers should be able to inspect model versions, data cutoffs, sources, and limitations. The site must communicate that no mode predicts winning numbers and that historical pattern fit is not predictive evidence.
+The interface should help visitors generate valid Philippine Lotto 6/42 combinations and understand how the generator relates to the fair-random chance model. Research readers should be able to inspect model versions, data cutoffs, sources, and limitations. The site must communicate that no mode predicts winning numbers and that historical pattern fit is not predictive evidence.
 
 Primary audiences are visitors using local generation, research readers exploring approved artifacts, and maintainers/reviewers auditing provenance. The design does not support sales, betting, account creation, social sharing of personal picks, or visitor submissions.
 
@@ -65,18 +67,20 @@ Show each line as a text list in ascending order with the six values separated c
 
 ## Distribution and statistical visualization
 
-Visualizations must identify data source, record count, time window, verification state, and whether the view is empirical or theoretical. Always distinguish:
+Visualizations must identify data source, record count, time window, verification state, and whether the view is empirical or theoretical. Always distinguish and label:
 
-- the exact fair-random reference distribution;
-- an approved historical empirical distribution;
-- a model's fitted training distribution;
-- any post-registration outcome evaluation.
+- **Fair-draw probability:** for one exact valid line, 1/5,245,786 (approximately 0.00001906%) under a fair independent draw. Every valid line has the same jackpot chance.
+- **Model selection probability:** the probability that the named, validated G1/G2 distribution selects that line. It describes generator selection, not a draw outcome or chance of winning.
+- **Historical pattern frequency:** the observed count of a defined pattern divided by its stated sample size. For training data, show N=902, the 2016-08-30 to 2022-11-12 date range, data/model version, and feature definition.
+- **Post-registration outcome evaluation:** a separate prospective metric evaluated only under the frozen protocol and using authorized post-registration outcomes.
+
+Show exact model percentages only after mathematical normalization and validation. Otherwise show “Not calculated” or “Not established.” Do not use a model score as a substitute for jackpot probability.
 
 Use frequency bars with denominators and uncertainty where appropriate. Include a table or text alternative for every chart. Do not imply that a deviation in a small sample predicts a future draw. The exact match-count mass function is hypergeometric as documented in [01 Product Requirements](01_PRODUCT_REQUIREMENTS.md); no rounded visual display should replace the formula or expose unverified entropy or sampler acceptance-rate claims.
 
 ## Historical draws explorer
 
-The explorer reads only reviewed, versioned artifacts with approved reuse status. Provide game/date filters, source attribution, verification status, missing-field disclosure, and a correction history. A source's website link does not itself authorize copying, scraping, or republication. If the source gate is not met, the explorer is hidden or explicitly unavailable; never fill missing winner counts, amounts, or source dates by guesswork.
+The explorer reads only reviewed, versioned artifacts with approved reuse status. Its game filter and data contract are limited to Philippine Lotto 6/42. Identify PCSO as the authoritative result publisher and preferred source candidate. Identify LottoPCSO.com as an independent third-party comparison site; it cannot confer official verification without suitable PCSO cross-check. LottoMatik remains excluded from automated collection pending current terms review. Provide draw-date filters, source attribution, source classification, access/reuse status, verification status, missing-field disclosure, and correction history. A website link or public page does not itself authorize copying, automated retrieval, or republication. If a source gate is not met, hide the data or show a clear unavailable state; never fill missing winner counts, amounts, or source dates by guesswork.
 
 ## Prospective research dashboard
 
@@ -99,9 +103,13 @@ For G1/G2, show algorithm ID and name, model/config version, training-data hash/
 
 Persistent concise notice near generation:
 
-> This tool generates number combinations. It does not predict lottery outcomes or improve the odds of a fair draw. G0 gives every valid 6/42 combination equal probability; experimental modes describe research distributions, not forecasts.
+> Magic Lotto is an independent educational project for Philippine Lotto 6/42 only. It is not affiliated with or endorsed by PCSO or any Philippine government agency. These experimental combinations are not predictions or guaranteed wins; under a fair draw every valid line has the same 1 in 5,245,786 jackpot chance. No tickets or wagers are sold or accepted.
 
-Methods/research views should also state the existing STOP verdict, distinguish descriptive model fit from predictive effectiveness, note the training boundary, and state that current validation and locked-test partitions remain sealed. No new claim may reverse that verdict without independent review of new evidence under a separately approved protocol.
+The About and Methods views shall provide this full disclaimer using original project wording:
+
+> Magic Lotto is an independent educational and experimental project focused only on Philippine Lotto 6/42. It is not affiliated with, authorized by, sponsored by, or endorsed by the Philippine Charity Sweepstakes Office (PCSO) or any Philippine government agency. Its research purposes include machine learning experimentation, probability theory, statistical pattern analysis, random-behavior analysis, probabilistic combination generation, and statistical simulation and comparison. Generated combinations are not predictions or guaranteed winning numbers. Under a fair draw, every valid Lotto 6/42 combination has the same 1 in 5,245,786 jackpot probability. A model's probability of selecting a combination describes its own output distribution, not the chance that the draw will produce that combination. Historical pattern frequencies describe recorded data and do not establish future predictive effectiveness. Magic Lotto does not sell lottery tickets, accept wagers, or operate games. PCSO is identified as the authoritative draw-result publisher; independent reference sites are labelled third-party and remain subject to access and reuse review.
+
+Methods/research views should also state the existing STOP verdict, distinguish descriptive model fit from predictive effectiveness, note the 902-draw training boundary, and state that current validation and locked-test partitions remain sealed. No new claim may reverse that verdict without independent review of new evidence under a separately approved protocol.
 
 ## Interaction and state behavior
 
@@ -133,7 +141,7 @@ This is a proposed target, not a conformance claim. Acceptance review must inclu
 | State | User-facing treatment |
 | --- | --- |
 | No result yet | Explain the next action; no empty placeholder combinations |
-| Results source not approved | Explain that the explorer is unavailable pending access/reuse review; link to the publisher if appropriate |
+| Results source not approved | Explain that the explorer is unavailable pending source-specific access/reuse review; link to PCSO as publisher if appropriate |
 | Model artifact loading | Identify model/version, use a concise status message, and leave G0 available if safe |
 | Invalid/unsupported model | Hide the affected mode and explain integrity/version failure; do not fall back silently |
 | Invalid input | Show a specific associated message and keep valid local results intact |
@@ -156,7 +164,9 @@ After implementation approval, test with representative novice visitors and rese
 6. Result explorer and registry are read-only and show source/timestamp status.
 7. Primary flows pass the planned WCAG 2.2 AA review and responsive checks.
 8. Empty, blocked, invalid, and offline states explain what happened and what remains possible.
+9. Every result and research view is limited to Lotto 6/42 and distinguishes the three probability categories with their denominators and provenance.
+10. The concise generator notice and full independent-project disclaimer are present and do not imply PCSO affiliation or predictive effectiveness.
 
 ## Decisions pending design review
 
-Approve or revise the page hierarchy, framework, browser support policy, exact mobile performance target, final notice wording, host/provider privacy notice, chart library, and whether any historical artifact qualifies for display. Those choices do not change the G0 default, source gate, sealed partitions, or STOP verdict.
+Approve or revise the page hierarchy, framework, browser support policy, exact mobile performance target, host/provider privacy notice, chart library, and whether any historical artifact qualifies for display. The supplied disclaimer wording is a proposal for human review. Current PCSO access/reuse conditions and LottoPCSO.com terms/robots/reuse require source-specific review; LottoMatik stays excluded until its current terms are reverified. Those choices do not change the G0 default, exclusive game scope, sealed partitions, or STOP verdict.
