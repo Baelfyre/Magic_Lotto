@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from threadpoolctl import threadpool_limits
 
 from magic_lotto.domain.draw_642 import BALLS, DRAW_COLS, DRAW_SIZE, encode_draws
 
@@ -20,7 +21,11 @@ def fair_null_draws(n: int, rng: np.random.Generator) -> np.ndarray:
 def fit_kmeans(x: np.ndarray, k: int, seed: int = SEED) -> KMeans:
     if k < 2 or k >= len(x):
         raise ValueError("k outside supported range")
-    return KMeans(n_clusters=k, n_init=5, random_state=seed, max_iter=200).fit(x)
+    # K-means uses native OpenMP/BLAS reductions; a fixed seed alone does not
+    # guarantee repeatable results across thread schedules in one runtime.
+    # Limit only the fit operation, rather than mutating process-wide settings.
+    with threadpool_limits(limits=1):
+        return KMeans(n_clusters=k, n_init=5, random_state=seed, max_iter=200).fit(x)
 
 
 def nearest_historical_examples(x: np.ndarray, model: KMeans) -> list[list[int]]:
@@ -51,7 +56,9 @@ def analyze(train: pd.DataFrame, null_replicates: int = 100, seed: int = SEED) -
     p_lower = (1 + int(np.sum(null_inertia <= model.inertia_))) / (null_replicates + 1)
     elbow = {str(k): float(fit_kmeans(x, k, seed).inertia_) for k in range(2, 9)}
     pca = PCA(n_components=2, random_state=seed)
-    points = pca.fit_transform(x)
+    # Apply the same execution policy to the PCA/SVD reduction.
+    with threadpool_limits(limits=1):
+        points = pca.fit_transform(x)
     return {
         "x": x, "model": model, "freqs": freqs, "cooccur": cooccur,
         "cluster_counts": counts, "null_inertia": null_inertia, "elbow": elbow,
