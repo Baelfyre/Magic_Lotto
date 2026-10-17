@@ -6,8 +6,10 @@ from tempfile import TemporaryDirectory
 import sys
 import numpy as np
 import pandas as pd
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from phase7_kmeans_642 import (
+    DEFAULT_INPUT,
     TRAIN_COUNT,
     TRAIN_END_SOURCE_ROW,
     TRAIN_PREFIX_ROWS,
@@ -19,6 +21,9 @@ from phase7_kmeans_642 import (
 
 
 class KMeansExplorationTests(unittest.TestCase):
+    def test_default_input_tracks_repository_layout(self):
+        self.assertEqual(DEFAULT_INPUT, Path(__file__).resolve().parents[1] / "data/processed/lotto_6_42_cleaned_normalized.csv")
+
     def test_binary_encoding_indifferent_to_ball_order(self):
         a = encode_draws(np.array([[1, 2, 3, 4, 5, 6], [6, 5, 4, 3, 2, 1]]))
         self.assertEqual(a.shape, (2, 42))
@@ -27,6 +32,15 @@ class KMeansExplorationTests(unittest.TestCase):
 
     def test_invalid_combination_rejected(self):
         for values in ([1, 1, 2, 3, 4, 5], [0, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 43]):
+            with self.assertRaises(ValueError):
+                encode_draws(np.array([values]))
+
+    def test_noninteger_and_nonfinite_numbers_rejected(self):
+        for values in (
+            [1.5, 2, 3, 4, 5, 6],
+            [np.nan, 2, 3, 4, 5, 6],
+            [np.inf, 2, 3, 4, 5, 6],
+        ):
             with self.assertRaises(ValueError):
                 encode_draws(np.array([values]))
 
@@ -47,7 +61,7 @@ class KMeansExplorationTests(unittest.TestCase):
                 load_train_only(csv)
 
     def test_adjacent_source_row_inversion_is_provenance_only(self):
-        source = Path(__file__).resolve().parents[1] / "lotto_6_42_cleaned_normalized.csv"
+        source = Path(__file__).resolve().parents[1] / "data/processed/lotto_6_42_cleaned_normalized.csv"
         prefix = pd.read_csv(source, nrows=TRAIN_PREFIX_ROWS)
         self.assertEqual(prefix.loc[870:871, "source_row"].tolist(), [876, 875])
 
@@ -67,7 +81,7 @@ class KMeansExplorationTests(unittest.TestCase):
         self.assertEqual(train["draw_date"].iloc[-1], "2022-11-12")
 
     def test_duplicate_source_row_still_rejected(self):
-        source = Path(__file__).resolve().parents[1] / "lotto_6_42_cleaned_normalized.csv"
+        source = Path(__file__).resolve().parents[1] / "data/processed/lotto_6_42_cleaned_normalized.csv"
         prefix = pd.read_csv(source, nrows=TRAIN_PREFIX_ROWS)
         prefix.loc[871, "source_row"] = prefix.loc[870, "source_row"]
         with TemporaryDirectory() as p:
