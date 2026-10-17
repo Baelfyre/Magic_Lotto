@@ -6,7 +6,7 @@
 
 Inspect whether unordered 6/42 training draws form visually interpretable groups and whether their K-means compactness is unusually high relative to independent fair-random 6/42 histories.
 
-- Source: existing `lotto_6_42_cleaned_normalized.csv` at repository root.
+- Source: existing `data/processed/lotto_6_42_cleaned_normalized.csv`.
 - Preserved training partition: 902 draws, August 30, 2016 through November 12, 2022, source rows 103 through 1008.
 - The reader consumes only the first 1003 cleaned records and asserts the train boundary before selecting the established 902-row training partition.
 - `source_row` is unique provenance metadata, not a chronological ordering key; chronological order is validated from `draw_date`.
@@ -33,7 +33,7 @@ python -m unittest discover -s tests -p "test_phase7*.py" -v
 python scripts/phase7_kmeans_642.py --null-replicates 100 --seed 162
 ```
 
-Open `notebooks/lotto_phase7_kmeans_descriptive.ipynb` in Colab or Jupyter and run its first code cell to initialize the environment. It discovers a checkout by walking up from the kernel working directory; in Colab only, it clones the repository's default branch into `/content/Magic_Lotto` when no usable checkout is found. The cell switches to the verified repository root, installs `requirements-phase7.txt` into the active kernel's Python environment, and validates imports before analysis. Re-running the cell reuses the checkout and does not reset files. For local Jupyter, start from the repository tree; no clone is performed.
+Open `notebooks/lotto_phase7_kmeans_descriptive.ipynb` in Colab or Jupyter and run its first code cell to initialize the environment. It discovers a checkout from the kernel working directory and its parents; set `MAGIC_LOTTO_ROOT` when a local kernel starts elsewhere. In Colab only, it clones the repository default branch into `/content/Magic_Lotto` when no usable checkout is found; set `MAGIC_LOTTO_REF` to request another ref. The cell uses the verified repository root, installs `.[notebook]` (also listed by `requirements-phase7.txt`) into the active kernel's Python environment, and validates imports before analysis. Re-running the cell reuses the checkout and does not reset files. Local setup never clones.
 
 The following notebook cells generate and display all six figures and print the generated evidence summary.
 
