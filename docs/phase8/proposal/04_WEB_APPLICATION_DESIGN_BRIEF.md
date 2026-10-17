@@ -2,7 +2,7 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposed design direction; no UI is implemented
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
@@ -39,6 +39,12 @@ Navigation must not imply that a page exists before its data/artifact gate passe
 5. **About and Sources** contains source/reuse status and project research verdict.
 
 Use one descriptive page heading, a short purpose statement, primary task region, limitations/source context, and secondary details. Keep the selected generator, model version, and privacy behavior visible when navigating or downloading.
+
+## Current repository foundation and proposed client boundary
+
+Merged PR #4 added the Phase 7 package and shared startup for the six notebooks. It did not add a web client, frontend source directory, Phase 8 model artifacts, public registry, or results API. The existing `reports/phase7_kmeans_642/` outputs are descriptive Phase 7 evidence, not a stable browser data contract or a source of approved public result records. Keep the design here as proposed until the frontend stack and client source location are approved. The shared notebook bootstrap is for research notebooks; it is not a browser-client runtime.
+
+If approved, the client will read only versioned Phase 8 JSON artifacts whose schema, provenance, public-display status, and reuse conditions have passed review. Proposed model artifacts, public research/registry artifacts, and future observations are kept under the proposed locations `models/phase8/`, `reports/phase8/`, and `data/prospective/lotto-6-42/`, respectively. These directories are not present in the current tree and must not be treated as implemented. Do not repurpose historical result files or the Phase 7 output directory as a client API.
 
 ## Generator interface
 

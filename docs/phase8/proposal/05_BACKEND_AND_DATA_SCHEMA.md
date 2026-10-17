@@ -2,7 +2,7 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposed artifact schema and lifecycle; no database or backend is implemented
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
@@ -12,13 +12,15 @@
 
 V1 uses versioned JSON for structured snapshots and JSONL for append-only event streams, reviewed through Git. This matches the proposed offline research engine and static read-only client without adding a service or database. The repository stores only public/approved research artifacts and synthetic fixtures; it does not store visitor-generated combinations.
 
+The merged repository currently has Phase 7-specific CSV input and report output: `CsvTrainingDrawDao` and `CsvTrainingDrawRepository` read the established training prefix, while the infrastructure `Phase7ArtifactWriter` writes the existing charts, `summary.json`, and `README.md` under `reports/phase7_kmeans_642/`. The application ports `TrainingDrawRepository` and `Phase7ArtifactWriter` are contracts for that Phase 7 workflow, not general draw-observation or artifact-store interfaces. There is no Phase 8 JSON/JSONL store, database, source adapter, or static registry.
+
 | Store | Advantages | Limits | V1 decision |
 | --- | --- | --- | --- |
 | Git-versioned JSON/JSONL | Human review, diffs, immutable commit history, no database service, static hosting compatible | Concurrent writers require repository review; large histories are cumbersome; Git is not a query service | Use for bounded public artifacts and frozen studies |
 | SQLite | Transactional local workflows and queries | Not a shared write store for a static site; adds migration/backup lifecycle | Defer unless local research operations show a need |
 | PostgreSQL or managed database | Concurrent writes, query/index support, service controls | Requires backend/API, identity/access policy, operations, privacy and cost decisions | Out of v1; separate architecture approval required |
 
-No database is required for browser-local generation or read-only artifact viewing. A migration seam is the artifact repository interface: `read_model`, `read_draw_series`, `write_frozen_manifest`, and `append_event`. These are proposed interface names only. Do not build an abstraction layer without an approved consumer.
+No database is required for browser-local generation or read-only artifact viewing. Preserve the existing application-port to infrastructure implementation direction when a concrete Phase 8 use case needs storage. Add a narrow application port and matching infrastructure serializer/repository only for that approved consumer; do not broaden the Phase 7 training port or writer or create a generic abstraction without a caller. The Phase 8 operations previously listed as `read_model`, `read_draw_series`, `write_frozen_manifest`, and `append_event` remain logical proposals, not implemented methods.
 
 ## JSON and JSONL storage strategy
 
@@ -28,6 +30,7 @@ No database is required for browser-local generation or read-only artifact viewi
 - Record SHA-256 for source snapshots, model artifacts, generated batch files, and frozen study manifests.
 - Do not update a frozen artifact in place. Create a new version/event referencing the previous ID and hash.
 - Keep source data, synthetic fixtures, public display artifacts, and future outcomes in separate directories and access paths.
+- If separately approved, use `models/phase8/` for versioned Phase 8 model parameters/specifications, `reports/phase8/` for reviewed public research artifacts and frozen registry manifests, and `data/prospective/lotto-6-42/` for post-cutoff source observations/outcomes. These are proposed new locations, not current files or directories. Keep the protected 902-draw training source at `data/processed/lotto_6_42_cleaned_normalized.csv`; never merge prospective records into it or the sealed partitions.
 - Do not put credentials, visitor data, browser-local lines, or unapproved source extracts in Git.
 
 ## Logical entities and relationships
@@ -87,6 +90,8 @@ Required fields: `schema_version`, `record_type`, `record_id`, `record_class`, `
 ## SourceRegistry, SourceReview, and provenance records
 
 `SourceRegistry` is proposed at schema version 2.0. Its fields are `source_id`, `schema_version`, `publisher_name`, `source_name`, `source_url`, `source_classification` (`official`, `third_party`, or `unverified`), `priority`, `terms_url`, `robots_url`, `access_review_status`, `reuse_review_status`, `reviewed_request_method`, `request_limits`, `review_conditions`, `last_reviewed_at`, `review_expires_at`, `collector_enabled`, and notes. Review states are `not_reviewed`, `review_required`, `conditional`, `approved`, `denied`, or `expired`. The exact conditions field records when applicable law, terms, or source-specific restrictions require written permission; written permission is not a blanket prerequisite. `collector_enabled` defaults to `false`; changing it requires separate activation approval. Official classification does not imply access or reuse approval.
+
+No source adapter or `src/magic_lotto/infrastructure/sources/` package exists in the current repository; the architecture guide explicitly records it as absent. The Phase 7 CSV DAO is bound to the existing train-only input contract and must not be extended to fetch public results. Any future adapter, parser, or separate observation persistence requires implementation approval and remains disabled until source review passes.
 
 `SourceReview` fields: `source_review_id`, `source_id`, `review_scope` (`identity`, `access`, `reuse`, `privacy`, or `provenance`), `decision` (`pending`, `approved`, `denied`, `expired`, or `needs_review`), `reviewed_at`, `reviewer_role`, `evidence_refs`, `conditions`, and nullable `expires_at`. Access and reuse require separate decisions; each must be rechecked when a source changes its terms or access behavior.
 

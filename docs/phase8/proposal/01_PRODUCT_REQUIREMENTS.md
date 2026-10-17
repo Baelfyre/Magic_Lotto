@@ -2,7 +2,7 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposal for human review; not implementation authorization
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Prepared:** 2026-10-17
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
@@ -14,6 +14,8 @@ Phase 8 proposes a transparent educational and experimental randomizer for the P
 Versioned JSON and JSONL research artifacts are the proposed v1 storage. The web client is static and runs generation in the visitor's browser. It does not upload or centrally store visitor combinations. A separate, read-only public registry may display frozen project research batches after they have been registered before a draw. It is not a submission endpoint. Official-result collection is blocked pending verified access and reuse authority. The existing validation and locked-test partitions remain sealed, and the STOP verdict remains in force.
 
 This document and its five companion documents are proposals. None describes implemented Phase 8 behavior or permits implementation, collection, deployment, or a change to the research verdict.
+
+The merged PR #4 is the implementation foundation, not a Phase 8 implementation. It added the installable `src/magic_lotto/` package for the Phase 7 train-only analysis, shared notebook bootstrap, and repository migration documentation. No Phase 8 G0/G1/G2 generator, public result collector, web client, registry, general JSON/JSONL research-artifact store, or prospective evaluation service is implemented. See the [repository architecture](../../architecture/REPOSITORY_ARCHITECTURE.md) for the current module responsibilities.
 
 ## Problem statement and research motivation
 
@@ -179,6 +181,6 @@ The proposed first release contains a static, accessible G0 generator, client-si
 
 ## Source basis and limits
 
-Repository facts were checked at baseline `b67e31572187001c89266839871c9e28456b90e8`: [README](../../../README.md), [Phase 7 report](../../PHASE7_KMEANS_DESCRIPTIVE.md), [Phase 5R report](../../../reports/phase5r_predictive_information.md), [Phase 6B adjudication](../../../reports/phase6b_642_semantic_adjudication.json), and [repository structure](../../REPOSITORY_STRUCTURE.md). The Phase 7 report states that it uses only the established 902-row training partition and that `source_row` is provenance metadata, not a chronological key.
+Repository facts were checked at `origin/main` commit `998f16d133b4500dfd65fa57fb73f9d84c91f8f4`, which merges PR #4: [README](../../../README.md), [Phase 7 report](../../PHASE7_KMEANS_DESCRIPTIVE.md), [Phase 5R report](../../../reports/phase5r_predictive_information.md), [Phase 6B adjudication](../../../reports/phase6b_642_semantic_adjudication.json), [repository structure](../../REPOSITORY_STRUCTURE.md), [repository architecture](../../architecture/REPOSITORY_ARCHITECTURE.md), [file migration map](../../architecture/FILE_MIGRATION_MAP.md), [migration manifest](../../REPOSITORY_LAYOUT_MIGRATION.json), [path policy](../../architecture/IMPORT_AND_PATH_POLICY.md), [notebook guide](../../architecture/NOTEBOOK_EXECUTION_GUIDE.md), and [`pyproject.toml`](../../../pyproject.toml). The Phase 7 report states that it uses only the established 902-row training partition and that `source_row` is provenance metadata, not a chronological key. PR #4's migration manifest records the hashes of moved data and historical artifacts; this proposal does not alter them.
 
 External sources checked 2026-10-17: [PCSO official Lotto result search page](https://www.pcso.gov.ph/searchlottoresult.aspx), [LottoPCSO.com 6/42 history](https://www.lottopcso.com/6-42-lotto-result-history-and-summary/), [LottoPCSO.com disclaimer](https://www.lottopcso.com/disclaimer/), [LottoMatik result page](https://lottomatik.pcso.gov.ph/lotto-results), [LottoMatik terms](https://lottomatik.pcso.gov.ph/terms), [RFC 3161](https://www.rfc-editor.org/info/rfc3161/), [GitHub Pages overview](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [Cloudflare Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/), and [GitHub Actions scheduled-workflow limits](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows). The PCSO page was visible with date/game search controls and a mixed-game results table, but its request mechanics, robots rules, and reuse conditions were not resolved; visibility does not establish an API or permission. LottoPCSO.com was visible with 6/42 history and a disclaimer identifying it as unaffiliated and directing readers to PCSO for verification; its current automation/reuse terms remain unreviewed. The LottoMatik terms page could not be reverified in this review, so its prior exclusion remains. FOI is excluded as a collection dependency. The AGY proposal remains unavailable.

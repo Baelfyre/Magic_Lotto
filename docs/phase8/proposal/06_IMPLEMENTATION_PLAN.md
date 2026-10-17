@@ -2,13 +2,15 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposed roadmap; no implementation authorized by this document
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Prepared:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
 ## Delivery objectives and constraints
 
 Deliver a small, reproducible G0-first randomizer and research artifact pipeline with a static client, explicit provenance, and separately gated prospective evaluation. The Python research engine and versioned JSON/JSONL artifacts are the proposed foundation. No item in this plan authorizes implementation, dataset changes, source collection, deployment, or changes to the current STOP verdict.
+
+PR #4 completed the initial repository migration and Phase 7 package foundation in `src/magic_lotto/`. Phase 8 must extend that package's existing domain, research, application, infrastructure, and interface layers; do not schedule another package-architecture refactor or recreate its training repository, output writer, notebook bootstrap, or path policy. PR #4 did not implement Phase 8 generators, a web client, a general artifact store, a source adapter, or an evaluation workflow.
 
 **Research scope:** Philippine Lotto 6/42 only. 3D Lotto, all other lottery games, and unrelated prediction systems are excluded. Phase 8 remains an educational and experimental project, not an affiliated PCSO product or a predictive service.
 
@@ -28,13 +30,13 @@ Hard constraints throughout delivery:
 
 ## Architecture prerequisites
 
-Before coding, human reviewers should approve the product scope and this architecture direction; confirm local repo and partition access controls; approve dependency/browser support policy; select the Python package boundary; and resolve whether React/TypeScript is necessary for the client. The first implementation work must not depend on an unverified official API or an assumed reuse right. G0 can proceed independently of source collection. G1/G2, a public result explorer, prospective registry, collector, and evaluation have their own acceptance gates.
+Before coding, human reviewers should approve the product scope and the Phase 8 extension map against the merged `src/magic_lotto/` architecture; confirm local repository and partition access controls; approve dependency/browser support policy; and resolve whether React/TypeScript is necessary for the client and where its source will live. Reuse `magic_lotto.domain.draw_642` for combination invariants and place approved generator mathematics in the existing `magic_lotto.research` layer. Add application ports and infrastructure persistence only for an approved consumer. The first implementation work must not depend on an unverified official API or assumed reuse right. G0 can proceed independently of source collection. G1/G2, a public result explorer, prospective registry, collector, and evaluation have their own gates.
 
 The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was reviewed. The earlier reconciled Codex proposal was present in conversation history but not as a standalone repository file. Reconciliation remains based on the shared decisions in the current request and verified repository evidence until the missing proposal is supplied.
 
 ## Milestone 8A: Python mathematical core
 
-**Scope:** Implement input validation and an unbiased G0 reference; add versioned contracts and exact combinatorial utilities; preserve established training boundaries. G1's fixed-cardinality math may be implemented only after its training inputs/configuration are separately approved. No G2 release in this milestone.
+**Scope:** Reuse `magic_lotto.domain.draw_642` combination validation; add approved G0 generation, versioned contracts, and exact combinatorial utilities in the existing `src/magic_lotto/research/` layer; preserve established training boundaries. G1's fixed-cardinality math may be implemented only after its training inputs/configuration are separately approved. No G2 release in this milestone.
 
 **Tasks:** Define canonical sorted-line type and schema version; implement invalid-input rejection; define injected random source for tests and cryptographic runtime source; implement G0 sample and exact match PMF; implement G1 normalization/sampling if authorized; add assertions for `C(42,6)`, exact numerator sum, expected match count, and the Jaccard formula; create tests that forbid protected-data paths.
 
@@ -54,7 +56,7 @@ The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was r
 
 ## Milestone 8C: Static web application
 
-**Scope:** Build the responsive, accessible, static client for browser-local G0 generation, copy/download, research explanations, and only approved model/summary artifacts. Add G1/G2 controls only after 8B gates. No visitor write endpoint, database, collector, or deployment in this milestone.
+**Scope:** Build the responsive, accessible, static client for browser-local G0 generation, copy/download, research explanations, and only approved model/summary artifacts. The client source location and frontend stack must be approved before this work; no frontend directory exists in the current repository. Add G1/G2 controls only after 8B gates. No visitor write endpoint, database, collector, or deployment in this milestone.
 
 **Tasks:** Confirm framework and browser matrix; implement the information architecture and mode labels; use Web Crypto bounded-integer rejection sampling for G0; load and validate read-only artifacts; provide accessible text/table alternatives for charts; add privacy/source/research notices; test network requests to confirm generated lines stay in-browser; document static hosting candidates without selecting one.
 
@@ -66,7 +68,7 @@ The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was r
 
 **Scope:** 8D is separate from randomizer development. All adapters remain disabled throughout this proposal stage, and source-policy review does not itself activate collection. PCSO is the primary source candidate; LottoPCSO.com is secondary and requires cross-checking; LottoMatik is excluded from automation pending current terms review. FOI is not an operational dependency.
 
-**8D.1 Offline parser feasibility:** Specify the DrawSourceAdapter methods, versioned normalization, schema/provenance, error states, deduplication, correction, quarantine, and source-status reporting. Build only from synthetic offline HTML fixtures representing the observed source layouts and edge cases. Evaluate existing/standard-library options before approving dependencies. Disabled adapters and health checks make no network requests.
+**8D.1 Offline parser feasibility:** Specify the DrawSourceAdapter methods, versioned normalization, schema/provenance, error states, deduplication, correction, quarantine, and source-status reporting. If approved for implementation, keep source adapters in a new `src/magic_lotto/infrastructure/sources/` extension; this package is intentionally absent today. Build only from synthetic offline HTML fixtures representing the observed source layouts and edge cases. Evaluate existing/standard-library options before approving dependencies. Disabled adapters and health checks make no network requests.
 
 **Acceptance:** TEST-008, TEST-015, TEST-023, and TEST-024 pass on synthetic fixtures. Tests cover date formats, published versus sorted order, missing optional fields, duplicate and incomplete records, unexpected headers, placeholders, malformed markup, pagination/date boundaries, layout changes, access denial, timeout/server failure, conflicting sources, and corrections. No live request or copied protected result row is used.
 
@@ -76,13 +78,13 @@ The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was r
 
 **8D.3 Conditional live pilot:** Only after separate human approval, pilot one eligible source with a low-frequency request after draw-result publication, bounded retries, configurable pacing, monitored failures, and idempotent writes. Verify the current PCSO draw timetable before configuring any schedule. Do not use a scheduled workflow as exact-time evidence. Stop on access denial, clear prohibition, or changed/unresolved terms. Do not use CAPTCHA solving, stealth browsers, proxy rotation, or WAF/authentication circumvention.
 
-**Acceptance:** TEST-010, TEST-015, and TEST-020 pass; a disabled adapter makes zero requests; an enabled pilot follows the approved source limits; unknown values remain null; conflicts and corrections create quarantined or superseding records; only Lotto 6/42 observations reach the approved prospective store; original datasets and sealed partitions remain untouched.
+**Acceptance:** TEST-010, TEST-015, and TEST-020 pass; a disabled adapter makes zero requests; an enabled pilot follows the approved source limits; unknown values remain null; conflicts and corrections create quarantined or superseding records; only Lotto 6/42 observations reach the proposed `data/prospective/lotto-6-42/` store; original datasets and sealed partitions remain untouched.
 
 **Definition of done:** Offline parser contract is reviewed; source feasibility and current policy status are documented; any live pilot is separately approved and bounded; source record revisions and recovery procedure are retained. No source approval or human activation means no collection.
 
 ## Milestone 8E: Prospective research registry
 
-**Scope:** Create a read-only static view for project-generated batches only. Freeze study manifests and results before target draws, obtain an external RFC 3161 token, verify it, and publish the verified record under an approved hosting process. This is not a public visitor registration form.
+**Scope:** Create a read-only static view for project-generated batches only. Proposed storage locations are `models/phase8/` for model artifacts and `reports/phase8/` for reviewed public research artifacts and frozen registry manifests; these directories are not present today. Freeze study manifests and results before target draws, obtain an external RFC 3161 token, verify it, and publish the verified record under an approved hosting process. This is not a public visitor registration form.
 
 **Tasks:** Select an independent TSA and verification procedure; define canonical manifest serialization; generate equal-size G0 and experimental comparison batches under a frozen protocol; hash all artifacts; timestamp manifest before target draw; retain token/cert verification; commit the manifest/token/event references; implement a read-only static page; disclose timestamp time separately from site deployment time.
 
@@ -104,7 +106,7 @@ For a two-sided normal-approximation sensitivity calculation, `n ≈ ((z_(1-alph
 
 ## Work breakdown and implementation order
 
-1. Approve architecture, identifiers, mathematical definitions, data boundaries, privacy boundary, and test plan.
+1. Approve the Phase 8 extension map for the merged package, identifiers, mathematical definitions, data boundaries, privacy boundary, and test plan. Do not repeat PR #4's completed package-structure work.
 2. Complete 8A mathematical contracts and G0 reference; review before fitting.
 3. Complete 8B statistical and model gates; leave G2 unavailable if it fails.
 4. Complete 8C static client and accessibility/privacy review.
@@ -207,7 +209,7 @@ For each milestone, record baseline commit, exact implementation commit, working
 
 ## Requirements traceability matrix
 
-Components: C1 Python research core, C2 artifact repository, C3 static client, C4 static registry, C5 evaluation process, C6 source adapter, C7 timestamp service. Tests are defined in [02 Technical Requirements](02_TECHNICAL_REQUIREMENTS.md); milestones are defined above.
+Components: C1 uses the existing `domain.draw_642` and `research.kmeans_642` foundation with proposed Phase 8 generators under `src/magic_lotto/research/`; C2 uses the Phase 7-specific repository/writer only as architectural examples, with a proposed Phase 8 artifact store; C3 static client, C4 registry view, C5 prospective evaluation, C6 source adapter, and C7 timestamp service are proposed and not implemented. The current Phase 7 ports and IO modules must not be described as generic Phase 8 services. Tests are defined in [02 Technical Requirements](02_TECHNICAL_REQUIREMENTS.md); milestones are defined above.
 
 | Requirement | Component(s) | Test | Milestone |
 | --- | --- | --- | --- |

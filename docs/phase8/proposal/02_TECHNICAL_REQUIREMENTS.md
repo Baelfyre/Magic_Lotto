@@ -2,7 +2,7 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposed target architecture; not implemented
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
@@ -10,7 +10,7 @@
 
 Phase 8 should retain a Python-first research engine and add a static web client only after separate implementation approval. Python produces versioned model, research-summary, and registration artifacts. A static client reads reviewed artifacts and runs G0 locally with the browser's Web Crypto API. V1 has no backend or application database, and it sends no generated lines to project storage.
 
-The baseline is a research repository, not a deployed application. Existing Python and data-validation conventions remain the starting point. Proposed frontend technology is not a repository fact. Hosting is unresolved. The read-only registry is a static view over committed manifests; it does not accept public POST requests. A future database or API requires an evidenced concurrency, retention, or operational need and a separate architecture decision.
+The baseline is a research repository, not a deployed application. Merged PR #4 provides the installable `src/magic_lotto/` package for Phase 7, with domain validation, research calculations, a Phase 7 use case/service, CSV training-data DAO/repository, Phase 7 artifact writer, CLI, and notebook bootstrap. It does not add Phase 8 generators, a generic artifact store, a collector, a web client, or a database. Extend those existing layer boundaries only where Phase 8 needs a real consumer; do not recreate the package structure. Proposed frontend technology is not a repository fact. Hosting is unresolved. The read-only registry is a static view over proposed committed manifests; it does not accept public POST requests. A future database or API requires an evidenced concurrency, retention, or operational need and a separate architecture decision.
 
 ## Stable technical requirements
 
@@ -44,19 +44,33 @@ Use Python already established by the research repository for fitting and valida
 
 ## Python package and module boundaries
 
-Proposed package boundaries, not current modules:
+The existing package is under `src/magic_lotto/`. Its current modules and their implemented responsibilities are:
 
-| Component | Responsibility | Must not own |
+| Current module | Implemented responsibility | Phase 8 boundary |
 | --- | --- | --- |
-| `phase8.contracts` | Versioned schemas, enums, validation, canonical serialization | Source collection or UI state |
-| `phase8.generators` | G0/G1/G2 target distributions and sampling interfaces | Reading sealed partitions |
-| `phase8.fit` | Training-only feature extraction, fitting, chronological development folds | Public hosting or future-outcome selection |
-| `phase8.artifacts` | Hashing, model manifests, generated batches, append-only evaluation events | Visitor profiles |
-| `phase8.sources` | Disabled adapter interfaces and source review records | Network access until approved |
-| `phase8.evaluation` | Frozen-protocol metrics over authorized post-registration outcomes | Model tuning after observing registered outcomes |
-| Static client | Accessible local generation, display, download, and read-only artifact viewing | Persistent visitor storage or mutation of research artifacts |
+| `magic_lotto.domain.draw_642` | Validate and encode unordered six-number Lotto 6/42 combinations | Reuse its combination invariants for any approved generator; do not move file or data access into the domain layer |
+| `magic_lotto.research.kmeans_642` | Existing Phase 7 K-means, PCA, fair-null, and descriptive calculations | It is not a Phase 8 generator; proposed G0/G1/G2 research calculations belong under the existing `magic_lotto.research` layer, with module splitting decided only during approved implementation |
+| `magic_lotto.application.ports.training_draw_repository.TrainingDrawRepository` and `magic_lotto.application.ports.phase7_artifact_writer.Phase7ArtifactWriter` | Phase 7-specific training-input and output contracts | Do not treat either as a generic draw-observation or Phase 8 artifact contract |
+| `magic_lotto.application.services.phase7_analysis_service` and `magic_lotto.application.use_cases.run_phase7` | Orchestrate the established Phase 7 analysis and outputs | Add Phase 8 orchestration only for an approved use case, following the same application boundary |
+| `magic_lotto.infrastructure.dao.csv_training_draw_dao` and `magic_lotto.infrastructure.repositories.csv_training_draw_repository` | Read and expose the bounded Phase 7 training prefix | Do not widen this reader to prospective, validation, or locked-test records |
+| `magic_lotto.infrastructure.serialization.phase7_artifact_writer` | Write the six Phase 7 plots, `summary.json`, and `README.md` | It is not a general JSON/JSONL artifact store; add serialization only for an approved concrete consumer |
+| `magic_lotto.interfaces.phase7_cli` and `magic_lotto.interfaces.notebook_bootstrap` | Phase 7 CLI composition and shared notebook setup | Reuse the package and bootstrap; do not introduce a second path/import bootstrap |
+| `magic_lotto.paths` | Resolve repository root and exact historical Phase 1-3 path aliases | New paths must be passed or resolved at the interface/infrastructure boundary; do not carry the legacy alias map into new application code |
 
-The Python research core is authoritative for model fitting and artifact validation. Browser implementations must implement the same mathematical contracts; they must not independently redefine a model.
+No `phase8.*` package exists. Proposed extension boundaries are:
+
+| Proposed concern | Target boundary, not yet implemented | Constraint |
+| --- | --- | --- |
+| G0, G1, G2 math and samplers | Existing `src/magic_lotto/research/`; use `magic_lotto.domain.draw_642` for shared validity rules | Keep G0 uniform; G1/G2 remain gated; do not create a parallel top-level research package |
+| Training-only fit and orchestration | Existing `application/services/` and `application/use_cases/` only where a concrete workflow needs orchestration | Read only the approved 902-draw training input; do not add service wrappers without a consumer |
+| Versioned JSON/JSONL artifacts | Existing `application/ports/` plus `infrastructure/serialization/` pattern, if an approved use case requires persistence | Phase 7 ports and writer stay phase-specific; no database or generic repository layer by default |
+| Public-result source adapters | A future `infrastructure/sources/` extension; this directory is intentionally absent | Disabled and unimplemented until source-specific review and separate activation approval |
+| Static browser client | New static-client source location and stack remain an implementation decision | No frontend exists in the current tree; browser-local generation and read-only artifacts remain the proposal |
+| Prospective evaluation and timestamping | Application workflow plus external RFC 3161 evidence, if separately approved | Never change a frozen protocol after outcomes; the timestamp service is not part of the current package |
+
+The Python research implementation remains authoritative for fitting and normalization. A browser implementation must follow the same approved mathematical contracts, not redefine a model.
+
+The installed package and notebook extra are declared in `pyproject.toml`; the current install command is `python -m pip install -e ".[notebook]"`, and the current console entry point is `magic-lotto-phase7`. The six notebooks use the shared bootstrap generated by `magic_lotto.interfaces.notebook_bootstrap` and exposed through `scripts/notebook_bootstrap.py`. Static notebook checks and local setup validation do not establish actual hosted Google Colab compatibility; the repository guide records that no actual hosted Colab session was available. Any approved Phase 8 notebook should reuse that bootstrap.
 
 ## Generator interfaces and contracts
 

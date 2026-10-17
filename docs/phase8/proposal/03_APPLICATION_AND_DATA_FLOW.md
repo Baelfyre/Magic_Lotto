@@ -2,34 +2,63 @@
 <!-- @codebase_provenance_JEO -->
 
 - **Status:** Proposed component and workflow design; not implemented
-- **Baseline:** `origin/main` at `b67e31572187001c89266839871c9e28456b90e8`
+- **Baseline:** `origin/main` at `998f16d133b4500dfd65fa57fb73f9d84c91f8f4` (merged PR #4)
 - **Last reviewed:** 2026-10-17
 - **Research verdict:** `STOP_NO_REPRODUCIBLE_PREDICTIVE_SIGNAL`
 
 **Scope:** Philippine Lotto 6/42 only. 3D Lotto, other lottery games, and unrelated prediction systems are outside this design.
 
-## System context diagram
+## Implemented Phase 7 foundation
+
+PR #4 is merged into `main` and provides the current package and notebook foundation. This Phase 8 proposal extends it; it does not replace the package or claim that Phase 8 features exist.
+
+```mermaid
+flowchart LR
+  CLI["magic_lotto.interfaces.phase7_cli"] --> UseCase["magic_lotto.application.use_cases.run_phase7"]
+  UseCase --> Service["magic_lotto.application.services.phase7_analysis_service"]
+  Service --> RepoPort["magic_lotto.application.ports.training_draw_repository.TrainingDrawRepository"]
+  Repo["magic_lotto.infrastructure.repositories.CsvTrainingDrawRepository"] -.implements.-> RepoPort
+  Repo --> DAO["magic_lotto.infrastructure.dao.CsvTrainingDrawDao"]
+  DAO --> Train["data/processed/lotto_6_42_cleaned_normalized.csv"]
+  Service --> Research["magic_lotto.research.kmeans_642"]
+  Research --> Domain["magic_lotto.domain.draw_642"]
+  UseCase --> WriterPort["magic_lotto.application.ports.phase7_artifact_writer.Phase7ArtifactWriter"]
+  Writer["magic_lotto.infrastructure.serialization.Phase7ArtifactWriter"] -.implements.-> WriterPort
+  Writer --> Reports["reports/phase7_kmeans_642/"]
+  Notebooks["notebooks/ (six existing notebooks)"] --> Bootstrap["scripts/notebook_bootstrap.py"]
+  Bootstrap --> BootstrapPackage["magic_lotto.interfaces.notebook_bootstrap"]
+```
+
+The CSV DAO enforces the existing Phase 7 training boundary; the source dataset is not modified or reordered. Phase 7 writes its existing plots and reports under `reports/phase7_kmeans_642/`. `source_row` is provenance metadata with a uniqueness check; chronology is checked by `draw_date`. The current repository and import constraints are documented in [the architecture](../../architecture/REPOSITORY_ARCHITECTURE.md) and [the import/path policy](../../architecture/IMPORT_AND_PATH_POLICY.md).
+
+All six notebooks use the shared startup helper. Setup checks and notebook static validation are distinct from notebook runtime qualification. The merged repository does not claim an actual hosted Google Colab run; the [notebook execution guide](../../architecture/NOTEBOOK_EXECUTION_GUIDE.md) records that limitation. No notebook is executed as part of this proposal reconciliation.
+
+## Proposed Phase 8 system context
 
 ```mermaid
 flowchart LR
   Visitor[Visitor browser]
   Static[Static web client]
-  Artifacts[Reviewed versioned JSON and JSONL]
-  Python[Offline Python research engine]
+  Artifacts[Proposed reports/phase8 public research JSON and JSONL]
+  Models[Proposed models/phase8 model specifications and parameters]
+  Observations[Proposed source observation store, isolated from training data]
+  Python[Proposed Python research extension under src/magic_lotto/research/]
   Git[Git-reviewed repository history]
   TSA[Independent RFC 3161 timestamp authority]
   PCSO[PCSO official result page]
   ThirdParty[LottoPCSO.com independent reference]
   Registry[Source registry: access, terms, robots, reuse]
   Gate[Source eligibility gate]
-  Adapter[Disabled Python source adapter]
+  Adapter[Proposed disabled source adapter; infrastructure/sources absent today]
   Parser[Versioned parse, normalize, validate]
   Quarantine[Quarantine and human review]
   Reviewers[Research and source reviewers]
 
   Visitor -->|local generation and download| Static
   Static -->|read-only fetch| Artifacts
-  Python -->|model, summaries, frozen manifests| Artifacts
+  Static -->|approved model artifact fetch| Models
+  Python -->|model specifications and parameters| Models
+  Python -->|approved summaries and frozen manifests| Artifacts
   Python -->|hash and register change| Git
   Python -->|manifest hash before target draw| TSA
   TSA -->|timestamp token| Git
@@ -39,8 +68,9 @@ flowchart LR
   Gate -.->|eligible request only| Adapter
   Adapter --> Parser
   Parser -->|uncertain or conflicting| Quarantine
-  Parser -->|verified and reuse-approved| Artifacts
-  Quarantine -->|reviewed correction or disposition| Artifacts
+  Parser -->|normalized observation| Observations
+  Observations -->|reuse-approved public records| Artifacts
+  Quarantine -->|reviewed correction or disposition| Observations
   Reviewers -->|approve artifacts and protocol| Git
 ```
 
@@ -50,13 +80,17 @@ Dashed source flow is design-only and disabled by default. PCSO is the authorita
 
 | Component | ID | Responsibility | State boundary |
 | --- | --- | --- | --- |
-| Python research core | C1 | Validate approved training data, fit versioned models, calculate exact probabilities, emit artifacts | Offline; training-only until a separate prospective evaluation is approved |
-| Artifact repository | C2 | Store versioned JSON/JSONL, hashes, manifest and evaluation events | Git-reviewed; immutable records use new versions/events rather than replacement |
-| Static web client | C3 | Read approved artifacts, run local generation, display explanations, export visitor output | Browser-local; no central write endpoint |
-| Public registry view | C4 | Render frozen project-generated research manifests as static read-only pages | Publishes only after pre-draw timestamp evidence is verified |
-| Evaluation process | C5 | Apply frozen metrics to authorized post-registration outcomes | Append-only result event; cannot tune registered models in place |
-| Source adapter boundary | C6 | Check source eligibility; define ordinary retrieval, versioned parsing, normalization, deduplication, independent cross-check, quarantine, and correction flow | Disabled until current source-specific access/reuse review and human feasibility approval |
-| Independent timestamp service | C7 | Timestamp the canonical manifest hash before the target draw | External evidence; token and verification details retained |
+| Component | ID | Current foundation and proposed responsibility | State boundary |
+| --- | --- | --- | --- |
+| Lotto 6/42 rules and research calculations | C1 | Existing `domain.draw_642` and `research.kmeans_642`; proposed G0/G1/G2 calculations extend the existing `src/magic_lotto/research/` layer | Phase 7 algorithms remain descriptive; G0 is the proposed default, G1/G2 remain gated |
+| Data and artifact persistence | C2 | Existing Phase 7 `TrainingDrawRepository` and `Phase7ArtifactWriter` are specific to Phase 7; a versioned Phase 8 JSON/JSONL store is proposed only for an approved consumer | Git-reviewed immutable versions; do not widen the fixed training reader or reuse the Phase 7 writer as a generic store |
+| Static web client | C3 | Proposed new client; no frontend source directory or implementation exists | Browser-local generation; no central visitor write endpoint |
+| Public registry view | C4 | Proposed static view over approved project-owned manifests | Read-only; publish only with verified pre-draw timestamp evidence |
+| Evaluation process | C5 | Proposed workflow over authorized post-registration outcomes | Append-only result event; cannot tune registered models in place |
+| Source adapter boundary | C6 | Proposed future `infrastructure/sources/` extension; absent from the current package | Disabled until current source-specific access/reuse review and human feasibility approval |
+| Independent timestamp service | C7 | Proposed external RFC 3161 evidence provider | Timestamp token and verification evidence retained; it is not a current repository service |
+
+Current Phase 7 outputs remain under `reports/phase7_kmeans_642/`; those reports are not a Phase 8 web contract. If implementation is separately approved, `models/phase8/`, `reports/phase8/`, and `data/prospective/lotto-6-42/` are proposed new locations for Phase 8 model artifacts, reviewed public research artifacts/manifests, and prospective observations, respectively. These directories do not exist in the current tree. The static-client source location remains to be selected with the frontend stack before implementation.
 
 ## User journeys for G0, G1, and G2
 
