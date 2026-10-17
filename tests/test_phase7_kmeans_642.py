@@ -1,5 +1,6 @@
 """Lightweight shape, reproducibility and partition-guard checks."""
 # @codebase_provenance_JEO
+from datetime import date, timedelta
 import unittest
 from unittest.mock import patch
 from pathlib import Path
@@ -21,7 +22,34 @@ from phase7_kmeans_642 import (
     fair_null_draws,
     load_train_only,
 )
+from magic_lotto.domain.draw_642 import BALLS, DRAW_COLS, DRAW_SIZE
 from magic_lotto.research.kmeans_642 import fit_kmeans
+
+
+def make_synthetic_training_prefix():
+    preceding = list(range(2, 103))
+    training = [row for row in range(TRAIN_START_SOURCE_ROW, TRAIN_END_SOURCE_ROW + 1)
+                if row not in {200, 300, 400, 990}]
+    source_rows = preceding + training
+    source_rows[870], source_rows[871] = source_rows[871], source_rows[870]
+
+    start = date(2016, 8, 30)
+    end = date(2022, 11, 12)
+    span = (end - start).days
+    dates = [start - timedelta(days=101 - index) for index in range(len(preceding))]
+    dates.extend(start + timedelta(days=(span * index) // (TRAIN_COUNT - 1))
+                 for index in range(TRAIN_COUNT))
+
+    rows = []
+    for index, (source_row, draw_date) in enumerate(zip(source_rows, dates)):
+        numbers = [(index + offset) % BALLS + 1 for offset in range(DRAW_SIZE)]
+        rows.append({
+            "draw_date": draw_date.isoformat(),
+            "source_row": source_row,
+            "record_status": "valid",
+            **dict(zip(DRAW_COLS, numbers)),
+        })
+    return pd.DataFrame(rows)
 
 
 class KMeansExplorationTests(unittest.TestCase):
@@ -84,21 +112,23 @@ class KMeansExplorationTests(unittest.TestCase):
         self.assertEqual(first.inertia_, second.inertia_)
         np.testing.assert_array_equal(first.labels_, second.labels_)
 
-    def test_refuses_bad_training_prefix_without_touching_suffix(self):
+    def test_rejects_synthetic_prefix_with_changed_boundary(self):
+        prefix = make_synthetic_training_prefix()
+        prefix.loc[prefix.index[-1], "source_row"] = TRAIN_END_SOURCE_ROW + 1
         with TemporaryDirectory() as p:
             csv = Path(p) / "synthetic.csv"
-            cols = ["draw_date", "source_row", "record_status"] + [f"number_{i}" for i in range(1, 7)]
-            data = [["2016-01-01", i, "valid", 1, 2, 3, 4, 5, 6] for i in range(2, 1005)]
-            pd.DataFrame(data, columns=cols).to_csv(csv, index=False)
+            prefix.to_csv(csv, index=False)
             with open(csv, "a", encoding="utf-8") as f:
-                f.write("not,a,valid,row,with,broken,columns,after,limit\n")
+                f.write("malformed synthetic suffix after the training prefix\n")
             with self.assertRaisesRegex(ValueError, "Training boundary changed"):
                 load_train_only(csv)
 
-    def test_adjacent_source_row_inversion_is_provenance_only(self):
-        source = Path(__file__).resolve().parents[1] / "data/processed/lotto_6_42_cleaned_normalized.csv"
-        prefix = pd.read_csv(source, nrows=TRAIN_PREFIX_ROWS)
+    def test_synthetic_adjacent_source_row_inversion_is_provenance_only(self):
+        prefix = make_synthetic_training_prefix()
+        self.assertEqual(len(prefix), TRAIN_PREFIX_ROWS)
+        self.assertEqual(prefix.loc[:100, "source_row"].tolist(), list(range(2, 103)))
         self.assertEqual(prefix.loc[870:871, "source_row"].tolist(), [876, 875])
+        self.assertFalse(prefix["source_row"].is_monotonic_increasing)
 
         with TemporaryDirectory() as p:
             csv = Path(p) / "prefix.csv"
@@ -111,13 +141,20 @@ class KMeansExplorationTests(unittest.TestCase):
         self.assertFalse(train["source_row"].duplicated().any())
         self.assertEqual(int(train["source_row"].min()), TRAIN_START_SOURCE_ROW)
         self.assertEqual(int(train["source_row"].max()), TRAIN_END_SOURCE_ROW)
+        self.assertEqual(len(train), 902)
+        self.assertEqual(
+            sorted(train["source_row"].tolist()),
+            [row for row in range(TRAIN_START_SOURCE_ROW, TRAIN_END_SOURCE_ROW + 1)
+             if row not in {200, 300, 400, 990}],
+        )
+        self.assertTrue((train["record_status"] == "valid").all())
         self.assertTrue(train["draw_date"].is_monotonic_increasing)
+        self.assertFalse(train["source_row"].is_monotonic_increasing)
         self.assertEqual(train["draw_date"].iloc[0], "2016-08-30")
         self.assertEqual(train["draw_date"].iloc[-1], "2022-11-12")
 
-    def test_duplicate_source_row_still_rejected(self):
-        source = Path(__file__).resolve().parents[1] / "data/processed/lotto_6_42_cleaned_normalized.csv"
-        prefix = pd.read_csv(source, nrows=TRAIN_PREFIX_ROWS)
+    def test_synthetic_duplicate_source_row_still_rejected(self):
+        prefix = make_synthetic_training_prefix()
         prefix.loc[871, "source_row"] = prefix.loc[870, "source_row"]
         with TemporaryDirectory() as p:
             csv = Path(p) / "duplicate-source-row.csv"
