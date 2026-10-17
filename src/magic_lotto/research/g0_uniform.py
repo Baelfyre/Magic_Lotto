@@ -7,6 +7,8 @@ claim replayability. No historical data, model fitting, or IO is used.
 
 from __future__ import annotations
 
+# @codebase_provenance_JEO
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from math import comb

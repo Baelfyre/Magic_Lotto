@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+# @codebase_provenance_JEO
+
 from magic_lotto.research.g0_uniform import (
     INDEPENDENT_WITH_REPLACEMENT, G0GenerationResult, RandBelow, generate_g0,
 )

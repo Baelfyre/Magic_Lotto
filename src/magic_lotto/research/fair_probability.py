@@ -6,6 +6,8 @@ predictions or model-based estimates of winning chances.
 
 from __future__ import annotations
 
+# @codebase_provenance_JEO
+
 from fractions import Fraction
 from math import comb
 

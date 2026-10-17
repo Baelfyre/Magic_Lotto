@@ -6,6 +6,8 @@ This module performs no IO and does not reference historical result partitions.
 
 from __future__ import annotations
 
+# @codebase_provenance_JEO
+
 from dataclasses import dataclass
 from typing import Sequence
 
