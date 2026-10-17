@@ -17,8 +17,8 @@ The baseline is a research repository, not a deployed application. Existing Pyth
 | ID | Technical requirement | Planned evidence |
 | --- | --- | --- |
 | TR-001 | Python shall own research fitting, reference probabilities, schema validation, and release-artifact creation; the client shall consume versioned artifacts. | TEST-008, TEST-012 |
-| TR-002 | G0 and G1 shall use exact fixed-cardinality probability definitions and unbiased sampling methods. | TEST-003, TEST-005 |
-| TR-003 | G2 shall use finite positive-support parameters, exact normalization, and an exact sampler or remain unavailable. | TEST-006, TEST-007, TEST-013 |
+| TR-002 | G0 and G1 shall use exact fixed-cardinality probability definitions and unbiased sampling methods; G1 must pass its predeclared concentration guardrail before release. | TEST-003, TEST-005 |
+| TR-003 | G2 shall use finite positive-support parameters, exact normalization, an exact sampler, and a predeclared concentration guardrail, or remain unavailable. | TEST-006, TEST-007, TEST-013 |
 | TR-004 | Training, validation, locked-test, and prospective outcome paths shall be isolated; Phase 8 may access only approved training inputs and authorized post-registration outcomes. | TEST-009, TEST-018 |
 | TR-005 | Versioned JSON/JSONL artifacts shall use stable IDs, schema versions, canonical hashes, and append-only corrections/evaluations. | TEST-008, TEST-011 |
 | TR-006 | External result ingestion shall require independent source identity, access, and reuse review; adapters remain disabled until approved. | TEST-010, TEST-020 |
@@ -101,7 +101,7 @@ For positive smoothed number weights `w_i`, a six-number set `S` has:
 P_G1(S | w) = product(w_i for i in S) / e_6(w_1,...,w_42)
 ```
 
-`e_6` is the sixth elementary symmetric polynomial and normalizes the fixed-cardinality distribution. Use dynamic programming to compute the normalizer and sample a weighted subset. Fit smoothing only on approved training observations. Version all weights, smoothing configuration, training-data hash, and cutoff. G1 remains experimental regardless of whether it matches training marginals more closely.
+`e_6` is the sixth elementary symmetric polynomial and normalizes the fixed-cardinality distribution. Use dynamic programming to compute the normalizer and sample a weighted subset. Fit smoothing only on approved training observations. Version all weights, smoothing configuration, training-data hash, and cutoff. Positive support prevents zero-probability combinations but does not prevent near-concentration. Before fitting, approve a concentration diagnostic and threshold (for example, maximum combination mass or cumulative mass over a fixed number of combinations); keep G1 unavailable if its exact normalized distribution fails the guardrail. G1 remains experimental regardless of whether it matches training marginals more closely.
 
 ### G2 calibrated soft-constraint model
 
@@ -114,7 +114,7 @@ Z(theta) = sum over all valid six-number sets S of exp(theta · f(S))
 
 `f(S)` may contain low-dimensional odd/even, high/low, sum, sorted-gap, and consecutive-structure features. Define features so the energy decomposes into unary number terms plus adjacent sorted-number transition terms; this permits a dynamic-programming partition function and exact sequential sampling over the 42-number subset graph. If that decomposition is not sufficient for a proposed feature, that feature requires a new reviewed exact-normalization/sampler design before use.
 
-Fit `theta` on approved historical training-only chronological development folds, with explicit regularization/shrinkage toward the uniform baseline. No fixed coefficient values are assumed. Finite scores ensure all valid sets retain positive probability. Before release, validate the partition function, sampler against small enumerated reference spaces, browser/Python distribution parity, calibration stability, and measured compute cost. If exact parity or acceptable cost is not demonstrated, keep G2 unavailable; do not substitute an unvalidated approximate chain or rejection sampler.
+Fit `theta` on approved historical training-only chronological development folds, with explicit regularization/shrinkage toward the uniform baseline. No fixed coefficient values are assumed. Finite scores ensure all valid sets retain positive probability but do not prevent near-concentration. Approve a concentration diagnostic and threshold before feature/parameter search and keep G2 unavailable if its exact normalized distribution fails the guardrail. Before release, also validate the partition function, sampler against small enumerated reference spaces, browser/Python distribution parity, calibration stability, and measured compute cost. If exact parity or acceptable cost is not demonstrated, keep G2 unavailable; do not substitute an unvalidated approximate chain or rejection sampler.
 
 ## Python and browser implementation consistency
 
@@ -169,7 +169,7 @@ Target WCAG 2.2 AA, verified by manual and automated checks. Preserve keyboard a
 | TEST-002 | Input and duplicate-ball tests | Reject duplicate, malformed, and out-of-range values; reject nonpositive or excessive batch sizes |
 | TEST-003 | G0 exact small-space and statistical tests | Uniform bounded selection passes exact toy-space checks and a predeclared goodness-of-fit check; no test is misrepresented as a proof of perfect randomness |
 | TEST-004 | Batch-mode tests | Independent mode permits repeated complete lines; distinct mode has no repeated complete lines and is labelled separately |
-| TEST-005 | G1 normalization and parity tests | DP normalizer agrees with exhaustive toy spaces; seeded sampler matches reference; positive weights retain support |
+| TEST-005 | G1 normalization and parity tests | DP normalizer agrees with exhaustive toy spaces; seeded sampler matches reference; positive weights retain support; an approved concentration diagnostic and threshold frozen before fitting are met |
 | TEST-006 | G2 partition-function tests | Exact DP normalization agrees with enumeration on toy universes and sums to one within a predeclared numerical tolerance |
 | TEST-007 | G2 sampler and parity tests | Exact sampler agrees with reference law on toy spaces; feature/model versions match in Python and browser |
 | TEST-008 | Schema/manifest validation | Required fields, nullability, IDs, versions, hashes, and lifecycle transitions validated |
@@ -177,7 +177,7 @@ Target WCAG 2.2 AA, verified by manual and automated checks. Preserve keyboard a
 | TEST-010 | Source-gate test | Collector adapters make no network request when disabled; approved source checks precede any later activation |
 | TEST-011 | Registration-integrity test | Canonical manifest hash, TSA token, token verification, target draw, and frozen output agree |
 | TEST-012 | Provenance rendering test | UI exposes generator/model version, data hash/cutoff, and experimental status |
-| TEST-013 | G2 release gate | Independent reviewer signs calibration, normalization, sampler fidelity, and compute-cost evidence before UI enablement |
+| TEST-013 | G2 release gate | Independent reviewer signs calibration, normalization, sampler fidelity, compute-cost, and predeclared concentration-guardrail evidence before UI enablement |
 | TEST-014 | Research-copy and plot review | Exact match law, fair chance, source/sample/cutoff, and limitations are correct and accessible |
 | TEST-015 | Results provenance test | Only reviewed/permitted artifacts render; corrections and missing source values remain explicit |
 | TEST-016 | Local download/privacy test | Copy/download works; generated lines are absent from network requests and central storage |

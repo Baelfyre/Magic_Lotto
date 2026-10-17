@@ -56,7 +56,7 @@ Dashed source flow is disabled by default and blocked pending source authorizati
 ### G1: historical-weighting control
 
 1. Visitor chooses an experimental mode after reading its label.
-2. The client validates model schema/version and checks training cutoff and status metadata.
+2. The client validates model schema/version and checks training cutoff, status metadata, and the approved `TEST-005` concentration-guardrail evidence.
 3. The browser samples from the fixed-cardinality distribution defined by the published positive weights and normalizer.
 4. The output shows the exact model version and “experimental control” status. No superior-odds statement is made.
 

@@ -49,7 +49,7 @@ Recommended order:
 5. Generate button, then result region with a polite live announcement.
 6. Combination list, copy/download actions, generator/model provenance, fair-probability notice, and no-prediction notice.
 
-Do not expose G1 or G2 until their artifact status and release checks pass. G2 should remain unavailable if calibration, exact-normalization, sampler-parity, or performance evidence is missing. Do not let an experimental mode appear selected merely because it was the last used mode on a shared device.
+Do not expose G1 or G2 until their artifact status and release checks pass, including the predeclared concentration guardrail. G2 should remain unavailable if calibration, exact-normalization, sampler-parity, concentration, or performance evidence is missing. Do not let an experimental mode appear selected merely because it was the last used mode on a shared device.
 
 ## Uniform and experimental mode differentiation
 

@@ -42,9 +42,9 @@ The AGY proposal is `[NEEDS SOURCE]`; this plan cannot claim that document was r
 
 **Scope:** Fit/version G1 as a control and develop G2 only on approved training data using chronological development folds. Calibrate regularization and feature set, compute exact normalizers, validate sampler fidelity, quantify numerical and compute behavior, and prepare training-only reports. Existing validation and locked-test partitions remain sealed.
 
-**Tasks:** Predefine candidate features and development comparisons; use chronological folds inside approved training data; document every feature/parameter search and multiplicity adjustment; compare fitted distributions with fair null using exact/simulation checks with seeded fixtures; validate G2's unary/adjacent-transition DP against exhaustive toy universes; compare Python and browser contracts; record fit stability and compute measurements; submit G2 artifact for independent review.
+**Tasks:** Predefine candidate features and development comparisons; approve the concentration diagnostic and threshold before the feature/parameter search; use chronological folds inside approved training data; document every feature/parameter search and multiplicity adjustment; compare fitted distributions with fair null using exact/simulation checks with seeded fixtures; validate G2's unary/adjacent-transition DP against exhaustive toy universes; compare Python and browser contracts; record fit stability and compute measurements; submit G1/G2 artifacts for independent review.
 
-**Acceptance:** TEST-005 through TEST-009 and TEST-013 pass; G2 has normalized probabilities, positive support over all valid combinations, matching sampler implementation, a reviewed training cutoff/hash, and a published measurement report. If any condition fails, G2 remains unavailable and G0 remains usable. No result from these checks reverses the STOP verdict.
+**Acceptance:** TEST-005 through TEST-009 and TEST-013 pass; G1/G2 meet the predeclared concentration guardrail, and G2 has normalized probabilities, positive support over all valid combinations, matching sampler implementation, a reviewed training cutoff/hash, and a published measurement report. If any condition fails, the affected experimental mode remains unavailable and G0 remains usable. No result from these checks reverses the STOP verdict.
 
 **Definition of done:** Immutable G1/G2 `ModelSpec` candidates, reproducibility notes, completed training-only validation, and independent model review. A G2 candidate is not user-facing until the release reviewer records approval.
 
@@ -109,7 +109,7 @@ For a two-sided normal-approximation sensitivity calculation, `n ≈ ((z_(1-alph
 | TEST-002 | Input validation | 8A, 8C | Invalid types, bounds, duplicates, and batch sizes rejected |
 | TEST-003 | G0 distribution | 8A, 8C | Exact toy spaces, bounded-integer edge cases, predeclared statistical checks |
 | TEST-004 | Batch sampling design | 8A, 8C | Replacement versus distinct-set behavior and labels |
-| TEST-005 | G1 normalization/sampling | 8A, 8B | Fixed-cardinality normalizer and sampler against exhaustive toy spaces |
+| TEST-005 | G1 normalization/sampling | 8A, 8B | Fixed-cardinality normalizer and sampler against exhaustive toy spaces; predeclared concentration diagnostic passes |
 | TEST-006 | G2 normalization | 8B | DP partition function agrees with exhaustive toy universe and sums to one |
 | TEST-007 | G2 sampler parity | 8B, 8C | Target law and Python/browser parity on toy/reference fixtures |
 | TEST-008 | Schema and artifacts | 8A-8E | Versioning, nullability, stable IDs, hash integrity and lifecycle |
@@ -117,7 +117,7 @@ For a two-sided normal-approximation sensitivity calculation, `n ≈ ((z_(1-alph
 | TEST-010 | Collector disabled state | 8D | No network requests absent activation and current approval |
 | TEST-011 | Timestamp and manifest | 8E, 8F | Canonical hash, token verification, time precedes target draw |
 | TEST-012 | Provenance presentation | 8B, 8C | Model/version/cutoff/status visible |
-| TEST-013 | G2 release review | 8B | Calibration, exact normalization, sampler fidelity, and compute-cost approval |
+| TEST-013 | G2 release review | 8B | Calibration, exact normalization, sampler fidelity, concentration-guardrail, and compute-cost approval |
 | TEST-014 | Scientific display | 8C | Exact chance law and limitations shown; no unsupported claims |
 | TEST-015 | Result provenance | 8C, 8D | Only permitted verified records, correction states and nulls displayed |
 | TEST-016 | Visitor privacy | 8C | No generated line in network requests or central persistence |

@@ -88,7 +88,7 @@ Provenance references include `source_id`, `source_url`, `retrieved_at`, nullabl
 
 ## ModelSpec schema
 
-Required fields: `schema_version`, `record_type`, `model_id`, `model_version`, `algorithm_id` (`G0`, `G1`, `G2`), `status` (`baseline`, `experimental_control`, `pending_calibration`, `approved_for_experimental_use`, or `retired`), `feature_definition_version`, `training_dataset_sha256` or `null` for G0, `training_cutoff` or `null` for G0, `fit_revision`, `parameter_artifact_sha256`, `normalizer`, `sampler_contract_version`, `created_at`, and `review_refs`. G2 includes calibration method, regularization configuration, chronological fold definition, and approval status. G1 includes smoothing configuration and fixed-cardinality normalizer version. No unapproved parameters belong in a released model artifact.
+Required fields: `schema_version`, `record_type`, `model_id`, `model_version`, `algorithm_id` (`G0`, `G1`, `G2`), `status` (`baseline`, `experimental_control`, `pending_calibration`, `approved_for_experimental_use`, or `retired`), `feature_definition_version`, `training_dataset_sha256` or `null` for G0, `training_cutoff` or `null` for G0, `fit_revision`, `parameter_artifact_sha256`, `normalizer`, `sampler_contract_version`, `created_at`, and `review_refs`. G2 includes calibration method, regularization configuration, chronological fold definition, and approval status. G1 includes smoothing configuration and fixed-cardinality normalizer version. Released G1/G2 `review_refs` must include evidence that the concentration diagnostic and threshold were approved before fitting and passed. No unapproved parameters belong in a released model artifact.
 
 ## StudyManifest schema
 
